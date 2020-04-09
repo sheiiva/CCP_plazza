@@ -34,7 +34,7 @@ Prerequisites:
 * restock      the time in milliseconds, used by the kitchen stock to replace ingredients
 
 
-* To execute tests
+## TESTS
 
 ```
 >> make tests_run
