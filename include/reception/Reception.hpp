@@ -17,26 +17,26 @@
 
 namespace Plazza
 {
+
     class Core
     {
         public:
-            Core() noexcept = default;
-            Core(Core const& b) noexcept = default;
-            Core(Core&& b) noexcept = default;
+            Core() noexcept = delete;
+            Core(int bakeTimeWeight, int maxCook, int stockRegen) noexcept;
+            Core(Core const& b) noexcept = delete;
+            Core(Core&& b) noexcept = delete;
             ~Core() noexcept = default;
-            Core& operator=(Core const& rhs) noexcept = default;
-            Core& operator=(Core&& rhs) noexcept = default;
+            Core& operator=(Core const& rhs) noexcept = delete;
+            Core& operator=(Core&& rhs) noexcept = delete;
 
             //GETTERS
             Kitchen& getKitchen(int index) noexcept;
-            std::vector<Kitchen> getKitchen() noexcept;
-            // int getStock(std::string) const noexcept;
-            // std::map<std::string, int> getStock() noexcept;
-            int getPizza(std::string) const noexcept;
-            std::map<std::string, int> getPizza() noexcept;
+            int getStock(const std::string &ingredient) const noexcept;
+            std::list<int> getPizzasIngredients(const std::string &pizza) noexcept;
+            int getPizza(const std::string &pizza) const noexcept;
             //SETTERS
             void setKitchen(Kitchen &kitchen) noexcept;
-            // void setStock(const std::string &ingredient) noexcept;
+            void setStock(const std::string &ingredient) noexcept;
             void setPizza(Pizza &pizza) noexcept;
             //METHODS
             int run() noexcept;
@@ -49,12 +49,14 @@ namespace Plazza
             // Core& operator>>(Core&& rhs) noexcept;
 
         private:
+            int _bakeTimeWeight;
+            int _maxCook;
+            int _stockRegen;
             std::string _input;
             std::queue<Pizza> _orders;
             std::vector<Kitchen> _kitchens;
-            // std::map<std::string, int> _stock;
-            std::map<std::string, std::list<int>> _menu;
-            std::map<std::string, int> _bakeTime;
+            std::vector<std::string> _stock;
+            std::map<std::string, Pizza> _menu;
     };
 }
 
