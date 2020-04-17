@@ -5,13 +5,12 @@
 ** Recipe.hpp
 */
 
-#include "vector"
 #include "Recipe.hpp"
 
 namespace Plazza
 {
-    Recipe::Recipe(int bakeTime, std::vector<int> ingredients) noexcept :
-         _bakeTime(bakeTime), _ingredients(ingredients)
+    Recipe::Recipe(const std::string &pizzaName, std::vector<int> ingredients, int bakeTime) noexcept :
+         _pizzaName(pizzaName), _ingredients(ingredients), _bakeTime(bakeTime)
     {
     }
 
