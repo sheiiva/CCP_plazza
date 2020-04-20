@@ -8,9 +8,10 @@
 #ifndef PIZZA_HPP
 #define PIZZA_HPP
 
-#include <list>
+#include <vector>
 #include <string>
 #include "Kitchen.hpp"
+#include "Recipe.hpp"
 
 namespace Plazza
 {
@@ -18,12 +19,12 @@ namespace Plazza
     {
         public:
             Pizza() noexcept = delete;
-            Pizza(std::list<int> &neededIngredients, int bakeTime) noexcept;
+            Pizza(const std::string &pizzaName, std::vector<int> &neededIngredients, int bakeTime) noexcept;
             Pizza(Pizza const& b) noexcept = default;
             Pizza(Pizza&& b) noexcept = default;
             ~Pizza() noexcept = default;
-            Pizza& operator=(Pizza const& rhs) noexcept = default;
-            Pizza& operator=(Pizza&& rhs) noexcept = default;
+            Pizza &operator=(const Pizza &rhs) noexcept = default;
+            Pizza &operator=(Pizza &&rhs) noexcept = default;
 
         public:
             //GETTERS
@@ -31,6 +32,7 @@ namespace Plazza
             int getClock(void) const noexcept;
             std::list<int> getNeededIngredients() const noexcept;
             int getNeedIngredients(int index) const noexcept;
+            Recipe getRecipe(void) noexcept;
             //SETTERS
             void setBakeTime(int bakeTime) const noexcept;
             void setClock(int clock) const noexcept;
@@ -41,9 +43,8 @@ namespace Plazza
             Pizza& operator>>(Kitchen const &kitchen) noexcept;
 
         protected:
-            int _bakeTime;
             int _clock;
-            std::list<int> _neededIngredients;
+            Recipe _recipe;
     };
 }
 

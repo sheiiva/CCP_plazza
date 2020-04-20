@@ -8,12 +8,13 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
+#include <iostream>
+#include <queue>
 #include <map>
 #include <string>
 #include <vector>
-#include <queue>
-#include "Pizza.hpp"
 #include "Kitchen.hpp"
+#include "Pizza.hpp"
 
 namespace Plazza
 {
@@ -32,12 +33,9 @@ namespace Plazza
             //GETTERS
             Kitchen& getKitchen(int index) noexcept;
             int getStock(const std::string &ingredient) const noexcept;
-            std::list<int> getPizzasIngredients(const std::string &pizza) noexcept;
-            int getPizza(const std::string &pizza) const noexcept;
+            Pizza& getPizza(const std::string &pizzaName) noexcept;
             //SETTERS
             void setKitchen(Kitchen &kitchen) noexcept;
-            void setStock(const std::string &ingredient) noexcept;
-            void setPizza(Pizza &pizza) noexcept;
             //METHODS
             int run() noexcept;
             std::string read_stdin(void) noexcept;
@@ -45,6 +43,8 @@ namespace Plazza
             int assignOrder(void) noexcept;
             int checkKitchen() noexcept;
             bool status() noexcept;
+            void addToStock(const std::string &ingredient) noexcept;
+            void addToMenu(Pizza &pizza) noexcept;
             // Core& operator<<(Pizza const &pizza) noexcept; // 
             // Core& operator>>(Core&& rhs) noexcept;
 

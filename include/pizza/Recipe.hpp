@@ -25,10 +25,11 @@ namespace Plazza
             Recipe &operator=(Recipe &&rhs) noexcept = default;
 
         public:
-            int getBakeTime() const noexcept;
+            std::string getPizzaName(void) noexcept;
 
             std::vector<int> getIngredients() const noexcept;
 
+            int getBakeTime() const noexcept;
         private:
             std::string _pizzaName;
             std::vector<int> _ingredients;

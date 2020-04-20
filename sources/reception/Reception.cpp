@@ -26,35 +26,45 @@ namespace Plazza
         _menu["Fantasia"] = Pizza("Fantasia", ingredients, (4 * _bakeTimeWeight));
     }
 
-    // Kitchen& Core::getKitchen(int index) noexcept
-    // {
-    //     return _kitchens.at(index);
-    // }
+    Kitchen& Core::getKitchen(int index) noexcept
+    {
+        return _kitchens.at(index);
+    }
 
-    // int Core::getStock(const std::string &ingredient) const noexcept
-    // {
-    //     for (int i = 0; i < _stock.size(); i++) {
-    //         if (!_stock[i].compare(ingredient))
-    //             return (i);
-    //     }
-    //     return (-1);
-    // }
+    int Core::getStock(const std::string &ingredient) const noexcept
+    {
+        for (int i = 0; i < _stock.size(); i++) {
+            if (!_stock[i].compare(ingredient))
+                return (i);
+        }
+        return (-1);
+    }
 
-    // std::list<int> Core::getPizzasIngredients(const std::string &pizza) noexcept
-    // {
-    //     std::list<int> list;
-    
-    //     for (auto &i : _menu) {
-    //         if (i.first == pizza)
-    //             return i.second;
-    //     }
-    //     return list;
-    // }
+    Pizza& Core::getPizza(const std::string &pizzaName) noexcept
+    {
+        return _menu[pizzaName];
+    }
 
-    // int getPizza(const std::string &pizza) const noexcept
-    // {
+    int Core::run() noexcept
+    {
+        //MAIN LOOP
+        return (0);
+    }
 
-    // }
+    std::string read_stdin(void) noexcept
+    {
+        std::string input;
+
+        getline(std::cin, input);
+        return input;
+    }
+
+    void Core::parser(void) noexcept
+    {
+
+    }
+
+
             // std::map<std::string, int> getPizza() noexcept;
             // //SETTERS
             // void setKitchen(Kitchen &kitchen) noexcept;
@@ -67,4 +77,28 @@ namespace Plazza
             // int assignOrder(void) noexcept;
             // int checkKitchen() noexcept;
             // bool status() noexcept;
+
+    void Core::addToStock(const std::string &ingredient) noexcept
+    {
+        for (auto &i: _stock) {
+            if (i.compare(ingredient)) {
+                std::cout << ingredient << " already in stock!" << std::endl;
+                return;
+            }
+        }
+        _stock.push_back(ingredient);
+    }
+
+    void Core::addToMenu(Pizza &pizza) noexcept
+    {
+        std::string pizzaName = pizza.getRecipe().getPizzaName();
+
+        for (auto &i: _menu) {
+            if (i.second.getRecipe().getPizzaName() == pizzaName) {
+                std::cout << pizzaName << " already in the menu!" << std::endl;
+                return;
+            }
+        }
+        // _menu[pizzaName] = pizza; WHAT?? VERIFY THE COPY CONSTRUCTOR
+    }
 }

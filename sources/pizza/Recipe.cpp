@@ -14,13 +14,18 @@ namespace Plazza
     {
     }
 
-    int Recipe::getBakeTime() const noexcept
+    std::string Recipe::getPizzaName(void) noexcept
     {
-        return _bakeTime;
+        return _pizzaName;
     }
 
     std::vector<int> Recipe::getIngredients() const noexcept
     {
         return _ingredients;
+    }
+
+    int Recipe::getBakeTime() const noexcept
+    {
+        return _bakeTime;
     }
 }
