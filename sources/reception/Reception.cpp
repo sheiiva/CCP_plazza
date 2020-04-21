@@ -60,10 +60,9 @@ namespace Plazza
         return _stockRegen;
     }
 
-    void setKitchen(Kitchen &kitchen) noexcept
+    void Reception::setKitchen(Kitchen &kitchen) noexcept
     {
-        // TO DO
-        (void)kitchen;
+        _kitchens.push_back(kitchen);
     }
 
     int Reception::run() noexcept

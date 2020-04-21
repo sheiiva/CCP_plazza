@@ -8,7 +8,6 @@
 #ifndef KITCHEN_HPP
 #define KITCHEN_HPP
 
-#include <list>
 #include <map>
 #include <string>
 #include "Cook.hpp"
@@ -20,7 +19,7 @@ namespace Plazza
     {
         public:
             Kitchen() noexcept = default;
-            Kitchen(Kitchen const& b) noexcept = default;
+            Kitchen(Kitchen const& b) noexcept;
             Kitchen(Kitchen&& b) noexcept = default;
             ~Kitchen() noexcept = default;
             Kitchen& operator=(Kitchen const& rhs) noexcept;
@@ -29,7 +28,7 @@ namespace Plazza
             //GETTER
             int getInactiveTime(void) noexcept;
             Cook getCook(int index) const noexcept;
-            std::list<Cook> getCooks() const noexcept;
+            std::vector<Cook> getCooks() const noexcept;
             int getIngredientsStock(const std::string &ingredient) const noexcept;
             std::map<std::string, int> getIngredientsStock() const noexcept;
             //SETTER
@@ -43,7 +42,7 @@ namespace Plazza
 
         protected:
             int _inactiveTime;
-            std::list<Cook> _cooks;
+            std::vector<Cook> _cooks;
             std::map<std::string, int> _ingredientsStock;
     };
 }
