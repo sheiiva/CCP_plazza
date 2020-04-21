@@ -8,22 +8,16 @@
 #ifndef RECEPTION_HPP
 #define RECEPTION_HPP
 
-#include <algorithm>
-#include <iostream>
-#include <iterator>
 #include <map>
 #include <queue>
-#include <sstream>
 #include <string>
 #include <vector>
 #include "Kitchen.hpp"
+#include "Parser.hpp"
 #include "Pizza.hpp"
 
 namespace Plazza
 {
-    #define PIZZANAME   0
-    #define SIZE        1
-    #define NUMBER      2
     class Reception
     {
         public:
@@ -47,7 +41,6 @@ namespace Plazza
             //METHODS
             int run() noexcept;
             std::string read_stdin(void) noexcept;
-            void parser(const std::string &input) noexcept;
             int assignOrder(void) noexcept;
             int checkKitchen() noexcept;
             bool status() noexcept;
@@ -55,9 +48,6 @@ namespace Plazza
             bool addToMenu(Pizza &pizza) noexcept;
             // Reception& operator<<(Pizza const &pizza) noexcept; // 
             // Reception& operator>>(Reception&& rhs) noexcept;
-            bool isValidName(const std::string &inputName);
-            size_t isValidNbr(const std::string &inputNbr);
-            bool isValidSize(const std::string &inputSize);
 
         private:
             int _bakeTimeWeight;

@@ -67,11 +67,15 @@ namespace Plazza
 
     int Reception::run() noexcept
     {
+        Parser parser;
         std::string input;
 
         while (1) {
             input.assign(read_stdin());
-            parser(input);
+            if (parser.run(input, _orders, _menu) == 1) {
+                //show help;
+                return (0); // TO DELETE
+            }
         }
         return (0);
     }
@@ -82,74 +86,6 @@ namespace Plazza
 
         getline(std::cin, input);
         return input;
-    }
-
-    bool Reception::isValidSize(const std::string &inputSize)
-    {
-        static std::string sizes[5] = {"S", "M", "L", "XL", "XXL"};
-
-        for (auto &size : sizes) {
-            if (!inputSize.compare(size))
-                return true;
-        }
-        return false;
-    }
-
-    bool Reception::isValidName(const std::string &inputName)
-    {
-        for (auto &name : _menu) {
-            if (!inputName.compare(name.first))
-                return true;
-        }
-        return false;
-    }
-
-    size_t Reception::isValidNbr(const std::string &inputNbr)
-    {
-        if (inputNbr[0] != 'x')
-            return (0);
-        else if (!atoi(inputNbr.c_str() + 1))
-            return (0);
-        return atoi(inputNbr.c_str() + 1);
-    }
-
-    void Reception::parser(const std::string &input) noexcept
-    {
-        size_t nbr = 0;
-        std::string command(input);
-        size_t sep = std::count(command.begin(), command.end(), ';');
-        std::replace(command.begin(), command.end(), ';', ' ');
-        std::istringstream iss(command);
-        std::vector<std::string> splitString(std::istream_iterator<std::string>{iss},
-                                        std::istream_iterator<std::string>());
-        
-        if (!input.compare("HELP")) {
-            //SHOW USAGE
-            return;
-        } else if (!input.compare("ADD")) {
-            return;
-        }
-        if ((splitString.size() % 3) != 0 || (((splitString.size() / 3) - 1) != sep)) {
-            std::cerr << "Wrong input :: number of arguments." << std::endl;
-            return;
-        }
-        for (size_t i = 0; i < splitString.size(); i += 3) {
-            if (isValidName(splitString[PIZZANAME + i]) == false)
-                std::cerr << "Wrong input :: name of pizza." << std::endl;
-            else if (isValidSize(splitString[SIZE + i]) == false)
-                std::cerr << "Wrong input :: size of pizza." << std::endl;
-            else if (!(nbr = isValidNbr(splitString[NUMBER + i])))
-                std::cerr << "Wrong input :: number of pizza." << std::endl;
-            else {
-                for(size_t index = 0; index < nbr; index++)
-                    _orders.push(Pizza(_menu[splitString[PIZZANAME + i]]));
-                //WHAT ABOUT THE SIZE ? HAVE TO STOCK IT IN THE PIZZA
-            }
-        }
-        while (_orders.size() != 0) {
-            std::cout << _orders.front().getRecipe().getPizzaName() << std::endl;
-            _orders.pop();
-        }
     }
 
     int Reception::assignOrder(void) noexcept
