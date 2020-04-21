@@ -2,14 +2,14 @@
 ** EPITECH PROJECT, 2019
 ** SOURCES // RECEPTION
 ** File description:
-** Core.cpp
+** Reception.cpp
 */
 
 #include "Reception.hpp"
 
 namespace Plazza
 {
-    Core::Core(int bakeTimeWeight, int maxCook, int stockRegen) noexcept:
+    Reception::Reception(int bakeTimeWeight, int maxCook, int stockRegen) noexcept:
         _bakeTimeWeight(bakeTimeWeight), _maxCook(maxCook), _stockRegen(stockRegen)
     {
         std::vector<int> ingredients;
@@ -26,28 +26,49 @@ namespace Plazza
         _menu["Fantasia"] = Pizza("Fantasia", ingredients, (4 * _bakeTimeWeight));
     }
 
-    Kitchen& Core::getKitchen(int index) noexcept
+    Kitchen& Reception::getKitchen(int index) noexcept
     {
         return _kitchens.at(index);
     }
 
-    int Core::getStock(const std::string &ingredient) const noexcept
+    int Reception::getStock(const std::string &ingredient) const noexcept
     {
-        for (int i = 0; i < _stock.size(); i++) {
+        for (size_t i = 0; i < _stock.size(); i++) {
             if (!_stock[i].compare(ingredient))
                 return (i);
         }
         return (-1);
     }
 
-    Pizza& Core::getPizza(const std::string &pizzaName) noexcept
+    Pizza& Reception::getPizza(const std::string &pizzaName) noexcept
     {
         return _menu[pizzaName];
     }
 
-    int Core::run() noexcept
+    int Reception::getBakeTimeWeight(void) noexcept
     {
-        //MAIN LOOP
+        return _bakeTimeWeight;
+    }
+
+    int Reception::getMaxCook(void) noexcept
+    {
+        return _maxCook;
+    }
+
+    int Reception::getStockRegen(void) noexcept
+    {
+        return _stockRegen;
+    }
+
+    void setKitchen(Kitchen &kitchen) noexcept
+    {
+        // TO DO
+        (void)kitchen;
+    }
+
+    int Reception::run() noexcept
+    {
+        while (1) {}
         return (0);
     }
 
@@ -59,46 +80,52 @@ namespace Plazza
         return input;
     }
 
-    void Core::parser(void) noexcept
+    void Reception::parser(void) noexcept
     {
-
+        // TO DO
     }
 
+    int assignOrder(void) noexcept
+    {
+        // TO DO
+        return (0);
+    }
 
-            // std::map<std::string, int> getPizza() noexcept;
-            // //SETTERS
-            // void setKitchen(Kitchen &kitchen) noexcept;
-            // void setStock(const std::string &ingredient) noexcept;
-            // void setPizza(Pizza &pizza) noexcept;
-            // //METHODS
-            // int run() noexcept;
-            // std::string read_stdin(void) noexcept;
-            // void parser(void) noexcept;
-            // int assignOrder(void) noexcept;
-            // int checkKitchen() noexcept;
-            // bool status() noexcept;
+    int checkKitchen() noexcept
+    {
+        // TO DO
+        return (0);
+    }
 
-    void Core::addToStock(const std::string &ingredient) noexcept
+    bool status() noexcept
+    {
+        // TO DO
+        return (true);
+    }
+
+    bool Reception::addToStock(const std::string &ingredient) noexcept
     {
         for (auto &i: _stock) {
             if (i.compare(ingredient)) {
                 std::cout << ingredient << " already in stock!" << std::endl;
-                return;
+                return (false);
             }
         }
         _stock.push_back(ingredient);
+        return (true);
     }
 
-    void Core::addToMenu(Pizza &pizza) noexcept
+    bool Reception::addToMenu(Pizza &pizza) noexcept
     {
         std::string pizzaName = pizza.getRecipe().getPizzaName();
 
         for (auto &i: _menu) {
             if (i.second.getRecipe().getPizzaName() == pizzaName) {
                 std::cout << pizzaName << " already in the menu!" << std::endl;
-                return;
+                return (false);
             }
         }
-        // _menu[pizzaName] = pizza; WHAT?? VERIFY THE COPY CONSTRUCTOR
+        _menu[pizzaName] = pizza;
+        return (true);
     }
 }

@@ -28,6 +28,8 @@ override LDLIBS 	+=
 
 
 SRC		=		main.cpp								\
+				$(PIZZA_PATH)Pizza.cpp					\
+				$(PIZZA_PATH)Recipe.cpp					\
 				$(RECEPTION_PATH)Reception.cpp			\
 
 OBJ 	= 	$(SRC:.cpp=.o)

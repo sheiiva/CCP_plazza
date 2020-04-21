@@ -11,8 +11,8 @@
 #include <queue>
 #include <thread>
 #include <mutex>
-#include "Pizza.hpp"
 #include "Kitchen.hpp"
+#include "Pizza.hpp"
 
 namespace Plazza
 {
@@ -21,11 +21,12 @@ namespace Plazza
         ACTIVE      = 1
     };
 
+    class Kitchen;
     class Cook
     {
         public:
             Cook() noexcept = delete;
-            Cook(Kitchen const& Kitchen) noexcept;
+            Cook(const Kitchen &Kitchen) noexcept;
             Cook(Cook const& b) noexcept = default;
             Cook(Cook&& b) noexcept = default;
             ~Cook() noexcept = default;
@@ -48,7 +49,7 @@ namespace Plazza
             std::thread _thread;
             std::mutex _mutex;
             std::queue<Pizza> _orders;
-            const Kitchen _kitchen;
+            Kitchen *_kitchen; //THIS SHOULD NOT BE A POINTER
     };
 }
 

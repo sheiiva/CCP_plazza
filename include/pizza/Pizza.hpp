@@ -10,7 +10,6 @@
 
 #include <vector>
 #include <string>
-#include "Kitchen.hpp"
 #include "Recipe.hpp"
 
 namespace Plazza
@@ -18,19 +17,20 @@ namespace Plazza
     class Pizza
     {
         public:
-            Pizza() noexcept = delete;
+            Pizza() noexcept = default;
             Pizza(const std::string &pizzaName, std::vector<int> &neededIngredients, int bakeTime) noexcept;
-            Pizza(Pizza const& b) noexcept = default;
-            Pizza(Pizza&& b) noexcept = default;
+            Pizza(const Pizza &b) noexcept = default;
+            Pizza(Pizza &&b) noexcept = default;
             ~Pizza() noexcept = default;
-            Pizza &operator=(const Pizza &rhs) noexcept = default;
+            Pizza &operator=(const Pizza &rhs) noexcept;
             Pizza &operator=(Pizza &&rhs) noexcept = default;
+    
 
         public:
             //GETTERS
             int getBakeTime(void) const noexcept;
             int getClock(void) const noexcept;
-            std::list<int> getNeededIngredients() const noexcept;
+            std::vector<int> getNeededIngredients() const noexcept;
             int getNeedIngredients(int index) const noexcept;
             Recipe getRecipe(void) noexcept;
             //SETTERS
@@ -40,7 +40,7 @@ namespace Plazza
             //METHODS
             void bake() noexcept;
             // Pizza& operator<<(std::list<int> &ingredients) noexcept; // SAME AS bake
-            Pizza& operator>>(Kitchen const &kitchen) noexcept;
+            // Pizza& operator>>(const Kitchen &kitchen) noexcept;
 
         protected:
             int _clock;

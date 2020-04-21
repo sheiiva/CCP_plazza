@@ -14,6 +14,15 @@ namespace Plazza
     {
     }
 
+    Recipe::Recipe(const Recipe &b) noexcept
+    {
+        std::vector<int> newlist(b._ingredients);
+
+        _pizzaName.assign(b._pizzaName);
+        _ingredients.swap(newlist);
+        _bakeTime = b._bakeTime;
+    }
+
     std::string Recipe::getPizzaName(void) noexcept
     {
         return _pizzaName;

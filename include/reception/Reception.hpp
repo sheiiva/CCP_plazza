@@ -2,11 +2,11 @@
 ** EPITECH PROJECT, 2019
 ** INCLUDE // RECEPTION
 ** File description:
-** Core.hpp
+** Reception.hpp
 */
 
-#ifndef CORE_HPP
-#define CORE_HPP
+#ifndef RECEPTION_HPP
+#define RECEPTION_HPP
 
 #include <iostream>
 #include <queue>
@@ -19,21 +19,24 @@
 namespace Plazza
 {
 
-    class Core
+    class Reception
     {
         public:
-            Core() noexcept = delete;
-            Core(int bakeTimeWeight, int maxCook, int stockRegen) noexcept;
-            Core(Core const& b) noexcept = delete;
-            Core(Core&& b) noexcept = delete;
-            ~Core() noexcept = default;
-            Core& operator=(Core const& rhs) noexcept = delete;
-            Core& operator=(Core&& rhs) noexcept = delete;
+            Reception() noexcept = delete;
+            Reception(int bakeTimeWeight, int maxCook, int stockRegen) noexcept;
+            Reception(Reception const& b) noexcept = delete;
+            Reception(Reception&& b) noexcept = delete;
+            ~Reception() noexcept = default;
+            Reception& operator=(Reception const& rhs) noexcept = delete;
+            Reception& operator=(Reception&& rhs) noexcept = delete;
 
             //GETTERS
             Kitchen& getKitchen(int index) noexcept;
             int getStock(const std::string &ingredient) const noexcept;
             Pizza& getPizza(const std::string &pizzaName) noexcept;
+            int getBakeTimeWeight(void) noexcept;
+            int getMaxCook(void) noexcept;
+            int getStockRegen(void) noexcept;
             //SETTERS
             void setKitchen(Kitchen &kitchen) noexcept;
             //METHODS
@@ -43,10 +46,10 @@ namespace Plazza
             int assignOrder(void) noexcept;
             int checkKitchen() noexcept;
             bool status() noexcept;
-            void addToStock(const std::string &ingredient) noexcept;
-            void addToMenu(Pizza &pizza) noexcept;
-            // Core& operator<<(Pizza const &pizza) noexcept; // 
-            // Core& operator>>(Core&& rhs) noexcept;
+            bool addToStock(const std::string &ingredient) noexcept;
+            bool addToMenu(Pizza &pizza) noexcept;
+            // Reception& operator<<(Pizza const &pizza) noexcept; // 
+            // Reception& operator>>(Reception&& rhs) noexcept;
 
         private:
             int _bakeTimeWeight;
@@ -60,4 +63,4 @@ namespace Plazza
     };
 }
 
-#endif /* !CORE_HPP */
+#endif /* !RECEPTION_HPP */

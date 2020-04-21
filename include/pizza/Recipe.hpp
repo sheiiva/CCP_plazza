@@ -15,9 +15,9 @@ namespace Plazza
     class Recipe
     {
         public:
+            Recipe() noexcept = default;
             Recipe(const std::string &pizzaName, std::vector<int> ingredients, int bakeTime) noexcept;
-            Recipe() noexcept = delete;
-            Recipe(const Recipe &b) noexcept = default;
+            Recipe(const Recipe &b) noexcept;
             Recipe(Recipe &&b) noexcept = default;
             ~Recipe() noexcept = default;
 
@@ -30,6 +30,7 @@ namespace Plazza
             std::vector<int> getIngredients() const noexcept;
 
             int getBakeTime() const noexcept;
+
         private:
             std::string _pizzaName;
             std::vector<int> _ingredients;
