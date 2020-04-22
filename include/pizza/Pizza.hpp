@@ -21,7 +21,7 @@ namespace Plazza
             Pizza(std::vector<int> &neededIngredients, int bakeTime) noexcept;
             Pizza(Pizza const& b) noexcept = default;
             Pizza(Pizza&& b) noexcept = default;
-            ~Pizza() noexcept = default;
+            ~Pizza() noexcept;
             Pizza& operator=(Pizza const& rhs) noexcept = default;
             Pizza& operator=(Pizza&& rhs) noexcept = default;
 
