@@ -14,6 +14,8 @@
 #include <string>
 #include <sstream>
 
+#include "Usage.hpp"
+
 namespace Plazza
 {
 

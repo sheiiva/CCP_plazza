@@ -10,9 +10,11 @@
 
 int main(int ac, char **av)
 {
-    if (Plazza::ArgumentsHandler::check(ac, av) == 84)
-        return (84);
-    Plazza::Reception reception(atof(av[1]), atoi(av[2]), atoi(av[3]));
+    int status = Plazza::ArgumentsHandler::check(ac, av);
+    
+    if (status != 0)
+        return ((status == 84) ? 84 : 0);
+    Plazza::Reception reception(strtof(av[1], NULL), atoi(av[2]), atoi(av[3]));
 
     return (reception.run());
 }

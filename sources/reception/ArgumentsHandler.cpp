@@ -15,9 +15,10 @@ namespace Plazza
         int i = 0;
         float f = 0;
 
-        if ((ac == 2) && ((strcmp(av[1], "-h") || strcmp(av[1], "--help"))))
-            return (0);
-        else if (ac != 4) {
+        if ((ac == 2) && ((!strcmp(av[1], "-h") || !strcmp(av[1], "--help")))) {
+            Usage::show();
+            return (1);
+        } else if (ac != 4) {
             std::cerr << "Wrong number of arguments" << std::endl;
             return (84);
         }
