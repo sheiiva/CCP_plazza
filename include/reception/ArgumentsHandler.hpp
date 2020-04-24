@@ -29,13 +29,19 @@ namespace Plazza
     
         private:
 
-            bool isFloat(const std::string &nb);
-
-            bool isInt(const std::string &nb);
 
             int run(int ac, char **av) noexcept;
 
         public:
+
+            template <typename Type>
+            static bool isType(Type ret, const std::string &nb)
+            {
+                std::istringstream iss(nb);
+
+                iss >> ret;
+                return iss.eof() && !iss.fail();   
+            }
 
             static int check(int ac, char **av) noexcept
             {
