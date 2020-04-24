@@ -19,17 +19,45 @@ namespace Plazza
         std::cout << ingredient << " added to the stock!" << std::endl;
     }
 
-    void Parser::addPizzaToMenu(std::string command, std::map<std::string, Pizza> menu)
+    void Parser::addPizzaToMenu(std::string command, std::vector<std::string> stock,
+                                                    std::map<std::string, Pizza> menu)
     {
-        (void)command;
-        (void)menu;
+        std::string pizzaName;
+        int bakeTime;
+        std::vector<int> ingredients;
+        std::istringstream iss(command);
+        std::vector<std::string> splitString(std::istream_iterator<std::string>{iss},
+                                        std::istream_iterator<std::string>());
+        
+        splitString.erase(splitString.begin());
+        splitString.erase(splitString.begin());
+        if (splitString.size() < 3) {
+            std::cerr << "Wrong input :: PIZZANAME BAKETIME INGREDIENTS" << std::endl;
+            return;
+        }
+        pizzaName.assign(*splitString.begin());
+        splitString.erase(splitString.begin());
+        bakeTime = atoi((*splitString.begin()).c_str());
+        if (!bakeTime) {
+            std::cerr << "Wrong input :: Baketime should be an int" << std::endl;
+            return;
+        }
+        splitString.erase(splitString.begin());
+        for (auto &ingredient : splitString) {
+            if (getIngredient(ingredient, stock) == -1) {
+                stock.push_back(ingredient);
+                std::cout << ingredient << " added to the stock!" << std::endl;
+            }
+            ingredients.push_back(getIngredient(ingredient, stock));
+        }
+        menu[pizzaName] = Pizza(pizzaName, ingredients, bakeTime);
     }
 
     void Parser::addItem(std::string command, std::vector<std::string> stock,
                                     std::map<std::string, Pizza> menu)
     {
         if (!command.compare(0, 9, "ADD PIZZA"))
-            addPizzaToMenu(command, menu);
+            addPizzaToMenu(command, stock, menu);
         else if (!command.compare(0, 14, "ADD INGREDIENT"))
             addIngredientToStock(command, stock);
         else
@@ -38,13 +66,22 @@ namespace Plazza
 
     bool Parser::isValidSize(const std::string &inputSize) noexcept
     {
-        static std::string sizes[5] = {"S", "M", "L", "XL", "XXL"};
+        std::string sizes[5] = {"S", "M", "L", "XL", "XXL"};
 
         for (auto &size : sizes) {
             if (!inputSize.compare(size))
                 return true;
         }
         return false;
+    }
+
+    int Parser::getIngredient(std::string ingredient, std::vector<std::string> stock) noexcept
+    {
+        for (size_t i = 0; i < stock.size(); i++) {
+            if (!ingredient.compare(stock[i]))
+                return (i);
+        }
+        return (-1);
     }
 
     bool Parser::isValidName(const std::string &inputName, std::map<std::string, Pizza> menu) noexcept
