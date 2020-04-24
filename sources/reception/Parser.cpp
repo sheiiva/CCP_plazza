@@ -42,11 +42,11 @@ namespace Plazza
             return;
         }
         parsedInput.erase(parsedInput.begin());
-        bakeTime = atoi((*parsedInput.begin()).c_str());
-        if (!bakeTime) {
+        if (!ArgumentsHandler::isType(0, (*parsedInput.begin()).c_str())) {
             std::cerr << "Wrong input :: Baketime should be an int" << std::endl;
             return;
         }
+        bakeTime = atoi((*parsedInput.begin()).c_str());
         parsedInput.erase(parsedInput.begin());
         for (auto &ingredient : parsedInput) {
             if (getIngredient(ingredient, stock) == -1) {
@@ -105,7 +105,7 @@ namespace Plazza
             return (0);
         if (inputNbr[0] != 'x')
             return (0);
-        else if (!atoi(inputNbr.c_str() + 1))
+        else if (!ArgumentsHandler::isType(0, inputNbr.c_str() + 1))
             return (0);
         return atoi(inputNbr.c_str() + 1);
     }
