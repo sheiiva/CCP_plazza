@@ -33,6 +33,7 @@ SRC		=		main.cpp								\
 				$(PIZZA_PATH)Recipe.cpp					\
 				$(RECEPTION_PATH)Parser.cpp				\
 				$(RECEPTION_PATH)Reception.cpp			\
+				$(RECEPTION_PATH)Usage.cpp				\
 
 OBJ 	= 	$(SRC:.cpp=.o)
 

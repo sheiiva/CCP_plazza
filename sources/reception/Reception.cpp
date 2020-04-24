@@ -76,7 +76,7 @@ namespace Plazza
             input.assign(read_stdin());
             action = parser.run(input, _orders, _stock, _menu);
             if (action == HELP) {
-                std::cout << "print help message" << std::endl;
+                Usage::show();
             } else if (action == QUIT)
                 state = 0;
         }

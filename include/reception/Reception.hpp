@@ -15,6 +15,7 @@
 #include "Kitchen.hpp"
 #include "Parser.hpp"
 #include "Pizza.hpp"
+#include "Usage.hpp"
 
 namespace Plazza
 {
