@@ -6,15 +6,13 @@
 */
 
 #include "Reception.hpp"
+#include "ArgumentsHandler.hpp"
 
-int main(/*int ac, char **av*/)
+int main(int ac, char **av)
 {
-    // size_t args[3];
-
-    // if (ArgumentHandler::checkArgs(&args) == HELP)
-    //     return Usage::showUsage();
-    // Plazza::Reception reception(args[0], args[1], args[2]);
-    Plazza::Reception reception(0, 0, 0);
+    if (Plazza::ArgumentsHandler::check(ac, av) == 84)
+        return (84);
+    Plazza::Reception reception(atof(av[1]), atoi(av[2]), atoi(av[3]));
 
     return (reception.run());
 }

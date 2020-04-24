@@ -31,6 +31,7 @@ SRC		=		main.cpp								\
 				$(KITCHEN_PATH)Kitchen.cpp				\
 				$(PIZZA_PATH)Pizza.cpp					\
 				$(PIZZA_PATH)Recipe.cpp					\
+				$(RECEPTION_PATH)ArgumentsHandler.cpp	\
 				$(RECEPTION_PATH)Parser.cpp				\
 				$(RECEPTION_PATH)Reception.cpp			\
 				$(RECEPTION_PATH)Usage.cpp				\
