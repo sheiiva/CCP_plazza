@@ -69,13 +69,16 @@ namespace Plazza
     {
         Parser parser;
         std::string input;
+        short action = 0;
+        bool state = 1;
 
-        while (1) {
+        while (state) {
             input.assign(read_stdin());
-            if (parser.run(input, _orders, _stock, _menu) == HELP) {
-                //show help;
-                return (0); // TO DELETE
-            }
+            action = parser.run(input, _orders, _stock, _menu);
+            if (action == HELP) {
+                std::cout << "print help message" << std::endl;
+            } else if (action == QUIT)
+                state = 0;
         }
         return (0);
     }

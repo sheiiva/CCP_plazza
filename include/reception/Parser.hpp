@@ -23,6 +23,14 @@ namespace Plazza
     #define SIZE        1
     #define NUMBER      2
 
+    enum OUTPUT {
+        NOACTION    = 0,
+        HELP        = 1,
+        COMMAND     = 2,
+        ADDITEM     = 3,
+        QUIT        = 4
+    };
+
     class Parser
     {
         public:
@@ -39,16 +47,20 @@ namespace Plazza
                     std::vector<std::string> stock, std::map<std::string, Pizza> menu) noexcept;
 
         private:
-            void addIngredientToStock(std::string command, std::vector<std::string> stock);
+            void addIngredientToStock(std::vector<std::string> parsedInput,
+                                        std::vector<std::string> stock);
 
-            void addItem(std::string command, std::vector<std::string> stock,
-                                            std::map<std::string, Pizza> menu);
+            void addItem(std::vector<std::string> parsedInput,
+                                        std::vector<std::string> stock,
+                                        std::map<std::string, Pizza> menu);
 
-            void addPizzaToMenu(std::string command, std::vector<std::string> stock,
-                                                    std::map<std::string, Pizza> menu);
+            void addPizzaToMenu(std::vector<std::string> parsedInput,
+                                        std::vector<std::string> stock,
+                                        std::map<std::string, Pizza> menu);
 
-            void addPizzatoOrder(std::string command, std::queue<Pizza> orders,
-                                                    std::map<std::string, Pizza> menu);
+            void addPizzatoOrder(std::vector<std::string> parsedInput, size_t sep,
+                                        std::queue<Pizza> orders, 
+                                        std::map<std::string, Pizza> menu);
 
             int getIngredient(std::string ingredient, std::vector<std::string> stock) noexcept;
 
