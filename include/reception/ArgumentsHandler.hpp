@@ -8,6 +8,7 @@
 #ifndef ARGUMENTSHANDLER_HPP
 #define ARGUMENTSHANDLER_HPP
 
+#include <string.h>
 #include <stdlib.h>
 #include <iostream>
 #include <string>
