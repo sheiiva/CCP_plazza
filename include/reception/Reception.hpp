@@ -18,6 +18,7 @@
 
 namespace Plazza
 {
+    #define HELP 1
     class Reception
     {
         public:

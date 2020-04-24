@@ -36,15 +36,24 @@ namespace Plazza
 
         public:
 
-            int run(const std::string &input,
-                    std::queue<Pizza> _orders,
-                    std::map<std::string, Pizza> menu) noexcept;
+            void addIngredientToStock(std::string command, std::vector<std::string> stock);
+
+            void addItem(std::string command, std::vector<std::string> stock,
+                                            std::map<std::string, Pizza> menu);
+
+            void addPizzaToMenu(std::string command, std::map<std::string, Pizza> menu);
+
+            void addPizzatoOrder(std::string command, std::queue<Pizza> orders,
+                                                    std::map<std::string, Pizza> menu);
 
             bool isValidSize(const std::string &inputSize) noexcept;
 
             bool isValidName(const std::string &inputName, std::map<std::string, Pizza> menu) noexcept;
 
             size_t isValidNbr(const std::string &inputNbr) noexcept;
+
+            int run(const std::string &input, std::queue<Pizza> _orders,
+                    std::vector<std::string> stock, std::map<std::string, Pizza> menu) noexcept;
 
     };
 

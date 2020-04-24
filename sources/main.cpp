@@ -7,10 +7,14 @@
 
 #include "Reception.hpp"
 
-int main()
+int main(/*int ac, char **av*/)
 {
+    // size_t args[3];
+
+    // if (ArgumentHandler::checkArgs(&args) == HELP)
+    //     return Usage::showUsage();
+    // Plazza::Reception reception(args[0], args[1], args[2]);
     Plazza::Reception reception(0, 0, 0);
 
-    reception.run();
-    return (0);
+    return (reception.run());
 }

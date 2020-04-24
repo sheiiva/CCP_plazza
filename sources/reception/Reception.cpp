@@ -72,7 +72,7 @@ namespace Plazza
 
         while (1) {
             input.assign(read_stdin());
-            if (parser.run(input, _orders, _menu) == 1) {
+            if (parser.run(input, _orders, _stock, _menu) == HELP) {
                 //show help;
                 return (0); // TO DELETE
             }
