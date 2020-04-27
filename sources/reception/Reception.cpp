@@ -109,29 +109,4 @@ namespace Plazza
         return (true);
     }
 
-    bool Reception::addToStock(const std::string &ingredient) noexcept
-    {
-        for (auto &i: _stock) {
-            if (i.compare(ingredient)) {
-                std::cout << ingredient << " already in stock!" << std::endl;
-                return (false);
-            }
-        }
-        _stock.push_back(ingredient);
-        return (true);
-    }
-
-    bool Reception::addToMenu(Pizza &pizza) noexcept
-    {
-        std::string pizzaName = pizza.getRecipe().getPizzaName();
-
-        for (auto &i: _menu) {
-            if (i.second.getRecipe().getPizzaName() == pizzaName) {
-                std::cout << pizzaName << " already in the menu!" << std::endl;
-                return (false);
-            }
-        }
-        _menu[pizzaName] = pizza;
-        return (true);
-    }
 }

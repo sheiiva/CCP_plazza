@@ -61,5 +61,5 @@ namespace Plazza
 
         cr_assert_eq(reception.getStockRegen(), 2000);
     }
-}
 
+}
