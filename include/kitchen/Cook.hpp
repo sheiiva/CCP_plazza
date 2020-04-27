@@ -21,15 +21,16 @@ namespace Plazza
         ACTIVE      = 1
     };
 
+    class Kitchen;
     class Cook
     {
         public:
             Cook() noexcept = delete;
             Cook(Kitchen const& Kitchen) noexcept;
-            Cook(Cook const& b) noexcept = default;
+            Cook(Cook const& b) noexcept;
             Cook(Cook&& b) noexcept = default;
             ~Cook() noexcept = default;
-            Cook& operator=(Cook const& rhs) noexcept = default;
+            Cook& operator=(Cook const& rhs) noexcept;
             Cook& operator=(Cook&& rhs) noexcept = default;
 
             //GETTERS
@@ -48,7 +49,7 @@ namespace Plazza
             std::thread _thread;
             std::mutex _mutex;
             std::queue<Pizza> _orders;
-            const Kitchen _kitchen;
+            const Kitchen &_kitchen;
     };
 }
 
