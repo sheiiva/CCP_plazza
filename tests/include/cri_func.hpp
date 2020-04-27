@@ -10,7 +10,6 @@
 
     #include <criterion/criterion.h>
     #include <criterion/redirect.h>
-    #include "tested_func.h"
 
     void redirect_all_std(void);
 

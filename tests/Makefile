@@ -7,7 +7,7 @@
 
 NAME 	= 	critests
 
-CC		= 	gcc
+CC		= 	g++
 LD		=	$(CC)
 
 LIB			=	lib
@@ -27,11 +27,12 @@ KITCHEN_PATH		=	kitchen/
 PIZZA_PATH			=	pizza/
 RECEPTION_PATH		=	reception/
 
-INCLUDES	=	-I./$(INCLUDE_PATH)$(KITCHEN_PATH) 		\
+INCLUDES	=	-I./include/							\
+				-I./$(INCLUDE_PATH)$(KITCHEN_PATH) 		\
 				-I./$(INCLUDE_PATH)$(PIZZA_PATH) 		\
 				-I./$(INCLUDE_PATH)$(RECEPTION_PATH)
 
-override CFLAGS	  		+=	-W -Wall -Wextra -Wextra $(INCLUDES) --coverage
+override CPPFLAGS  		+=	-W -Wall -Wextra -Wextra $(INCLUDES) --coverage
 override LDFLAGS    	+= 	-L./$(SRCLIB)
 override LDLIBS     	+=	-lcriterion -lsrc
 
@@ -40,16 +41,17 @@ TEST_SRC		=	sources/
 REC_FUNC		=	generic/
 
 
-SRC 	= 	$(REC_FUNC)redirect.c
+SRC 	= 	$(REC_FUNC)redirect.cpp								\
+			$(TEST_SRC)$(RECEPTION_PATH)t_arguments_handler.cpp
 
-OBJ 	= 	$(SRC:.c=.o)
+OBJ 	= 	$(SRC:.cpp=.o)
 
 
 $(NAME): $(OBJ)
 	$(PRINT) "\n------->\tCOMPILED TESTS SRC DEPENDECIES.\n"
 	@$(MAKE) $(LIB) -C $(SOURCES_PATH) $(ADD_COVERAGE) $(ADD_LCRITERION)
 	$(PRINT) "\n------->\tLET'S LINK IT ALL.\n"
-	$(LD) $^ -o $@ $(CFLAGS) $(LDFLAGS) $(LDLIBS)
+	$(LD) $(CPPFLAGS) $^ $(LDFLAGS) $(LDLIBS)  -o $@ 
 	$(PRINT) "\n------->\tCONGRATS!"
 	$(PRINT) "\n\n"
 	./$(NAME)
