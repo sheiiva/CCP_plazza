@@ -41,8 +41,9 @@ TEST_SRC		=	sources/
 REC_FUNC		=	generic/
 
 
-SRC 	= 	$(REC_FUNC)redirect.cpp								\
-			$(TEST_SRC)$(RECEPTION_PATH)t_arguments_handler.cpp
+SRC 	= 	$(REC_FUNC)redirect.cpp										\
+			$(TEST_SRC)$(RECEPTION_PATH)t_arguments_handler.cpp			\
+			$(TEST_SRC)$(RECEPTION_PATH)t_usage.cpp
 
 OBJ 	= 	$(SRC:.cpp=.o)
 
