@@ -54,5 +54,12 @@ namespace Plazza
 
         cr_assert_eq(reception.getMaxCook(), 5);
     }
+
+    Test(getStockRegen, with_normal_case)
+    {
+        Reception reception(2, 5, 2000);
+
+        cr_assert_eq(reception.getStockRegen(), 2000);
+    }
 }
 
