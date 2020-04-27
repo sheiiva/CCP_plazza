@@ -328,4 +328,15 @@ namespace Plazza {
 
         cr_assert_eq(parser.run(input, orders, stock, menu), HELP);
     }
+
+    Test(parser_run, with_quit)
+    {
+        const std::string &input("QUIT");
+        std::queue<Pizza> orders;
+        std::vector<std::string> stock;
+        std::map<std::string, Pizza> menu;
+        Parser parser;
+
+        cr_assert_eq(parser.run(input, orders, stock, menu), QUIT);
+    }
 }
