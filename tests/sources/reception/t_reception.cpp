@@ -47,5 +47,12 @@ namespace Plazza
 
         cr_assert_eq(reception.getBakeTimeWeight(), 2);
     }
+
+    Test(getMaxCook, with_normal_case)
+    {
+        Reception reception(2, 5, 2000);
+
+        cr_assert_eq(reception.getMaxCook(), 5);
+    }
 }
 
