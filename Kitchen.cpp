@@ -9,12 +9,47 @@
 
 namespace Plazza {
 
-    Kitchen(Kitchen const& b) noexcept
+    Kitchen::Kitchen(void) noexcept {}
+
+    Kitchen::Kitchen(Kitchen const& b) noexcept
     {
-        inactiveTime = getInactiveTime();
-        _cooks = getCooks();
-        _ingredientsStock = getIngredientsStock();
+        _inactiveTime = b._inactiveTime;
+        _cooks = b._cooks;
+        _ingredientsStock = b._ingredientsStock;
     }
+
+    Kitchen::Kitchen(Kitchen&& b) noexcept
+    {
+        _inactiveTime = b._inactiveTime;
+        _cooks = b._cooks;
+        _ingredientsStock = b._ingredientsStock;
+        b._inactiveTime = 0;
+        b._cooks.clear();
+        b._ingredientsStock.clear();
+    }
+    
+    Kitchen &Kitchen::operator=(Kitchen const& rhs) noexcept
+    {
+        _inactiveTime = rhs._inactiveTime;
+        _cooks = rhs._cooks;
+        _ingredientsStock = rhs._ingredientsStock;
+        return (*this);
+    }
+
+    Kitchen &Kitchen::operator=(Kitchen&& rhs) noexcept
+    {
+         if (this != &rhs) {
+            _inactiveTime = rhs._inactiveTime;
+            _cooks = rhs._cooks;
+            _ingredientsStock = rhs._ingredientsStock;
+            rhs._inactiveTime = 0;
+            rhs._cooks.clear();
+            rhs._ingredientsStock.clear();
+        }
+         return (*this);
+    }
+
+    Kitchen::~Kitchen() {}
     
     int Kitchen::getInactiveTime(void) const noexcept
     {
@@ -43,7 +78,7 @@ namespace Plazza {
     
     void Kitchen::setInactiveTime(int time) noexcept
     {
-        _inactiveTime = 5;
+        _inactiveTime = 0;
     }
     
     void Kitchen::setCook(Cook const &cook) noexcept
@@ -56,7 +91,7 @@ namespace Plazza {
         _ingredientsStock.emplace(ingredient, 5);
     }
     
-    bool Kitchen::checkCookStatus() noexcept
+    /*  bool Kitchen::checkCookStatus() noexcept
     {
         int i = 0;
     }
@@ -64,5 +99,5 @@ namespace Plazza {
     Kitchen& Kitchen::operator<<(Pizza const &pizza) noexcept
     {
         _kitchen
-    }   
+        }   */
 }
