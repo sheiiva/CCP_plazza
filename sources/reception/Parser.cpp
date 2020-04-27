@@ -12,7 +12,7 @@ namespace Plazza
 
     void Parser::addIngredientToStock(std::vector<std::string> parsedInput, std::vector<std::string> &stock)
     {
-        if (parsedInput.size() <= 2)
+        if (parsedInput.size() < 4)
             std::cerr << "Wrong input :: Insert an ingredient to add to the stock" << std::endl;
         else {
             for (size_t i = 2; i < parsedInput.size(); i++) {
@@ -102,8 +102,6 @@ namespace Plazza
 
     size_t Parser::isValidNbr(const std::string &inputNbr) noexcept
     {
-        if (inputNbr.size() == 0)
-            return (0);
         if (inputNbr[0] != 'x')
             return (0);
         else if (!ArgumentsHandler::isType(0, inputNbr.c_str() + 1))
@@ -151,7 +149,7 @@ namespace Plazza
         else if (!command.compare("QUIT"))
             return (QUIT);
         else if (parsedInput.size() < 2) {
-            std::cerr << "Wrong input :: number of pizza." << std::endl;
+            std::cerr << "Wrong input :: wrong command" << std::endl;
         } else {
             if (!parsedInput[0].compare("ADD")) {
                 addItem(parsedInput, stock, menu);

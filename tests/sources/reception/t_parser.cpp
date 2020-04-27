@@ -28,6 +28,20 @@ namespace Plazza {
         cr_assert_str_eq(stock[1].c_str(), "ingredient2");
     }
 
+    Test(addIngredientToStock, with_wrong_input, .init=redirect_all_std)
+    {
+        const std::string &input("ADD INGREDIENT  ");
+        std::string output("Wrong input :: Insert an ingredient to add to the stock\n");
+        std::queue<Pizza> orders;
+        std::vector<std::string> stock;
+        std::map<std::string, Pizza> menu;
+        Parser parser;
+
+        cr_assert_eq(parser.run(input, orders, stock, menu), ADDITEM);
+        cr_assert_stderr_eq_str(output.c_str());
+        cr_assert_eq(stock.size(), 0);
+    }
+
     Test(addPizzaToMenu, with_normal_case, .init=redirect_all_std)
     {
         const std::string &input("ADD PIZZA pizzaName 3 ingredient1 ingredient2\n");
@@ -338,5 +352,18 @@ namespace Plazza {
         Parser parser;
 
         cr_assert_eq(parser.run(input, orders, stock, menu), QUIT);
+    }
+
+    Test(parser_run, with_wrong_command, .init=redirect_all_std)
+    {
+        const std::string &input("command");
+        std::string output("Wrong input :: wrong command\n");
+        std::queue<Pizza> orders;
+        std::vector<std::string> stock;
+        std::map<std::string, Pizza> menu;
+        Parser parser;
+
+        cr_assert_eq(parser.run(input, orders, stock, menu), NOACTION);
+        cr_assert_stderr_eq_str(output.c_str());
     }
 }
