@@ -46,14 +46,14 @@ namespace Plazza
 
         public:
             int run(const std::string &input, std::queue<Pizza> _orders,
-                    std::vector<std::string> stock, std::map<std::string, Pizza> menu) noexcept;
+                    std::vector<std::string> &stock, std::map<std::string, Pizza> menu) noexcept;
 
         private:
             void addIngredientToStock(std::vector<std::string> parsedInput,
-                                        std::vector<std::string> stock);
+                                        std::vector<std::string> &stock);
 
             void addItem(std::vector<std::string> parsedInput,
-                                        std::vector<std::string> stock,
+                                        std::vector<std::string> &stock,
                                         std::map<std::string, Pizza> menu);
 
             void addPizzaToMenu(std::vector<std::string> parsedInput,
