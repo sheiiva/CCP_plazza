@@ -129,4 +129,35 @@ namespace Plazza {
         cr_assert_stderr_eq_str(output.c_str());
     }
 
+    Test(isValidSize, with_normal_case, .init=redirect_all_std)
+    {
+        std::string pizzaName("pizzaName");
+        std::vector<int> ingredient;
+        const std::string &input("pizzaName S x3\n");
+        std::string output("Wrong input :: size of pizza.\n");
+        std::queue<Pizza> orders;
+        std::vector<std::string> stock;
+        std::map<std::string, Pizza> menu;
+        Parser parser;
+
+        menu[pizzaName] = Pizza(pizzaName, ingredient, 3);
+        cr_assert_eq(parser.run(input, orders, stock, menu), COMMAND);
+        cr_assert_stderr_neq_str(output.c_str());
+    }
+
+    Test(isValidSize, with_wrong_case, .init=redirect_all_std)
+    {
+        std::string pizzaName("pizzaName");
+        std::vector<int> ingredient;
+        const std::string &input("pizzaName a x3\n");
+        std::string output("Wrong input :: size of pizza.\n");
+        std::queue<Pizza> orders;
+        std::vector<std::string> stock;
+        std::map<std::string, Pizza> menu;
+        Parser parser;
+
+        menu[pizzaName] = Pizza(pizzaName, ingredient, 3);
+        cr_assert_eq(parser.run(input, orders, stock, menu), COMMAND);
+        cr_assert_stderr_eq_str(output.c_str());
+    }
 }
