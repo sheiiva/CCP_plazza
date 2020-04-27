@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2019
 ** TESTS / GENERIC
 ** File description:
-** redirect.cpp
+** t_arguments_handler.cpp
 */
 
 #include "cri_func.hpp"
