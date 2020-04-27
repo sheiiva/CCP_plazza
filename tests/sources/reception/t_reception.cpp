@@ -25,5 +25,20 @@ namespace Plazza
         cr_assert_eq(reception.getStock("None"), -1);
     }
 
+    Test(getPizza, with_normal_case)
+    {
+        Reception reception(2, 5, 2000);
+        Pizza pizza(reception.getPizza("Margarita"));
+
+        cr_assert_str_eq(pizza.getRecipe().getPizzaName().c_str(), "Margarita");
+    }
+
+    Test(getPizza, with_wrong_name)
+    {
+        Reception reception(2, 5, 2000);
+        Pizza pizza(reception.getPizza("Wrong"));
+
+        cr_assert_str_empty(pizza.getRecipe().getPizzaName().c_str());
+    }
 }
 
