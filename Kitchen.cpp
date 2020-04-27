@@ -9,6 +9,13 @@
 
 namespace Plazza {
 
+    Kitchen(Kitchen const& b) noexcept
+    {
+        inactiveTime = getInactiveTime();
+        _cooks = getCooks();
+        _ingredientsStock = getIngredientsStock();
+    }
+    
     int Kitchen::getInactiveTime(void) const noexcept
     {
         return (_inactiveTime);
