@@ -163,3 +163,18 @@ Test(check, with_3_null_value, .init=redirect_all_std)
 
     cr_assert_eq(Plazza::ArgumentsHandler::check(ac, av), 84);
 }
+
+Test(isType, with_normal_case)
+{
+    cr_assert_eq(Plazza::ArgumentsHandler::isType(0, "0"), 1);
+}
+
+Test(isType, with_float_case)
+{
+    cr_assert_eq(Plazza::ArgumentsHandler::isType(0.0, "0.0"), 1);
+}
+
+Test(isType, with_wrong_case)
+{
+    cr_assert_eq(Plazza::ArgumentsHandler::isType(0.1, "Not a float"), 0);
+}
