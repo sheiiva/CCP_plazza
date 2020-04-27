@@ -38,8 +38,8 @@ namespace Plazza
         void setCook(Cook const &cook) noexcept;
         void setIngredientsStock(const std::string &ingredient) noexcept;
         //METHODS
-        //  bool checkCookStatus() noexcept;
-        // Kitchen& operator<<(Pizza const &pizza) noexcept;
+        bool checkCookStatus() noexcept;
+        Kitchen& operator<<(Pizza const &pizza) noexcept;
         // virtual Pizza& operator>>(Pizza&& rhsCook &cook) noexcept = 0;
         
     protected:
