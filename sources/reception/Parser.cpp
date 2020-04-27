@@ -23,10 +23,10 @@ namespace Plazza
     }
 
     void Parser::addPizzaToMenu(std::vector<std::string> parsedInput,
-                                std::vector<std::string> stock,
-                                std::map<std::string, Pizza> menu)
+                                std::vector<std::string> &stock,
+                                std::map<std::string, Pizza> &menu)
     {
-        int bakeTime;
+        int bakeTime = 0;
         std::string pizzaName;
         std::vector<int> ingredients;
         
@@ -61,7 +61,7 @@ namespace Plazza
 
     void Parser::addItem(std::vector<std::string> parsedInput,
                         std::vector<std::string> &stock,
-                        std::map<std::string, Pizza> menu)
+                        std::map<std::string, Pizza> &menu)
     {
         if (!parsedInput[1].compare("PIZZA"))
             addPizzaToMenu(parsedInput, stock, menu);
@@ -112,7 +112,7 @@ namespace Plazza
     }
 
     void Parser::addPizzatoOrder(std::vector<std::string> parsedInput, size_t sep,
-                                        std::queue<Pizza> orders,
+                                        std::queue<Pizza> &orders,
                                         std::map<std::string, Pizza> menu)
     {
         size_t nbr = 0;
@@ -136,8 +136,8 @@ namespace Plazza
         }
     }
 
-    int Parser::run(const std::string &input, std::queue<Pizza> orders,
-                std::vector<std::string> &stock, std::map<std::string, Pizza> menu) noexcept
+    int Parser::run(const std::string &input, std::queue<Pizza> &orders,
+                std::vector<std::string> &stock, std::map<std::string, Pizza> &menu) noexcept
     {
         std::string command(input);
         size_t sep = std::count(command.begin(), command.end(), ';');

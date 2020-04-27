@@ -25,7 +25,7 @@ namespace Plazza {
     //GETTERS
     int Pizza::getBakeTime(void) const noexcept
     {
-        return (0);
+        return this->_recipe.getBakeTime();
     }
 
     int Pizza::getClock(void) const noexcept

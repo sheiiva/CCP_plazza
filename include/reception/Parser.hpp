@@ -45,8 +45,8 @@ namespace Plazza
             Parser &operator=(Parser &&rhs) noexcept = delete;
 
         public:
-            int run(const std::string &input, std::queue<Pizza> _orders,
-                    std::vector<std::string> &stock, std::map<std::string, Pizza> menu) noexcept;
+            int run(const std::string &input, std::queue<Pizza> &_orders,
+                    std::vector<std::string> &stock, std::map<std::string, Pizza> &menu) noexcept;
 
         private:
             void addIngredientToStock(std::vector<std::string> parsedInput,
@@ -54,14 +54,14 @@ namespace Plazza
 
             void addItem(std::vector<std::string> parsedInput,
                                         std::vector<std::string> &stock,
-                                        std::map<std::string, Pizza> menu);
+                                        std::map<std::string, Pizza> &menu);
 
             void addPizzaToMenu(std::vector<std::string> parsedInput,
-                                        std::vector<std::string> stock,
-                                        std::map<std::string, Pizza> menu);
+                                        std::vector<std::string> &stock,
+                                        std::map<std::string, Pizza> &menu);
 
             void addPizzatoOrder(std::vector<std::string> parsedInput, size_t sep,
-                                        std::queue<Pizza> orders, 
+                                        std::queue<Pizza> &orders, 
                                         std::map<std::string, Pizza> menu);
 
             int getIngredient(std::string ingredient, std::vector<std::string> stock) noexcept;
