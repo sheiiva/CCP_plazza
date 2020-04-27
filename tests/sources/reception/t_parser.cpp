@@ -160,4 +160,84 @@ namespace Plazza {
         cr_assert_eq(parser.run(input, orders, stock, menu), COMMAND);
         cr_assert_stderr_eq_str(output.c_str());
     }
+
+    Test(isValidName, with_normal_case, .init=redirect_all_std)
+    {
+        std::string pizzaName("pizzaName");
+        std::vector<int> ingredient;
+        const std::string &input("pizzaName S x3\n");
+        std::string output("Wrong input :: name of pizza.\n");
+        std::queue<Pizza> orders;
+        std::vector<std::string> stock;
+        std::map<std::string, Pizza> menu;
+        Parser parser;
+
+        menu[pizzaName] = Pizza(pizzaName, ingredient, 3);
+        cr_assert_eq(parser.run(input, orders, stock, menu), COMMAND);
+        cr_assert_stderr_neq_str(output.c_str());
+    }
+
+    Test(isValidName, with_wrong_case, .init=redirect_all_std)
+    {
+        std::string pizzaName("pizzaname");
+        std::vector<int> ingredient;
+        const std::string &input("pizzaName a x3\n");
+        std::string output("Wrong input :: name of pizza.\n");
+        std::queue<Pizza> orders;
+        std::vector<std::string> stock;
+        std::map<std::string, Pizza> menu;
+        Parser parser;
+
+        menu[pizzaName] = Pizza(pizzaName, ingredient, 3);
+        cr_assert_eq(parser.run(input, orders, stock, menu), COMMAND);
+        cr_assert_stderr_eq_str(output.c_str());
+    }
+
+    Test(isValidNbr, with_normal_case, .init=redirect_all_std)
+    {
+        std::string pizzaName("pizzaName");
+        std::vector<int> ingredient;
+        const std::string &input("pizzaName S x3\n");
+        std::string output("Wrong input :: number of pizza.\n");
+        std::queue<Pizza> orders;
+        std::vector<std::string> stock;
+        std::map<std::string, Pizza> menu;
+        Parser parser;
+
+        menu[pizzaName] = Pizza(pizzaName, ingredient, 3);
+        cr_assert_eq(parser.run(input, orders, stock, menu), COMMAND);
+        cr_assert_stderr_neq_str(output.c_str());
+    }
+
+    Test(isValidNbr, with_no_x_format, .init=redirect_all_std)
+    {
+        std::string pizzaName("pizzaName");
+        std::vector<int> ingredient;
+        const std::string &input("pizzaName S 3\n");
+        std::string output("Wrong input :: number of pizza.\n");
+        std::queue<Pizza> orders;
+        std::vector<std::string> stock;
+        std::map<std::string, Pizza> menu;
+        Parser parser;
+
+        menu[pizzaName] = Pizza(pizzaName, ingredient, 3);
+        cr_assert_eq(parser.run(input, orders, stock, menu), COMMAND);
+        cr_assert_stderr_eq_str(output.c_str());
+    }
+
+    Test(isValidNbr, with_not_an_int, .init=redirect_all_std)
+    {
+        std::string pizzaName("pizzaName");
+        std::vector<int> ingredient;
+        const std::string &input("pizzaName S xA\n");
+        std::string output("Wrong input :: number of pizza.\n");
+        std::queue<Pizza> orders;
+        std::vector<std::string> stock;
+        std::map<std::string, Pizza> menu;
+        Parser parser;
+
+        menu[pizzaName] = Pizza(pizzaName, ingredient, 3);
+        cr_assert_eq(parser.run(input, orders, stock, menu), COMMAND);
+        cr_assert_stderr_eq_str(output.c_str());
+    }
 }
