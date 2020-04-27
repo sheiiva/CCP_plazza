@@ -40,5 +40,12 @@ namespace Plazza
 
         cr_assert_str_empty(pizza.getRecipe().getPizzaName().c_str());
     }
+
+    Test(getBakeTimeWeight, with_normal_case)
+    {
+        Reception reception(2, 5, 2000);
+
+        cr_assert_eq(reception.getBakeTimeWeight(), 2);
+    }
 }
 
