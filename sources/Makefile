@@ -27,7 +27,6 @@ override LDFLAGS 	+=
 override LDLIBS 	+=
 
 TST_SRC		=	$(KITCHEN_PATH)Kitchen.cpp				\
-				$(KITCHEN_PATH)Cook.cpp					\
 				$(PIZZA_PATH)Pizza.cpp					\
 				$(PIZZA_PATH)Recipe.cpp					\
 				$(RECEPTION_PATH)ArgumentsHandler.cpp	\
