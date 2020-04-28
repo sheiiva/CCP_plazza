@@ -12,7 +12,7 @@
 #include <thread>
 #include <mutex>
 #include "Kitchen.hpp"
-#include "../pizza/Pizza.hpp"
+#include "Pizza.hpp"
 
 namespace Plazza
 {

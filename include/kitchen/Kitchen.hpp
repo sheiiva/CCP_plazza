@@ -8,7 +8,6 @@
 #ifndef KITCHEN_HPP
 #define KITCHEN_HPP
 
-#include <list>
 #include <map>
 #include <string>
 #include <iostream>
@@ -47,6 +46,7 @@ namespace Plazza
         int _inactiveTime;
         std::vector<Cook> _cooks;
         std::map<std::string, int> _ingredientsStock;
+
     };
 }
 

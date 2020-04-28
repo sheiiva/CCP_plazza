@@ -60,6 +60,8 @@ vgcore*
 *.gcno
 critests
 
+## PLAZZA
+tmp
 # BINARY
 plazza
 

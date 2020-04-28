@@ -22,16 +22,25 @@ INCLUDES	=	-I./$(INCLUDE_PATH)$(KITCHEN_PATH) 		\
 				-I./$(INCLUDE_PATH)$(PIZZA_PATH) 		\
 				-I./$(INCLUDE_PATH)$(RECEPTION_PATH)
 
-override CPPFLAGS 	+=	-W -Wall -Werror -Wextra $(INCLUDES)
+override CPPFLAGS 	+=	-W -Wall -Werror -Wextra $(INCLUDES) -std=c++11
 override LDFLAGS 	+=
 override LDLIBS 	+=
 
-
-SRC		=		main.cpp								\
+TST_SRC		=	$(KITCHEN_PATH)Kitchen.cpp				\
+				$(PIZZA_PATH)Pizza.cpp					\
+				$(PIZZA_PATH)Recipe.cpp					\
+				$(RECEPTION_PATH)ArgumentsHandler.cpp	\
+				$(RECEPTION_PATH)Parser.cpp				\
 				$(RECEPTION_PATH)Reception.cpp			\
+				$(RECEPTION_PATH)Usage.cpp				\
 
-OBJ 	= 	$(SRC:.cpp=.o)
+SRC			=		main.cpp							\
+					$(TST_SRC)
 
+
+OBJ 		= 	$(SRC:.cpp=.o)
+
+TST_OBJ 	= 	$(TST_SRC:.cpp=.o)
 
 CC		= 	g++
 LD		=	$(CC)
@@ -43,7 +52,7 @@ $(NAME): $(OBJ)
 	$(LD) $(CPPFLAGS) $^ $(LDFLAGS) $(LDLIBS) -o $@
 	$(PRINT) "\n------->\tCONGRATS !\n"
 
-$(SRC_LIB): $(OBJ)
+$(SRC_LIB): $(TST_OBJ)
 	$(PRINT) "\n------->\tCOMPILED SRC DEPENDENCIES.\n\nLET'S PACK AS A LIBRARY:\n"
 	@mkdir $(LIBSRC_PATH)
 	$(AR) rc $@ $^

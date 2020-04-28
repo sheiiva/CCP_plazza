@@ -1,0 +1,40 @@
+/*
+** EPITECH PROJECT, 2020
+** Cook.cpp
+** File description:
+** cook functions
+*/
+
+#include "Cook.hpp"
+
+Plazza::Cook::Cook(Kitchen const& Kitchen)
+{
+    //no lo he pensado mucho xd pero algo tiene que haber imagino
+}
+
+int Plazza::Cook::getStatus()
+{
+    return (_status);
+}
+
+Pizza& Plazza::Cook::getOrder(int index)
+{
+    return (_orders[index]);
+}
+
+Kitchen Plazza::Cook::getKitchen()
+{
+    return (_kitchen);
+}
+
+void Plazza::Cook::setStatus(int status)
+{
+    _status = status;
+}
+
+void Plazza::Cook::setOrder(Pizza const& pizza)
+{
+    _orders.back(pizza);
+}
+
+//operator
