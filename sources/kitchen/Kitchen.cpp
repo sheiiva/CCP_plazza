@@ -78,7 +78,7 @@ namespace Plazza {
     
     void Kitchen::setInactiveTime(int time) noexcept
     {
-        _inactiveTime = 0;
+        _inactiveTime = time;
     }
     
     void Kitchen::setCook(Cook const &cook) noexcept
@@ -101,9 +101,12 @@ namespace Plazza {
     
     Kitchen& Kitchen::operator<<(Pizza const &pizza) noexcept
     {
-        for (auto& i : _cooks)
-            if (i.getStatus() == 0)
+        for (auto& i : _cooks) {
+            if (i.getStatus() == 0) {
                 i.setStatus(1);
+                i.setOrder(pizza);
+            }
+        }
         return (*this);
     }
     
