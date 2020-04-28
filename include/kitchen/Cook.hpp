@@ -11,8 +11,8 @@
 #include <queue>
 #include <thread>
 #include <mutex>
-#include "Pizza.hpp"
 #include "Kitchen.hpp"
+#include "Pizza.hpp"
 
 namespace Plazza
 {

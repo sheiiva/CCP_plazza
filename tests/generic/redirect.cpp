@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2019
 ** TESTS / GENERIC
 ** File description:
-** redirect.c
+** redirect.cpp
 */
 
 #include <criterion/criterion.h>

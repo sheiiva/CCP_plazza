@@ -78,7 +78,7 @@ namespace Plazza {
     
     void Kitchen::setInactiveTime(int time) noexcept
     {
-        _inactiveTime = 0;
+        _inactiveTime = time;
     }
     
     void Kitchen::setCook(Cook const &cook) noexcept
@@ -91,20 +91,16 @@ namespace Plazza {
         _ingredientsStock.emplace(ingredient, 5);
     }
     
-    bool Kitchen::checkCookStatus() noexcept
+    /* bool Kitchen::checkCookStatus() noexcept
     {
         for (auto& i : _cooks)
-            if (i.getStatus() == 0)
-                return (false);
-        return (true);
-    }
+            if (*i == 0)
+                return (true);
+                }*/
     
-    Kitchen& Kitchen::operator<<(Pizza const &pizza) noexcept
+    /*Kitchen& Kitchen::operator<<(Pizza const &pizza) noexcept
     {
-        for (auto& i : _cooks)
-            if (i.getStatus() == 0)
-                i.setStatus(1);
-        return (*this);
+        
     }
-    
+    */
 }

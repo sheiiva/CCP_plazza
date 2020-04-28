@@ -8,9 +8,9 @@
 #ifndef KITCHEN_HPP
 #define KITCHEN_HPP
 
-#include <list>
 #include <map>
 #include <string>
+#include <algorithm>
 #include "Cook.hpp"
 #include "Pizza.hpp"
 
