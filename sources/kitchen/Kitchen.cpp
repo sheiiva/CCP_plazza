@@ -12,7 +12,6 @@ namespace Plazza {
     Kitchen::Kitchen(void) noexcept
     {
         _inactiveTime = 0;
-        _cooks = 
         _ingredientsStock["doe"] = 5 ;
         _ingredientsStock["tomato"] = 5 ;
         _ingredientsStock["gruyere"] = 5 ;
