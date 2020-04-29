@@ -9,20 +9,15 @@
 
 namespace Plazza
 {
+    Cook::Cook(Cook const& b) noexcept : _status(b.getStatus()), _orders(b._orders), _kitchen(b.getKitchen())
+    {
+    }
+    
     Cook::Cook(Kitchen const& Kitchen) noexcept : _kitchen(Kitchen)
     {
     }
-
-    Cook::Cook(Cook const& b) noexcept
-    {
-        _status = b.getStatus();
-        _orders = b._orders;
-        _thread = b.thread;
-        _mutex = b._mutex;
-        _kitchen = b.getKitchen();
-    }
     
-    int Cook::getStatus() noexcept
+    int Cook::getStatus() const noexcept
     {
         return (_status);
     }
