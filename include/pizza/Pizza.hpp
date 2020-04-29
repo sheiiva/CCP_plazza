@@ -19,21 +19,19 @@ namespace Plazza
     public:
         Pizza() noexcept = delete;
         Pizza(const std::string &pizzaName, std::vector<int> &neededIngredients, int bakeTime) noexcept;
-        Pizza(Pizza const& b) noexcept = default;
-        Pizza(Pizza&& b) noexcept = default;
+        Pizza(Pizza const& b) noexcept;
+        Pizza(Pizza&& b) noexcept;
         ~Pizza() noexcept;
-        Pizza& operator=(Pizza const& rhs) noexcept = default;
-        Pizza& operator=(Pizza&& rhs) noexcept = default;
+        Pizza& operator=(Pizza const& rhs) noexcept;
+        Pizza& operator=(Pizza&& rhs) noexcept;
         
     public:
         //GETTERS
-        int getBakeTime(void) const noexcept;
         int getClock(void) const noexcept;
         std::vector<int> getNeededIngredients(void) const noexcept;
         int getNeedIngredient(int index) const noexcept;
         Recipe getRecipe(void) noexcept;
         //SETTERS
-        void setBakeTime(int bakeTime) noexcept;
         void setClock(int clock) noexcept;
         void setNeededIngredients(int neededIngredient) noexcept;
         //METHODS

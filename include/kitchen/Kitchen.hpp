@@ -21,7 +21,7 @@ namespace Plazza
     {
     public:
         Kitchen() noexcept = default;
-        Kitchen(Kitchen const& b) noexcept = default;
+        Kitchen(Kitchen const& b) noexcept;
         Kitchen(Kitchen&& b) noexcept = default;
         ~Kitchen() noexcept = default;
         Kitchen& operator=(Kitchen const& rhs) noexcept;

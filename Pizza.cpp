@@ -9,21 +9,49 @@
 
 namespace Plazza
 {
-    Pizza::Pizza(const std::string &pizzaName, std::vector<int> &neededIngredients, int bakeTime) noexcept
+    Pizza::Pizza(const std::string &pizzaName, std::vector<int> &neededIngredients, int bakeTime) noexcept :  _recipe(pizzaName, neededIngredients, bakeTime)
     {
         _neededIngredients = neededIngredients;
-        _bakeTime = bakeTime;
-        _recipe(pizzaName, neededIngredients, bakeTime);
         _clock = 0;
     }
 
-    Pizza::~Pizza(void) {}
-    
-    int Pizza::getBakeTime(void) const noexcept
+    Pizza::Pizza(Pizza const& b) noexcept
     {
-        return (_bakeTime);
+        _neededIngredients = b._neededIngredients;
+        _recipe = b._recipe;
+        _clock = b._clock;
     }
 
+    Pizza::Pizza(Pizza&& b) noexcept
+    {
+        _neededIngredients = b._neededIngredients;
+        _recipe = b._recipe;
+        _clock = b._clock;
+
+        b._neededIngredients.empty();
+        b._clock = 0;
+        
+    }
+
+    Pizza::Pizza& operator=(Pizza const& rhs) noexcept
+    {
+        _neededIngredients = b._neededIngredients;
+        _recipe = b._recipe;
+        _clock = b._clock;
+    }
+
+    Pizza::Pizza& operator=(Pizza&& rhs) noexcept
+    {
+        _neededIngredients = b._neededIngredients;
+        _recipe = b._recipe;
+        _clock = b._clock;
+
+        b._neededIngredients.empty();
+        b._clock = 0;
+    }
+    
+    Pizza::~Pizza(void) {}
+    
     int Pizza::getClock(void) const noexcept
     {
         return (_clock);
@@ -37,11 +65,6 @@ namespace Plazza
     int Pizza::getNeedIngredient(int index) const noexcept
     {
         return (_neededIngredients[index]);
-    }
-
-    void Pizza::setBakeTime(int bakeTime) noexcept
-    {
-        _bakeTime = bakeTime;
     }
 
     void Pizza::setClock(int clock) noexcept
