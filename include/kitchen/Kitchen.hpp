@@ -39,9 +39,7 @@ namespace Plazza
         void setIngredientsStock(const std::string &ingredient) noexcept;
         //METHODS
         bool checkCookStatus() noexcept;
-        Kitchen& operator<<(Pizza const &pizza) noexcept;
-        // virtual Pizza& operator>>(Pizza&& rhsCook &cook) noexcept = 0;
-        
+               
     protected:
         int _inactiveTime;
         std::vector<Cook> _cooks;

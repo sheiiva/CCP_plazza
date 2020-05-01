@@ -114,16 +114,4 @@ namespace Plazza {
                 return (false);
         return (true);
     }
-    
-    Kitchen& Kitchen::operator<<(Pizza const &pizza) noexcept
-    {
-        for (auto& i : _cooks) {
-            if (i.getStatus() == 0) {
-                i.setStatus(1);
-                i.setOrder(pizza);
-            }
-        }
-        return (*this);
-    }
-    
 }
