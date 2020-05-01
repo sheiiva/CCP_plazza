@@ -15,6 +15,7 @@
 
 namespace Plazza
 {
+    class Kitchen;
     class Pizza {
     public:
         Pizza() noexcept = default;

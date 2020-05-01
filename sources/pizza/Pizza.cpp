@@ -88,7 +88,6 @@ namespace Plazza
 
     /*Pizza &Pizza::operator>>(const Kitchen &kitchen) noexcept
     {
-        //DO SOMETHING
         return (*this);
         }*/
 }
