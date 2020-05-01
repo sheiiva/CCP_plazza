@@ -56,6 +56,11 @@ namespace Plazza
         return (_clock);
     }
 
+    int Pizza::getBakeTime(void) const noexcept
+    {
+        return (_recipe.getBakeTime());
+    }
+
     std::vector<int> Pizza::getNeededIngredients(void) const noexcept
     {
         return (_neededIngredients);

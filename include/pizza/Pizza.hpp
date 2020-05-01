@@ -28,6 +28,7 @@ namespace Plazza
         
     public:
         //GETTERS
+        int getBakeTime(void) const noexcept;
         int getClock(void) const noexcept;
         std::vector<int> getNeededIngredients(void) const noexcept;
         int getNeedIngredient(int index) const noexcept;
