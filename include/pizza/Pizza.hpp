@@ -41,7 +41,7 @@ namespace Plazza
             //METHODS
             void bake() noexcept;
             // Pizza& operator<<(std::list<int> &ingredients) noexcept; // SAME AS bake
-            // Pizza& operator>>(const Kitchen &kitchen) noexcept;
+            //Pizza& operator>>(Kitchen const &kitchen) noexcept
 
         protected:
             int _clock;

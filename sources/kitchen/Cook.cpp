@@ -9,11 +9,11 @@
 
 namespace Plazza
 {
-    Cook::Cook(Cook const& b) noexcept : _status(b._status), _orders(b._orders), _kitchen(b._kitchen)
+    Cook::Cook(Cook const& b) noexcept : _status(b._status), _orders(b._orders)//, _kitchen(b._kitchen)
     {
     }
 
-    Cook::Cook(Cook&& b) noexcept : _status(b._status), _orders(b._orders), _kitchen(b._kitchen)
+    Cook::Cook(Cook&& b) noexcept : _status(b._status), _orders(b._orders)//, _kitchen(b._kitchen)
     {
         b._status = 0;
         while(!b._orders.empty())
@@ -38,10 +38,10 @@ namespace Plazza
          }
          return (*this);
     }
-    
-    Cook::Cook(Kitchen const& Kitchen) noexcept : _kitchen(Kitchen)
-    {
-    }
+
+    // Cook::Cook(Kitchen const& Kitchen) noexcept : _status(0),_kitchen(Kitchen)
+    // {
+    // }
     
     int Cook::getStatus() const noexcept
     {
@@ -50,13 +50,14 @@ namespace Plazza
 
     Pizza& Cook::getOrder(int index) noexcept
     {
+        index = index;
         return (_orders.front());
     }
 
-    Kitchen &Cook::getKitchen() noexcept
-    {
-        return (_kitchen);
-    }
+    // Kitchen Cook::getKitchen() const noexcept
+    // {
+    //     return (_kitchen);
+    // }
 
     void Cook::setStatus(int status) noexcept
     {
@@ -68,8 +69,8 @@ namespace Plazza
         _orders.push(pizza);
     }
 
-//     Cook& Cook::operator<<(Pizza const& pizza) noexcept
-//     {
-//         return (*this);
-//     }
+    // Cook& Cook::operator<<(Pizza const& pizza) noexcept
+    // {
+    //     return (*this);
+    // }
 }
