@@ -34,9 +34,9 @@ namespace Plazza
             Cook& operator=(Cook&& rhs) noexcept = default;
 
             //GETTERS
-            int getStatus() noexcept;
+            int getStatus() const noexcept;
             Pizza& getOrder(int index) noexcept;
-            Kitchen getKitchen() const noexcept;
+            Kitchen &getKitchen() noexcept;
             //SETTERS
             void setStatus(int status) noexcept;
             void setOrder(Pizza const& pizza) noexcept;
@@ -49,7 +49,7 @@ namespace Plazza
             std::thread _thread;
             std::mutex _mutex;
             std::queue<Pizza> _orders;
-            Kitchen *_kitchen; //THIS SHOULD NOT BE A POINTER
+            Kitchen &_kitchen; //THIS SHOULD NOT BE A POINTER
     };
 }
 

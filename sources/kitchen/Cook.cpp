@@ -53,7 +53,7 @@ namespace Plazza
         return (_orders.front());
     }
 
-    Kitchen Cook::getKitchen() const noexcept
+    Kitchen &Cook::getKitchen() noexcept
     {
         return (_kitchen);
     }
@@ -68,10 +68,8 @@ namespace Plazza
         _orders.push(pizza);
     }
 
-//operator
-
-    Cook& Cook::operator<<(Pizza const& pizza) noexcept
-    {
-        return (*this);
-    }
+//     Cook& Cook::operator<<(Pizza const& pizza) noexcept
+//     {
+//         return (*this);
+//     }
 }
