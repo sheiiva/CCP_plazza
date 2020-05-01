@@ -8,6 +8,7 @@
 #ifndef KITCHEN_HPP
 #define KITCHEN_HPP
 
+#include <time.h>
 #include <map>
 #include <string>
 #include <algorithm>
@@ -37,12 +38,15 @@ namespace Plazza
         void setCook(Cook const &cook) noexcept;
         void setIngredientsStock(const std::string &ingredient) noexcept;
         //METHODS
-        bool checkCookStatus() noexcept;
+        bool isKitchenActive() noexcept;
         Kitchen& operator<<(Pizza const &pizza) noexcept;
         // virtual Pizza& operator>>(Pizza&& rhsCook &cook) noexcept = 0;
         
+        private:
+            void updateTime(bool reset) noexcept;
+
     protected:
-        int _inactiveTime;
+        long int _inactiveTime;
         std::vector<Cook> _cooks;
         std::map<std::string, int> _ingredientsStock;
     };

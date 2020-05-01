@@ -62,6 +62,7 @@ namespace Plazza
 
     void Reception::setKitchen(Kitchen &kitchen) noexcept
     {
+        std::cout << "New kitchen created!" << std::endl;
         _kitchens.push_back(kitchen);
     }
 
@@ -97,10 +98,14 @@ namespace Plazza
         return (0);
     }
 
-    int Reception::checkKitchen() noexcept
+    void Reception::checkKitchensActivity() noexcept
     {
-        // TO DO
-        return (0);
+        for (auto it = _kitchens.begin(); it != _kitchens.end(); it++) {
+            if (it->getInactiveTime() >= 5) {
+                std::cout << "Inactive kitchen closed." << std::endl;
+                it = _kitchens.erase(it);
+            }
+        }
     }
 
     bool Reception::status() noexcept

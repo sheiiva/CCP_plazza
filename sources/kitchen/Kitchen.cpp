@@ -14,7 +14,7 @@ namespace Plazza {
         std::queue<Pizza> orders;
         // Cook cook(*this);
         
-        _inactiveTime = 0;
+        _inactiveTime = time(NULL);
         // _cooks.push_back(cook);
         _ingredientsStock["doe"] = 5;
         _ingredientsStock["tomato"] = 5;
@@ -106,13 +106,28 @@ namespace Plazza {
     {
         _ingredientsStock.emplace(ingredient, 5);
     }
-    
-    bool Kitchen::checkCookStatus() noexcept
+
+    void Kitchen::updateTime(bool reset) noexcept
     {
-        for (auto& i : _cooks)
-            if (i.getStatus() == 0)
-                return (false);
-        return (true);
+        static long int initialTime = time(NULL);
+
+        if (reset) {
+            initialTime = time(NULL);
+            setInactiveTime(time(NULL));
+        } else
+            _inactiveTime = initialTime - time(NULL);
+    }
+
+    bool Kitchen::isKitchenActive() noexcept
+    {
+        for (auto& cook : _cooks) {
+            if (cook.getStatus() == STATUS::ACTIVE) {
+                updateTime(true);
+                return (true);
+            }
+        }
+        updateTime(false);
+        return (false);
     }
     
     Kitchen& Kitchen::operator<<(Pizza const &pizza) noexcept

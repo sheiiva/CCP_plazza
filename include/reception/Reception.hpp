@@ -43,7 +43,7 @@ namespace Plazza
             int run() noexcept;
             std::string read_stdin(void) noexcept;
             int assignOrder(void) noexcept;
-            int checkKitchen() noexcept;
+            void checkKitchensActivity() noexcept;
             bool status() noexcept;
             bool addToStock(const std::string &ingredient) noexcept;
             bool addToMenu(Pizza &pizza) noexcept;

@@ -15,7 +15,7 @@ namespace Plazza
 
     Cook::Cook(Cook&& b) noexcept : _status(b._status), _orders(b._orders)//, _kitchen(b._kitchen)
     {
-        b._status = 0;
+        b._status = STATUS::INACTIVE;
         while(!b._orders.empty())
             b._orders.pop();
     }
