@@ -17,7 +17,7 @@ namespace Plazza
 {
     class Pizza {
     public:
-        Pizza() noexcept = delete;
+        Pizza() noexcept = default;
         Pizza(const std::string &pizzaName, std::vector<int> &neededIngredients, int bakeTime) noexcept;
         Pizza(Pizza const& b) noexcept;
         Pizza(Pizza&& b) noexcept;
@@ -37,7 +37,7 @@ namespace Plazza
         //METHODS
         void bake(void) noexcept;
         // Pizza& operator<<(std::list<int> &ingredients) noexcept; // SAME AS bake
-        // Pizza& operator>>(const Kitchen &kitchen) noexcept;
+        //Pizza& operator>>(const Kitchen &kitchen) noexcept;
                 
     protected:
         int _clock;

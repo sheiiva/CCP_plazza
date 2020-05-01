@@ -10,7 +10,7 @@
 
 #include <map>
 #include <string>
-#include <iostream>
+#include <algorithm>
 #include "Cook.hpp"
 #include "../pizza/Pizza.hpp"
 
@@ -20,10 +20,11 @@ namespace Plazza
     class Kitchen
     {
     public:
-        Kitchen() noexcept = default;
+
+        Kitchen() noexcept;
         Kitchen(Kitchen const& b) noexcept;
-        Kitchen(Kitchen&& b) noexcept = default;
-        ~Kitchen() noexcept = default;
+        Kitchen(Kitchen&& b) noexcept;
+        ~Kitchen() noexcept;
         Kitchen& operator=(Kitchen const& rhs) noexcept;
         Kitchen& operator=(Kitchen&& rhs) noexcept;
 
@@ -46,7 +47,6 @@ namespace Plazza
         int _inactiveTime;
         std::vector<Cook> _cooks;
         std::map<std::string, int> _ingredientsStock;
-
     };
 }
 

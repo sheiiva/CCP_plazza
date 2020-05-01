@@ -9,46 +9,44 @@
 
 namespace Plazza
 {
-    Pizza::Pizza(const std::string &pizzaName, std::vector<int> &neededIngredients, int bakeTime) noexcept
+    Pizza::Pizza(const std::string &pizzaName, std::vector<int> &neededIngredients, int bakeTime) noexcept :  _recipe(pizzaName, neededIngredients, bakeTime)
     {
-        _neededIngredients = neededIngredients;
-        _recipe(pizzaName, neededIngredients, bakeTime);
+        _neededIngredients = neededIngredients;       
         _clock = 0;
     }
 
-    Pizza::Pizza(Pizza const& b) noexcept
+    Pizza::Pizza(Pizza const& b) noexcept : _recipe(b._recipe)
     {
         _neededIngredients = b._neededIngredients;
-        _recipe = b._recipe;
         _clock = b._clock;
     }
 
-    Pizza::Pizza(Pizza&& b) noexcept
+    Pizza::Pizza(Pizza&& b) noexcept : _recipe(b._recipe)
     {
         _neededIngredients = b._neededIngredients;
-        _recipe = b._recipe;
         _clock = b._clock;
 
         b._neededIngredients.empty();
         b._clock = 0;
-        
     }
 
-    Pizza::Pizza& operator=(Pizza const& rhs) noexcept
+    Pizza &Pizza::operator=(Pizza const& rhs) noexcept
     {
-        _neededIngredients = b._neededIngredients;
-        _recipe = b._recipe;
-        _clock = b._clock;
+        _neededIngredients = rhs._neededIngredients;
+        _recipe = rhs._recipe;
+        _clock = rhs._clock;
+        return (*this);
     }
 
-    Pizza::Pizza& operator=(Pizza&& rhs) noexcept
+    Pizza &Pizza::operator=(Pizza&& rhs) noexcept
     {
-        _neededIngredients = b._neededIngredients;
-        _recipe = b._recipe;
-        _clock = b._clock;
+        _neededIngredients = rhs._neededIngredients;
+        _recipe = rhs._recipe;
+        _clock = rhs._clock;
 
-        b._neededIngredients.empty();
-        b._clock = 0;
+        rhs._neededIngredients.empty();
+        rhs._clock = 0;
+        return (*this);
     }
     
     Pizza::~Pizza(void) {}
@@ -68,6 +66,11 @@ namespace Plazza
         return (_neededIngredients[index]);
     }
 
+    Recipe Pizza::getRecipe(void) noexcept
+    {
+        return (_recipe);
+    }
+
     void Pizza::setClock(int clock) noexcept
     {
         _clock = clock;
@@ -82,4 +85,10 @@ namespace Plazza
     {
 
     }
+
+    /*Pizza &Pizza::operator>>(const Kitchen &kitchen) noexcept
+    {
+        //DO SOMETHING
+        return (*this);
+        }*/
 }
