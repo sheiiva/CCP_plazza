@@ -37,9 +37,7 @@ namespace Plazza
         void setNeededIngredients(int neededIngredient) noexcept;
         //METHODS
         void bake(void) noexcept;
-        // Pizza& operator<<(std::list<int> &ingredients) noexcept; // SAME AS bake
-        //Pizza& operator>>(const Kitchen &kitchen) noexcept;
-                
+                        
     protected:
         int _clock;
         std::vector<int> _neededIngredients;
