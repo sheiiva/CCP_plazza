@@ -28,14 +28,14 @@ namespace Plazza
         Cook() noexcept = delete;
         Cook(Kitchen const& Kitchen) noexcept;
         Cook(Cook const& b) noexcept;
-        Cook(Cook&& b) noexcept = default;
+        Cook(Cook&& b) noexcept;
         ~Cook() noexcept = default;
         Cook& operator=(Cook const& rhs) noexcept;
-        Cook& operator=(Cook&& rhs) noexcept = default;
+        Cook& operator=(Cook&& rhs) noexcept;
         
         //GETTERS
         int getStatus() const noexcept;
-        Pizza& getOrder(int index) const noexcept;
+        Pizza& getOrder(int index) noexcept;
         Kitchen getKitchen() const noexcept;
         //SETTERS
         void setStatus(int status) noexcept;

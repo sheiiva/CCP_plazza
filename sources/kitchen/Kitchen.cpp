@@ -11,17 +11,20 @@ namespace Plazza {
 
     Kitchen::Kitchen(void) noexcept
     {
-        _inactiveTime = 0;
-        _ingredientsStock["doe"] = 5 ;
-        _ingredientsStock["tomato"] = 5 ;
-        _ingredientsStock["gruyere"] = 5 ;
-        _ingredientsStock["ham"] = 5 ;
-        _ingredientsStock["mushrooms"] = 5 ;
-        _ingredientsStock["steak"] = 5 ;
-        _ingredientsStock["eggplant"] = 5 ;
-        _ingredientsStock["goat cheese"] = 5 ;
-        _ingredientsStock["chief love"] = 5 ;
+        std::queue<Pizza> orders;
+        Cook cook(*this);
         
+        _inactiveTime = 0;
+        _cooks.push_back(cook);
+        _ingredientsStock["doe"] = 5;
+        _ingredientsStock["tomato"] = 5;
+        _ingredientsStock["gruyere"] = 5;
+        _ingredientsStock["ham"] = 5;
+        _ingredientsStock["mushrooms"] = 5;
+        _ingredientsStock["steak"] = 5;
+        _ingredientsStock["eggplant"] = 5;
+        _ingredientsStock["goat cheese"] = 5;
+        _ingredientsStock["chief love"] = 5;  
     }
 
     Kitchen::Kitchen(Kitchen const& b) noexcept

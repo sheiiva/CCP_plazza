@@ -16,9 +16,23 @@ Test(getInactiveTime, get_inactive_time, .init=redirect_all_std)
 }
 
 
-/*Test(getCook, get_cook, .init=redirect_all_std)
+Test(getCook, get_cook, .init=redirect_all_std)
+{
+    Plazza::Kitchen kitchen;
+    Plazza::Cook cook(kitchen);
 
-  Test(getCooks, get_cooks, .init=redirect_all_std)*/
+    cr_assert_eq(kitchen.getCook(0), cook);
+}
+
+ /*Test(getCooks, get_cooks, .init=redirect_all_std)
+{
+    Plazza::Kitchen kitchen;
+    Plazza::Cook cook(kitchen);
+    std::vector<Plazza::Cook> cooks;
+
+    cooks.push_back(cook);
+    cr_assert_eq(kitchen.getCooks(), cooks);
+    }*/
 
 Test(getIngredientsStock, get_ingredient_stock_int, .init=redirect_all_std)
 {
@@ -45,9 +59,9 @@ Test(getIngredientsStock, get_ingredient_stock_map, .init=redirect_all_std)
     cr_assert_eq(kitchen.getIngredientsStock(), ingredients_stock);
 }
 
-/*Test(checkCookStatus, check_cook_status, .init=redirect_all_std)
+Test(checkCookStatus, check_cook_status, .init=redirect_all_std)
 {
     Plazza::Kitchen kitchen;
 
-    cr_assert_eq(kitchen.checkCookStatus(), true);
-    }*/
+    cr_assert_eq(kitchen.checkCookStatus(), false);
+}
