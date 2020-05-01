@@ -8,6 +8,7 @@
 #ifndef COOK_HPP
 #define COOK_HPP
 
+#include <iostream>
 #include <queue>
 #include <thread>
 #include <mutex>
@@ -34,7 +35,7 @@ namespace Plazza
 
             //GETTERS
             int getStatus() const noexcept;
-            Pizza& getOrder(int index) noexcept;
+            Pizza& getOrder() noexcept;
             // Kitchen getKitchen() const noexcept;
             //SETTERS
             void setStatus(int status) noexcept;

@@ -59,16 +59,20 @@ namespace Plazza
         std::cout << pizzaName << " added to the menu!" << std::endl;
     }
 
-    void Parser::addItem(std::vector<std::string> parsedInput,
+    int Parser::addItem(std::vector<std::string> parsedInput,
                         std::vector<std::string> &stock,
                         std::map<std::string, Pizza> &menu)
     {
-        if (!parsedInput[1].compare("PIZZA"))
+        if (!parsedInput[1].compare("PIZZA")) {
             addPizzaToMenu(parsedInput, stock, menu);
-        else if (!parsedInput[1].compare("INGREDIENT"))
+            return (ADDPIZZA);
+        } else if (!parsedInput[1].compare("INGREDIENT")) {
             addIngredientToStock(parsedInput, stock);
-        else
+            return (ADDINGREDIENT);
+        } else {
             std::cerr << "Wrong input :: ADD [PIZZA | INGREDIENT]" << std::endl;
+            return (NOACTION);
+        }
     }
 
     bool Parser::isValidSize(const std::string &inputSize) noexcept
@@ -148,13 +152,12 @@ namespace Plazza
             return (HELP);
         else if (!command.compare("QUIT"))
             return (QUIT);
-        else if (parsedInput.size() < 2) {
-            std::cerr << "Wrong input :: wrong command" << std::endl;
-        } else {
-            if (!parsedInput[0].compare("ADD")) {
-                addItem(parsedInput, stock, menu);
-                return (ADDITEM);
-            } else {
+        else {
+            if (parsedInput.size() < 2)
+                std::cerr << "Wrong input :: wrong command" << std::endl;
+            else if (!parsedInput[0].compare("ADD"))
+                return addItem(parsedInput, stock, menu);
+            else {
                 addPizzatoOrder(parsedInput, sep, orders, menu);
                 return (COMMAND);
             }

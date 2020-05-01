@@ -50,6 +50,9 @@ namespace Plazza
             // Reception& operator<<(Pizza const &pizza) noexcept; // 
             // Reception& operator>>(Reception&& rhs) noexcept;
 
+            private:
+                void updateKitchensStock() noexcept;
+
         private:
             int _bakeTimeWeight;
             int _maxCook;

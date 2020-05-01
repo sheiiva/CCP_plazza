@@ -26,11 +26,12 @@ namespace Plazza
     #define NUMBER      2
 
     enum OUTPUT {
-        NOACTION    = 0,
-        HELP        = 1,
-        COMMAND     = 2,
-        ADDITEM     = 3,
-        QUIT        = 4
+        NOACTION        = 0,
+        HELP            = 1,
+        COMMAND         = 2,
+        ADDPIZZA        = 3,
+        ADDINGREDIENT   = 4,
+        QUIT            = 5
     };
 
     class Parser
@@ -52,7 +53,7 @@ namespace Plazza
             void addIngredientToStock(std::vector<std::string> parsedInput,
                                         std::vector<std::string> &stock);
 
-            void addItem(std::vector<std::string> parsedInput,
+            int addItem(std::vector<std::string> parsedInput,
                                         std::vector<std::string> &stock,
                                         std::map<std::string, Pizza> &menu);
 

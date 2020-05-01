@@ -66,6 +66,12 @@ namespace Plazza
         _kitchens.push_back(kitchen);
     }
 
+    void Reception::updateKitchensStock() noexcept
+    {
+        for (auto &kitchen : _kitchens)
+            kitchen.updateIngredientsStock(_stock);
+    }
+
     int Reception::run() noexcept
     {
         Parser parser;
@@ -80,6 +86,8 @@ namespace Plazza
                 Usage::show();
             } else if (action == QUIT)
                 state = 0;
+            else if (action == ADDINGREDIENT)
+                updateKitchensStock();
         }
         return (0);
     }

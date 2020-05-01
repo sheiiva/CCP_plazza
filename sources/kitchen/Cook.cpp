@@ -9,15 +9,14 @@
 
 namespace Plazza
 {
-    Cook::Cook(Cook const& b) noexcept : _status(b._status), _orders(b._orders)//, _kitchen(b._kitchen)
+    Cook::Cook(Cook const& b) noexcept :
+        _status(b._status), _orders(b._orders)//, _kitchen(b._kitchen)
     {
     }
 
-    Cook::Cook(Cook&& b) noexcept : _status(b._status), _orders(b._orders)//, _kitchen(b._kitchen)
+    Cook::Cook(Cook&& b) noexcept :
+        _status(b._status),_orders(std::move(b._orders)) //, _kitchen(b._kitchen)
     {
-        b._status = STATUS::INACTIVE;
-        while(!b._orders.empty())
-            b._orders.pop();
     }
 
     Cook &Cook::operator=(Cook const& rhs) noexcept
@@ -29,14 +28,9 @@ namespace Plazza
 
     Cook &Cook::operator=(Cook&& rhs) noexcept
     {
-         if (this != &rhs) {
-            _status = rhs._status;
-            _orders = rhs._orders;
-            rhs._status = 0;
-            while(!rhs._orders.empty())
-                rhs._orders.pop();
-         }
-         return (*this);
+        _status = rhs._status;
+        _orders.swap(rhs._orders);
+        return (*this);
     }
 
     // Cook::Cook(Kitchen const& Kitchen) noexcept : _status(0),_kitchen(Kitchen)
@@ -48,9 +42,8 @@ namespace Plazza
         return (_status);
     }
 
-    Pizza& Cook::getOrder(int index) noexcept
+    Pizza& Cook::getOrder() noexcept
     {
-        index = index;
         return (_orders.front());
     }
 
@@ -61,7 +54,10 @@ namespace Plazza
 
     void Cook::setStatus(int status) noexcept
     {
-        _status = status;
+        if (status == ACTIVE || status == INACTIVE)
+            _status = status;
+        else
+            std::cerr << "Wrong input :: wrong status" << std::endl;
     }
 
     void Cook::setOrder(Pizza const& pizza) noexcept

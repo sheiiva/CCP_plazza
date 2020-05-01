@@ -20,7 +20,8 @@ namespace Plazza
     class Kitchen
     {
     public:
-        Kitchen() noexcept;
+        Kitchen() noexcept = delete;
+        Kitchen(std::vector<std::string> stock) noexcept;
         Kitchen(Kitchen const& b) noexcept;
         Kitchen(Kitchen&& b) noexcept;
         ~Kitchen() noexcept;
@@ -41,9 +42,11 @@ namespace Plazza
         bool isKitchenActive() noexcept;
         Kitchen& operator<<(Pizza const &pizza) noexcept;
         // virtual Pizza& operator>>(Pizza&& rhsCook &cook) noexcept = 0;
-        
+        void updateIngredientsStock(std::vector<std::string> stock) noexcept;
+
         private:
             void updateTime(bool reset) noexcept;
+            bool isInStock(std::string ingredient);
 
     protected:
         long int _inactiveTime;
