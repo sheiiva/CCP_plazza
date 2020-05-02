@@ -72,6 +72,26 @@ namespace Plazza
             kitchen.updateIngredientsStock(_stock);
     }
 
+    void Reception::doAction(int action, bool *state) noexcept
+    {
+        switch(action) {
+            case HELP:
+                Usage::show();
+                break;
+            case ADDINGREDIENT:
+                updateKitchensStock();
+                break;
+            case COMMAND:
+                assignOrder();
+                break;
+            case QUIT:
+                *state = 0;
+                break;
+            default:
+                return;
+        }
+    }
+
     int Reception::run() noexcept
     {
         Parser parser;
@@ -82,12 +102,7 @@ namespace Plazza
         while (state) {
             input.assign(read_stdin());
             action = parser.run(input, _orders, _stock, _menu);
-            if (action == HELP) {
-                Usage::show();
-            } else if (action == QUIT)
-                state = 0;
-            else if (action == ADDINGREDIENT)
-                updateKitchensStock();
+            doAction(action, &state);
         }
         return (0);
     }
@@ -100,9 +115,46 @@ namespace Plazza
         return input;
     }
 
+    bool Reception::assignToKitchen(int importance) noexcept
+    {
+        for (auto &kitchen : _kitchens) {
+            if (kitchen.assignOrder(_orders.front(), importance) == true) {
+                std::cout << _orders.front().getRecipe().getPizzaName()
+                            << ": assigned to a cooker!" << std::endl;
+                _orders.pop();
+                return (true);
+            }
+        }
+        std::cout << "DEBUG: can't assign to kitchen " << importance << std::endl;
+        return (false);
+    }
+
     int Reception::assignOrder(void) noexcept
     {
-        // TO DO
+        Kitchen newKitchen(_stock, _maxCook);
+
+        int importance = 1;
+
+        while (_orders.empty() == false) {
+            if (_kitchens.empty()) {
+                std::cout << "DEBUG: _kitchens is empty" << std::endl;
+                setKitchen(newKitchen);
+                assignToKitchen(1);
+                continue;
+            }
+            while (importance <= 2) {
+                std::cout << "DEBUG: importance = " << importance << std::endl;
+                if (assignToKitchen(importance) == false) {
+                    importance += 1;
+                    if (importance == 3) {
+                        setKitchen(newKitchen);
+                        assignToKitchen(1);
+                    }
+                } else
+                    break;
+            }
+            importance = 1;
+        }
         return (0);
     }
 

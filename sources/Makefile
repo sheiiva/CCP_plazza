@@ -22,7 +22,7 @@ INCLUDES	=	-I./$(INCLUDE_PATH)$(KITCHEN_PATH) 		\
 				-I./$(INCLUDE_PATH)$(PIZZA_PATH) 		\
 				-I./$(INCLUDE_PATH)$(RECEPTION_PATH)
 
-override CPPFLAGS 	+=	-W -Wall -Werror -Wextra $(INCLUDES) -std=c++11
+override CPPFLAGS 	+=	-W -Wall -Werror -Wextra $(INCLUDES) -std=c++11 -pthread
 override LDFLAGS 	+=
 override LDLIBS 	+=
 

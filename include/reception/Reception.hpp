@@ -42,7 +42,6 @@ namespace Plazza
             //METHODS
             int run() noexcept;
             std::string read_stdin(void) noexcept;
-            int assignOrder(void) noexcept;
             void checkKitchensActivity() noexcept;
             bool status() noexcept;
             bool addToStock(const std::string &ingredient) noexcept;
@@ -50,8 +49,11 @@ namespace Plazza
             // Reception& operator<<(Pizza const &pizza) noexcept; // 
             // Reception& operator>>(Reception&& rhs) noexcept;
 
-            private:
-                void updateKitchensStock() noexcept;
+        private:
+            void updateKitchensStock() noexcept;
+            int assignOrder(void) noexcept;
+            void doAction(int action, bool *state) noexcept;
+            bool assignToKitchen(int importance) noexcept;
 
         private:
             int _bakeTimeWeight;
