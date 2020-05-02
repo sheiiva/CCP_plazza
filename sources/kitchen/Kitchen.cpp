@@ -103,13 +103,10 @@ namespace Plazza {
         Cook newCook(pizza);
 
         _cooks.push_back(newCook);
-        std::cout << "CONTRACT NEW COOK!" << std::endl;
     }
     
     bool Kitchen::assignOrder(Pizza const &pizza, int importance) noexcept
     {
-        std::cout << " There are " << _cooks.size() << " cookers" << std::endl;
-        std::cout << "Can accept "<< _maxCook << "cookers" << std::endl;
         if (_cooks.size() < (size_t)_maxCook) {
             contractCook(pizza);
             return (true);

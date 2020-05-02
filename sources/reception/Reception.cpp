@@ -125,7 +125,6 @@ namespace Plazza
                 return (true);
             }
         }
-        std::cout << "DEBUG: can't assign to kitchen " << importance << std::endl;
         return (false);
     }
 
@@ -137,13 +136,11 @@ namespace Plazza
 
         while (_orders.empty() == false) {
             if (_kitchens.empty()) {
-                std::cout << "DEBUG: _kitchens is empty" << std::endl;
                 setKitchen(newKitchen);
                 assignToKitchen(1);
                 continue;
             }
             while (importance <= 2) {
-                std::cout << "DEBUG: importance = " << importance << std::endl;
                 if (assignToKitchen(importance) == false) {
                     importance += 1;
                     if (importance == 3) {
