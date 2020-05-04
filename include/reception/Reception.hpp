@@ -43,15 +43,12 @@ namespace Plazza
             //SETTERS
             //METHODS
             void createNewKitchen(void) noexcept;
-            // bool addToStock(const std::string &ingredient) noexcept;
-            // bool addToMenu(Pizza &pizza) noexcept;
-            // void updateKitchensStock() noexcept;
             bool assignToKitchen(int importance) noexcept;
-            bool assignOrder(void) noexcept;
+            void assignOrder(void) noexcept;
             void checkKitchensActivity() noexcept;
             bool status() noexcept;
             std::string read_stdin(void) noexcept;
-            short doAction(int action) noexcept;
+            bool doAction(int action) noexcept;
 
         private:
             int _bakeTimeWeight;

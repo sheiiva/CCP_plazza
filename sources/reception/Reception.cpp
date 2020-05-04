@@ -62,17 +62,11 @@ namespace Plazza
 
     void Reception::createNewKitchen(void) noexcept
     {
-        Kitchen newKitchen(_stock, _maxCook);
+        Kitchen newKitchen(_menu, _stock, _maxCook);
 
         std::cout << "New kitchen created!" << std::endl;
         _kitchens.push_back(newKitchen);
     }
-
-    // void Reception::updateKitchensStock() noexcept
-    // {
-    //     for (auto &kitchen : _kitchens)
-    //         kitchen.updateIngredientsStock(_stock);
-    // }
 
     bool Reception::assignToKitchen(int importance) noexcept
     {
@@ -85,19 +79,16 @@ namespace Plazza
         return (false);
     }
 
-    bool Reception::assignOrder(void) noexcept
+    void Reception::assignOrder(void) noexcept
     {
         while (_orders.empty() == false) {
-            if (assignToKitchen(1) == true)
-                return (true);
-            else if (assignToKitchen(2) == true)
-                return (true);
-            else {
-                createNewKitchen();
-                return (assignToKitchen(1));
+            if (assignToKitchen(1) == false) {
+                if (assignToKitchen(2) == false) {
+                    createNewKitchen();
+                    assignToKitchen(1);
+                }
             }
         }
-        return (false);
     }
 
     void Reception::checkKitchensActivity() noexcept
@@ -125,7 +116,7 @@ namespace Plazza
         return (input);
     }
 
-    short Reception::doAction(int action) noexcept
+    bool Reception::doAction(int action) noexcept
     {
         switch(action) {
             case HELP:
@@ -134,15 +125,14 @@ namespace Plazza
             case COMMAND:
                 assignOrder();
                 break;
-            // case ADDINGREDIENT:
-            //     updateKitchensStock();
-                break;
             case QUIT:
-                return (0);
+                for (auto &kitchen : _kitchens)
+                    kitchen.quit();
+                return (false);
             default:
-                return (1);
+                return (true);
         }
-        return (1);
+        return (true);
     }
 
     int Reception::run() noexcept
