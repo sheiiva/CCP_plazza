@@ -8,10 +8,13 @@
 #ifndef KITCHEN_HPP
 #define KITCHEN_HPP
 
-#include <time.h>
+#include <algorithm>
 #include <map>
 #include <string>
-#include <algorithm>
+#include <sys/types.h>
+#include <time.h>
+#include <unistd.h>
+
 #include "Cook.hpp"
 #include "Pizza.hpp"
 
@@ -29,28 +32,28 @@ namespace Plazza
         Kitchen& operator=(Kitchen&& rhs) noexcept;
 
         //GETTER
-        long int getInactiveTime(void) const noexcept;
-        Cook getCook(int index) const noexcept;
-        int getIngredientStock(const std::string &ingredient) const noexcept;
+        pid_t getPid() const noexcept;
+        pid_t getPpid() const noexcept;
+        time_t getInactiveTime(void) const noexcept;
+        size_t getMaxCook(void) const noexcept;
+        Cook getCook(int index) const;
+        int getIngredientStock(std::string const& ingredient) const noexcept;
         //SETTER
-        void setInactiveTime(long int time) noexcept;
+        void setInactiveTime(time_t time) noexcept;
         void setIngredientToStock(const std::string &ingredient) noexcept;
         //METHODS
-        bool isKitchenActive() noexcept;
-        bool assignOrder(Pizza const &pizza, int importance) noexcept;
- 
-        // Kitchen& operator<<(Pizza const &pizza) noexcept;
-        // virtual Pizza& operator>>(Pizza&& rhsCook &cook) noexcept = 0;
-        void updateIngredientsStock(std::vector<std::string> stock) noexcept;
-        void contractCook(Pizza const &pizza) noexcept;
+        bool isKitchenActive(void) noexcept;
+        void contractCook(Pizza const& pizza) noexcept;
+        bool assignOrder(Pizza const& pizza, int importance) noexcept;
 
-        private:
-            void updateTime(bool reset) noexcept;
-            bool isInStock(std::string ingredient);
+    private:
+        void updateTime(bool reset) noexcept;
 
-    protected:
-        long int _inactiveTime;
-        int _maxCook;
+    private:
+        pid_t _pid;
+        pid_t _ppid;
+        time_t _inactiveTime;
+        size_t _maxCook;
         std::vector<Cook> _cooks;
         std::map<std::string, int> _ingredientsStock;
     };

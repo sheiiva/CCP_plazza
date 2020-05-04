@@ -23,21 +23,19 @@ namespace Plazza
     {
         private:
             ArgumentsHandler() noexcept = default;
-            ArgumentsHandler(const ArgumentsHandler &b) noexcept = default;
-            ArgumentsHandler(ArgumentsHandler &&b) noexcept = default;
+            ArgumentsHandler(ArgumentsHandler const& b) noexcept = default;
+            ArgumentsHandler(ArgumentsHandler&& b) noexcept = default;
             ~ArgumentsHandler() noexcept = default;
     
-            ArgumentsHandler &operator=(const ArgumentsHandler &rhs) noexcept = default;
-            ArgumentsHandler &operator=(ArgumentsHandler &&rhs) noexcept = default;
+            ArgumentsHandler &operator=(ArgumentsHandler const& rhs) noexcept = default;
+            ArgumentsHandler &operator=(ArgumentsHandler&& rhs) noexcept = default;
     
         private:
-
             int run(int ac, char **av) noexcept;
 
         public:
-
             template <typename Type>
-            static bool isType(Type ret, const std::string &nb)
+            static bool isType(Type ret, std::string const& nb)
             {
                 std::istringstream iss(nb);
 

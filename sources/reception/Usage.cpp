@@ -17,11 +17,11 @@ namespace Plazza
 
         if (infile.fail()) {
             std::cerr << FILEPATH << ": no such file" << std::endl;
-            return;
+        } else {
+            while (std::getline(infile, line))
+                std::cout << line << std::endl;
+            infile.close();
         }
-        while (std::getline(infile, line))
-            std::cout << line << std::endl;
-        infile.close();
     }
 
 }

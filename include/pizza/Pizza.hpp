@@ -8,8 +8,11 @@
 #ifndef PIZZA_HPP
 #define PIZZA_HPP
 
+#include <iostream>
+#include <time.h>
 #include <vector>
 #include <string>
+#include <mutex>
 #include "Recipe.hpp"
 
 namespace Plazza
@@ -20,30 +23,22 @@ namespace Plazza
         public:
             Pizza() noexcept = default;
             Pizza(const std::string &pizzaName, std::vector<int> &neededIngredients, int bakeTime) noexcept;
-            Pizza(const Pizza &b) noexcept = default;
-            Pizza(Pizza &&b) noexcept = default;
+            Pizza(const Pizza &b) noexcept;
+            Pizza(Pizza &&b) noexcept;
             ~Pizza() noexcept = default;
             Pizza &operator=(const Pizza &rhs) noexcept;
-            Pizza &operator=(Pizza &&rhs) noexcept = default;
+            Pizza &operator=(Pizza &&rhs) noexcept;
     
-
         public:
             //GETTERS
-            int getBakeTime(void) const noexcept;
             int getClock(void) const noexcept;
-            std::vector<int> getNeededIngredients() const noexcept;
-            int getNeedIngredients(int index) const noexcept;
             Recipe getRecipe(void) noexcept;
             //SETTERS
-            void setBakeTime(int bakeTime) const noexcept;
-            void setClock(int clock) const noexcept;
-            void setNeededIngredients(int neededIngredient) const noexcept;
+            void setClock(int clock) noexcept;
             //METHODS
-            void bake() noexcept;
-            // Pizza& operator<<(std::list<int> &ingredients) noexcept; // SAME AS bake
-            //Pizza& operator>>(Kitchen const &kitchen) noexcept
+            void bake(void);
 
-        protected:
+        private:
             int _clock;
             Recipe _recipe;
     };

@@ -9,29 +9,29 @@
 #define PARSER_HPP
 
 #include <algorithm>
-#include <queue>
 #include <iostream>
-#include <sstream>
 #include <iterator>
 #include <map>
+#include <queue>
+#include <sstream>
 #include <string>
 
-#include "Pizza.hpp"
 #include "ArgumentsHandler.hpp"
+#include "Pizza.hpp"
 
 namespace Plazza
 {
-    #define PIZZANAME   0
-    #define SIZE        1
-    #define NUMBER      2
+    enum INPUT {
+        PIZZANAME   = 0,
+        SIZE        = 1,
+        NUMBER      = 2
+    };
 
     enum OUTPUT {
         NOACTION        = 0,
         HELP            = 1,
         COMMAND         = 2,
-        ADDPIZZA        = 3,
-        ADDINGREDIENT   = 4,
-        QUIT            = 5
+        QUIT            = 3
     };
 
     class Parser
@@ -46,33 +46,19 @@ namespace Plazza
             Parser &operator=(Parser &&rhs) noexcept = delete;
 
         public:
-            int run(const std::string &input, std::queue<Pizza> &_orders,
-                    std::vector<std::string> &stock, std::map<std::string, Pizza> &menu) noexcept;
+            int run(const std::string &input,
+                    std::queue<Pizza> &_orders,
+                    std::map<std::string, Pizza> &menu);
 
         private:
-            void addIngredientToStock(std::vector<std::string> parsedInput,
-                                        std::vector<std::string> &stock);
-
-            int addItem(std::vector<std::string> parsedInput,
-                                        std::vector<std::string> &stock,
-                                        std::map<std::string, Pizza> &menu);
-
-            void addPizzaToMenu(std::vector<std::string> parsedInput,
-                                        std::vector<std::string> &stock,
-                                        std::map<std::string, Pizza> &menu);
-
-            void addPizzatoOrder(std::vector<std::string> parsedInput, size_t sep,
+            bool isValidSize(std::string const& inputSize) const noexcept;
+            bool isValidName(std::string const& inputName, std::map<std::string, Pizza> menu) const noexcept;
+            size_t isValidNbr(const std::string &inputNbr) const noexcept;
+            bool addPizzatoOrder(std::vector<std::string> parsedInput, size_t sep,
                                         std::queue<Pizza> &orders, 
                                         std::map<std::string, Pizza> menu);
 
             int getIngredient(std::string ingredient, std::vector<std::string> stock) noexcept;
-
-            bool isValidSize(const std::string &inputSize) noexcept;
-
-            bool isValidName(const std::string &inputName, std::map<std::string, Pizza> menu) noexcept;
-
-            size_t isValidNbr(const std::string &inputNbr) noexcept;
-
     };
 
 }

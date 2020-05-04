@@ -16,20 +16,18 @@ namespace Plazza
     {
         public:
             Recipe() noexcept = default;
-            Recipe(const std::string &pizzaName, std::vector<int> ingredients, int bakeTime) noexcept;
-            Recipe(const Recipe &b) noexcept;
-            Recipe(Recipe &&b) noexcept = default;
+            Recipe(std::string const& pizzaName, std::vector<int> ingredients, int bakeTime) noexcept;
+            Recipe(Recipe const& b) noexcept;
+            Recipe(Recipe&& b) noexcept;
             ~Recipe() noexcept = default;
 
-            Recipe &operator=(Recipe &rhs) noexcept = default;
-            Recipe &operator=(Recipe &&rhs) noexcept = default;
+            Recipe& operator=(Recipe const& rhs) noexcept;
+            Recipe& operator=(Recipe&& rhs) noexcept;
 
         public:
             std::string getPizzaName(void) noexcept;
-
-            std::vector<int> getIngredients() const noexcept;
-
-            int getBakeTime() const noexcept;
+            std::vector<int> getIngredients(void) const noexcept;
+            int getBakeTime(void) const noexcept;
 
         private:
             std::string _pizzaName;

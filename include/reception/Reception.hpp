@@ -30,30 +30,28 @@ namespace Plazza
             Reception& operator=(Reception const& rhs) noexcept = delete;
             Reception& operator=(Reception&& rhs) noexcept = delete;
 
+            int run() noexcept;
+        
+        private:
             //GETTERS
+            int getBakeTimeWeight(void) const noexcept;
+            int getMaxCook(void) const noexcept;
+            int getStockRegen(void) const noexcept;
             Kitchen& getKitchen(int index) noexcept;
             int getStock(const std::string &ingredient) const noexcept;
-            Pizza& getPizza(const std::string &pizzaName) noexcept;
-            int getBakeTimeWeight(void) noexcept;
-            int getMaxCook(void) noexcept;
-            int getStockRegen(void) noexcept;
+            Pizza& getPizza(std::string const& pizzaName) noexcept;
             //SETTERS
-            void setKitchen(Kitchen &kitchen) noexcept;
             //METHODS
-            int run() noexcept;
-            std::string read_stdin(void) noexcept;
+            void createNewKitchen(void) noexcept;
+            // bool addToStock(const std::string &ingredient) noexcept;
+            // bool addToMenu(Pizza &pizza) noexcept;
+            // void updateKitchensStock() noexcept;
+            bool assignToKitchen(int importance) noexcept;
+            bool assignOrder(void) noexcept;
             void checkKitchensActivity() noexcept;
             bool status() noexcept;
-            bool addToStock(const std::string &ingredient) noexcept;
-            bool addToMenu(Pizza &pizza) noexcept;
-            // Reception& operator<<(Pizza const &pizza) noexcept; // 
-            // Reception& operator>>(Reception&& rhs) noexcept;
-
-        private:
-            void updateKitchensStock() noexcept;
-            int assignOrder(void) noexcept;
-            void doAction(int action, bool *state) noexcept;
-            bool assignToKitchen(int importance) noexcept;
+            std::string read_stdin(void) noexcept;
+            short doAction(int action) noexcept;
 
         private:
             int _bakeTimeWeight;

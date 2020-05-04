@@ -30,11 +30,9 @@ namespace Plazza
             Usage &operator=(Usage &&rhs) noexcept = default;
     
         private:
-
             void readFromFile(void) noexcept;
 
         public:
-            
             static void show(void) noexcept
             {
                 Usage usage;

@@ -26,12 +26,27 @@ namespace Plazza
         _menu["Fantasia"] = Pizza("Fantasia", ingredients, (4 * _bakeTimeWeight));
     }
 
+    int Reception::getBakeTimeWeight(void) const noexcept
+    {
+        return _bakeTimeWeight;
+    }
+
+    int Reception::getMaxCook(void) const noexcept
+    {
+        return _maxCook;
+    }
+
+    int Reception::getStockRegen(void) const noexcept
+    {
+        return _stockRegen;
+    }
+
     Kitchen& Reception::getKitchen(int index) noexcept
     {
         return _kitchens.at(index);
     }
 
-    int Reception::getStock(const std::string &ingredient) const noexcept
+    int Reception::getStock(std::string const& ingredient) const noexcept
     {
         for (size_t i = 0; i < _stock.size(); i++) {
             if (!_stock[i].compare(ingredient))
@@ -40,87 +55,29 @@ namespace Plazza
         return (-1);
     }
 
-    Pizza& Reception::getPizza(const std::string &pizzaName) noexcept
+    Pizza& Reception::getPizza(std::string const& pizzaName) noexcept
     {
         return _menu[pizzaName];
     }
 
-    int Reception::getBakeTimeWeight(void) noexcept
+    void Reception::createNewKitchen(void) noexcept
     {
-        return _bakeTimeWeight;
-    }
+        Kitchen newKitchen(_stock, _maxCook);
 
-    int Reception::getMaxCook(void) noexcept
-    {
-        return _maxCook;
-    }
-
-    int Reception::getStockRegen(void) noexcept
-    {
-        return _stockRegen;
-    }
-
-    void Reception::setKitchen(Kitchen &kitchen) noexcept
-    {
         std::cout << "New kitchen created!" << std::endl;
-        _kitchens.push_back(kitchen);
+        _kitchens.push_back(newKitchen);
     }
 
-    void Reception::updateKitchensStock() noexcept
-    {
-        for (auto &kitchen : _kitchens)
-            kitchen.updateIngredientsStock(_stock);
-    }
-
-    void Reception::doAction(int action, bool *state) noexcept
-    {
-        switch(action) {
-            case HELP:
-                Usage::show();
-                break;
-            case ADDINGREDIENT:
-                updateKitchensStock();
-                break;
-            case COMMAND:
-                assignOrder();
-                break;
-            case QUIT:
-                *state = 0;
-                break;
-            default:
-                return;
-        }
-    }
-
-    int Reception::run() noexcept
-    {
-        Parser parser;
-        std::string input;
-        short action = 0;
-        bool state = 1;
-
-        while (state) {
-            input.assign(read_stdin());
-            action = parser.run(input, _orders, _stock, _menu);
-            doAction(action, &state);
-        }
-        return (0);
-    }
-
-    std::string Reception::read_stdin(void) noexcept
-    {
-        std::string input;
-
-        getline(std::cin, input);
-        return input;
-    }
+    // void Reception::updateKitchensStock() noexcept
+    // {
+    //     for (auto &kitchen : _kitchens)
+    //         kitchen.updateIngredientsStock(_stock);
+    // }
 
     bool Reception::assignToKitchen(int importance) noexcept
     {
         for (auto &kitchen : _kitchens) {
             if (kitchen.assignOrder(_orders.front(), importance) == true) {
-                std::cout << _orders.front().getRecipe().getPizzaName()
-                            << ": assigned to a cooker!" << std::endl;
                 _orders.pop();
                 return (true);
             }
@@ -128,31 +85,19 @@ namespace Plazza
         return (false);
     }
 
-    int Reception::assignOrder(void) noexcept
+    bool Reception::assignOrder(void) noexcept
     {
-        Kitchen newKitchen(_stock, _maxCook);
-
-        int importance = 1;
-
         while (_orders.empty() == false) {
-            if (_kitchens.empty()) {
-                setKitchen(newKitchen);
-                assignToKitchen(1);
-                continue;
+            if (assignToKitchen(1) == true)
+                return (true);
+            else if (assignToKitchen(2) == true)
+                return (true);
+            else {
+                createNewKitchen();
+                return (assignToKitchen(1));
             }
-            while (importance <= 2) {
-                if (assignToKitchen(importance) == false) {
-                    importance += 1;
-                    if (importance == 3) {
-                        setKitchen(newKitchen);
-                        assignToKitchen(1);
-                    }
-                } else
-                    break;
-            }
-            importance = 1;
         }
-        return (0);
+        return (false);
     }
 
     void Reception::checkKitchensActivity() noexcept
@@ -160,6 +105,7 @@ namespace Plazza
         for (auto it = _kitchens.begin(); it != _kitchens.end(); it++) {
             if (it->getInactiveTime() >= 5) {
                 std::cout << "Inactive kitchen closed." << std::endl;
+                close(it->getPid());
                 it = _kitchens.erase(it);
             }
         }
@@ -169,6 +115,47 @@ namespace Plazza
     {
         // TO DO
         return (true);
+    }
+
+    std::string Reception::read_stdin(void) noexcept
+    {
+        std::string input;
+
+        getline(std::cin, input);
+        return (input);
+    }
+
+    short Reception::doAction(int action) noexcept
+    {
+        switch(action) {
+            case HELP:
+                Usage::show();
+                break;
+            case COMMAND:
+                assignOrder();
+                break;
+            // case ADDINGREDIENT:
+            //     updateKitchensStock();
+                break;
+            case QUIT:
+                return (0);
+            default:
+                return (1);
+        }
+        return (1);
+    }
+
+    int Reception::run() noexcept
+    {
+        Parser parser;
+        std::string input;
+        short action = NOACTION;
+
+        while (doAction(action)) {
+            input.assign(read_stdin());
+            action = parser.run(input, _orders, _menu);
+        }
+        return (0);
     }
 
 }

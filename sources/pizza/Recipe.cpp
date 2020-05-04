@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2019
-** INCLUDE // PIZZA
+** SOURCES // PIZZA
 ** File description:
 ** Recipe.hpp
 */
@@ -14,27 +14,46 @@ namespace Plazza
     {
     }
 
-    Recipe::Recipe(const Recipe &b) noexcept
+    Recipe::Recipe(Recipe const& b) noexcept :
+        _pizzaName(b._pizzaName), _ingredients(b._ingredients), _bakeTime(b._bakeTime)
     {
-        std::vector<int> newlist(b._ingredients);
+    }
 
-        _pizzaName.assign(b._pizzaName);
-        _ingredients.swap(newlist);
-        _bakeTime = b._bakeTime;
+    Recipe::Recipe(Recipe&& b) noexcept :
+        _pizzaName(std::move(b._pizzaName)),
+        _ingredients(std::move(b._ingredients)),
+        _bakeTime(b._bakeTime)
+    {
+    }
+
+    Recipe& Recipe::operator=(Recipe const& rhs) noexcept
+    {
+        _pizzaName = rhs._pizzaName;
+        _ingredients = rhs._ingredients;
+        _bakeTime = rhs._bakeTime;
+        return (*this);
+    }
+
+    Recipe& Recipe::operator=(Recipe&& rhs) noexcept
+    {
+        _pizzaName.assign(rhs._pizzaName);
+        _ingredients.swap(rhs._ingredients);
+        _bakeTime = rhs._bakeTime;
+        return (*this);
     }
 
     std::string Recipe::getPizzaName(void) noexcept
     {
-        return _pizzaName;
+        return (_pizzaName);
     }
 
-    std::vector<int> Recipe::getIngredients() const noexcept
+    std::vector<int> Recipe::getIngredients(void) const noexcept
     {
-        return _ingredients;
+        return (_ingredients);
     }
 
-    int Recipe::getBakeTime() const noexcept
+    int Recipe::getBakeTime(void) const noexcept
     {
-        return _bakeTime;
+        return (_bakeTime);
     }
 }
