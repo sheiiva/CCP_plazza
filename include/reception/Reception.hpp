@@ -43,9 +43,6 @@ namespace Plazza
             //SETTERS
             //METHODS
             void createNewKitchen(void) noexcept;
-            // bool addToStock(const std::string &ingredient) noexcept;
-            // bool addToMenu(Pizza &pizza) noexcept;
-            // void updateKitchensStock() noexcept;
             bool assignToKitchen(int importance) noexcept;
             bool assignOrder(void) noexcept;
             void checkKitchensActivity() noexcept;

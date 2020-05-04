@@ -68,12 +68,6 @@ namespace Plazza
         _kitchens.push_back(newKitchen);
     }
 
-    // void Reception::updateKitchensStock() noexcept
-    // {
-    //     for (auto &kitchen : _kitchens)
-    //         kitchen.updateIngredientsStock(_stock);
-    // }
-
     bool Reception::assignToKitchen(int importance) noexcept
     {
         for (auto &kitchen : _kitchens) {
@@ -134,8 +128,6 @@ namespace Plazza
             case COMMAND:
                 assignOrder();
                 break;
-            // case ADDINGREDIENT:
-            //     updateKitchensStock();
                 break;
             case QUIT:
                 return (0);

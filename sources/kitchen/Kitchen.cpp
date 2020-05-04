@@ -14,14 +14,18 @@ namespace Plazza
     {
         for (auto &ingredient : stock)
             _ingredientsStock[ingredient] = 5;
+        if (pipe(_pipefd) == -1) {
+            std::cerr << "Pipe :: failed" << std::endl;
+            this->~Kitchen();
+            return;
+        }
         _pid = fork();
         if (_pid == -1) {
             std::cerr << "Fork failed :: Can't create a new Kitchen" << std::endl;
             this->~Kitchen();
-        } else if (!_pid) {
+            return;
+        } else if (!_pid)
             _pid = getpid();
-            _ppid = getppid();
-        }
     }
 
     Kitchen::Kitchen(Kitchen const& b) noexcept :
