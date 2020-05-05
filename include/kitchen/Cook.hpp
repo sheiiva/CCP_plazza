@@ -20,16 +20,16 @@ namespace Plazza
         INACTIVE    = 0,
         ACTIVE      = 1
     };
-
+    class Pizza;
     class Kitchen;
     class Cook
     {
     public:
-        Cook() noexcept = delete;
+        Cook() noexcept;
+        ~Cook() noexcept = default;
         Cook(Kitchen const& Kitchen) noexcept;
         Cook(Cook const& b) noexcept;
         Cook(Cook&& b) noexcept;
-        ~Cook() noexcept = default;
         Cook& operator=(Cook const& rhs) noexcept;
         Cook& operator=(Cook&& rhs) noexcept;
         
