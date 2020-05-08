@@ -104,7 +104,7 @@ namespace Plazza
 
     void Reception::status() const noexcept
     {
-        size_t i = 0;
+        size_t i = 1;
 
         for (auto &kitchen : _kitchens) {
             std::cout << "Kitchen no. " << i++ <<  ":" << std::endl;

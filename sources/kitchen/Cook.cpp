@@ -9,12 +9,12 @@
 
 namespace Plazza
 {
-    Cook::Cook(Pizza const& pizza) noexcept :
-        _status(STATUS::ACTIVE)
+    Cook::Cook(Pizza const& pizza) noexcept
     {
         _orders.push(pizza);
         std::cout << _orders.back().getRecipe().getPizzaName()
                     << ": assigned to a cooker!" << std::endl;
+        setStatus(_status+1);
         cook();
     }
 
@@ -57,6 +57,7 @@ namespace Plazza
         if (_orders.size() > 2)
             return (false);
         _orders.push(pizza);
+        setStatus(_status+1);
         std::cout << _orders.back().getRecipe().getPizzaName()
                     << ": assigned to a cooker!" << std::endl;
         return (true);
@@ -68,8 +69,8 @@ namespace Plazza
         if (thread.joinable())
             thread.join();
         _orders.pop();
+        _status = ((_status - 1) <= INACTIVE) ? INACTIVE : (_status - 1);
         if (_orders.empty() == false)
             cook();
-        _status = ((_status - 1) <= INACTIVE) ? INACTIVE : (_status - 1);
     }
 }

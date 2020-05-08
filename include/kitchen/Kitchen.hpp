@@ -21,6 +21,7 @@
 #include <sys/types.h>
 #include <time.h>
 #include <unistd.h>
+#include <stdio.h>
 
 #include "Cook.hpp"
 #include "Pizza.hpp"
