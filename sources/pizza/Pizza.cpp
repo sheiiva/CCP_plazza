@@ -55,14 +55,13 @@ namespace Plazza {
 
     void Pizza::bake(void)
     {
-        std::mutex mutex;
+        // std::mutex mutex;
         int initTime = time(NULL);
 
-        mutex.lock();
+        // mutex.lock();
         std::cout << "Let's bake a " << _recipe.getPizzaName() << "..." << std::endl;
-        // std::cout << (time(NULL) - initTime) << std::endl;
         while ((time(NULL) - initTime) <= _recipe.getBakeTime());
         std::cout << _recipe.getPizzaName() << " ready!" << std::endl;
-        mutex.unlock();
+        // mutex.unlock();
     }
 }
