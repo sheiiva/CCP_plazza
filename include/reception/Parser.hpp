@@ -31,7 +31,8 @@ namespace Plazza
         NOACTION        = 0,
         HELP            = 1,
         COMMAND         = 2,
-        QUIT            = 3
+        STATUS          = 3,
+        QUIT            = 4
     };
 
     class Parser

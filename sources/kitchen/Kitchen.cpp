@@ -222,7 +222,7 @@ namespace Plazza
         }
     }
 
-    void Kitchen::status(void)
+    void Kitchen::status(void) const
     {
         std::string command;
 
@@ -233,6 +233,17 @@ namespace Plazza
                 std::cerr << "Write :: Can't write in the pipe" << std::endl;
             close(_pipefd[WRITE_END]);
         } else {
+            for (auto &cook : _cooks) {
+                if (cook.getStatus() == INACTIVE)
+                    std::cout << "Cook inactive." << std::endl;
+                else {
+                    std::cout << "Cook is cooking";
+                    if (cook.getStatus() == BUSY)
+                        std::cout << ", another pending order." << std::endl;
+                    else
+                        std::cout << "." << std::endl;
+                }
+            }
             std::cout << "this is kitchen's status" << std::endl;
         }
     }

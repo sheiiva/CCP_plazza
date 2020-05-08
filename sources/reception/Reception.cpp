@@ -102,10 +102,15 @@ namespace Plazza
         }
     }
 
-    bool Reception::status() noexcept
+    void Reception::status() const noexcept
     {
-        // TO DO
-        return (true);
+        size_t i = 0;
+
+        for (auto &kitchen : _kitchens) {
+            std::cout << "Kitchen no. " << i++ <<  ":" << std::endl;
+            kitchen.status();
+            std::cout << std::endl;
+        }
     }
 
     std::string Reception::read_stdin(void) noexcept
@@ -124,6 +129,9 @@ namespace Plazza
                 break;
             case COMMAND:
                 assignOrder();
+                break;
+            case STATUS:
+                status();
                 break;
             case QUIT:
                 for (auto &kitchen : _kitchens)

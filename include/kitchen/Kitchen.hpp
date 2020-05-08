@@ -60,7 +60,7 @@ namespace Plazza
             bool assignOrder(Pizza& pizza, int importance) noexcept;
             bool childLoop(void);
             bool parsInput(std::string&& command);
-            void status(void);
+            void status(void) const;
             void quit(void);
 
         private:

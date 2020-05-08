@@ -83,6 +83,8 @@ namespace Plazza
 
         if (!command.compare("HELP"))
             return (HELP);
+        else if (!command.compare("status"))
+            return (STATUS);
         else if (!command.compare("QUIT"))
             return (QUIT);
         return (addPizzatoOrder(parsedInput, sep, orders, menu) == true ? COMMAND : NOACTION);

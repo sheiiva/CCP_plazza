@@ -46,7 +46,7 @@ namespace Plazza
             bool assignToKitchen(int importance) noexcept;
             void assignOrder(void) noexcept;
             void checkKitchensActivity() noexcept;
-            bool status() noexcept;
+            void status() const noexcept;
             std::string read_stdin(void) noexcept;
             bool doAction(int action) noexcept;
 
