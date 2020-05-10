@@ -1,1 +1,33 @@
-this is the usage
+-----------------------------------
+|           The Plazza            |
+|                                 |
+|   PIZZA               SIZE      |
+|                                 |
+| Regina            S M L XL XXL  |
+| Fantasia          S M L XL XXL  |
+| Margarita         S M L XL XXL  |
+| Americana         S M L XL XXL  |
+-----------------------------------
+
+The program takes three arguments:
+
+1st parameter: a multiplier for the cooking time of pizzas.
+2nd parameter: number of cooks per kitchen.
+3rd parameter: time in milliseconds.
+
+Example
+------------------------
+|   ./plazza 2 5 2000  |
+------------------------
+
+Simple command:
+
+TYPE = Regina|Margarita|Americana|Fantasia
+SIZE = S|M|L|XL|XXL
+NUMBER = x[1..9][0..9]*
+
+TYPE SIZE NUMBER [;...]
+Example
+----------------------------------------------------
+|   Regina XXL x2; Fantasia M x3; Margarita S x1   |
+----------------------------------------------------
