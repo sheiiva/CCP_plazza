@@ -32,51 +32,6 @@ namespace Plazza
         }
     }
 
-    bool Kitchen::parsInput(std::string&& command)
-    {
-        std::replace(command.begin(), command.end(), ';', ' ');
-        std::istringstream iss(command);
-        std::vector<std::string> parsedInput(std::istream_iterator<std::string>{iss},
-                                        std::istream_iterator<std::string>()); 
-
-        std::cout << "Command: " << command << std::endl;
-        if (!command.compare("QUIT"))
-            _exit(EXIT_SUCCESS);
-        else if (!command.compare("STATUS"))
-            status();
-        else if (!parsedInput[0].compare("PIZZA"))
-            return (assignOrder(_menu[parsedInput[1]], atoi(parsedInput[2].c_str())));
-        return (true);
-    }
-
-    bool Kitchen::childLoop()
-    {
-        pollfd pfds;
-        char c;
-        char buf[100];
-        size_t i = 0;
-        bool status = true;
-
-        pfds.fd = _pipefd[READ_END];
-        pfds.events = POLLIN;
-        if (close(_pipefd[WRITE_END]) == -1)
-            std::cerr << "Close :: can't close unused write end" << std::endl;
-        memset(buf, 0, 100);
-        while(status) {
-            if (poll(&pfds, 2, -1)) {
-                std::cout << "Got a input!" << std::endl;
-                while (read(_pipefd[READ_END], &c, 1) > 0)
-                    buf[i++] = c;
-                i = 0;
-                std::cout << "input: " << buf << std::endl;
-                close(_pipefd[READ_END]);
-                parsInput(std::string(buf));
-                memset(buf, 0, 100);
-            }
-        }
-        _exit(EXIT_SUCCESS);
-    }
-
     Kitchen::Kitchen(Kitchen const& b) noexcept :
         _pid(b._pid),
         _inactiveTime(b._inactiveTime),
@@ -200,7 +155,6 @@ namespace Plazza
             command.append(";");
             command.append(std::to_string(importance));
             fdopen(_pipefd[1], "w");
-            std::cout << "PARENT COMMAND: " << std::endl;
             if (write(_pipefd[WRITE_END], command.c_str(), command.length()) == -1)
                 std::cerr << "Write :: Can't write in the pipe" << std::endl;
             close(_pipefd[WRITE_END]);
@@ -244,7 +198,6 @@ namespace Plazza
                         std::cout << "." << std::endl;
                 }
             }
-            std::cout << "this is kitchen's status" << std::endl;
         }
     }
 
@@ -253,7 +206,6 @@ namespace Plazza
         std::string command;
 
         if (_ppid == getpid()) {
-            std::cout << "PARENT: About to quit" << std::endl;
             command.assign("QUIT");
             fdopen(_pipefd[1], "w");
             if (write(_pipefd[WRITE_END], command.c_str(), command.length()) == -1)
@@ -261,6 +213,48 @@ namespace Plazza
             close(_pipefd[WRITE_END]);
         } else
             _exit(EXIT_SUCCESS);
+    }
+
+    bool Kitchen::parsInput(std::string&& command)
+    {
+        std::replace(command.begin(), command.end(), ';', ' ');
+        std::istringstream iss(command);
+        std::vector<std::string> parsedInput(std::istream_iterator<std::string>{iss},
+                                        std::istream_iterator<std::string>()); 
+
+        if (!command.compare("QUIT"))
+            _exit(EXIT_SUCCESS);
+        else if (!command.compare("STATUS"))
+            status();
+        else if (!parsedInput[0].compare("PIZZA"))
+            return (assignOrder(_menu[parsedInput[1]], atoi(parsedInput[2].c_str())));
+        return (true);
+    }
+
+    bool Kitchen::childLoop()
+    {
+        pollfd pfds;
+        char c;
+        char buf[100];
+        size_t i = 0;
+        bool status = true;
+
+        pfds.fd = _pipefd[READ_END];
+        pfds.events = POLLIN;
+        if (close(_pipefd[WRITE_END]) == -1)
+            std::cerr << "Close :: can't close unused write end" << std::endl;
+        memset(buf, 0, 100);
+        while(status) {
+            if (poll(&pfds, 2, -1)) {
+                while (read(_pipefd[READ_END], &c, 1) > 0)
+                    buf[i++] = c;
+                i = 0;
+                close(_pipefd[READ_END]);
+                parsInput(std::string(buf));
+                memset(buf, 0, 100);
+            }
+        }
+        _exit(EXIT_SUCCESS);
     }
 
 }
