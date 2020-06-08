@@ -16,7 +16,7 @@ namespace Plazza
         std::string line;
 
         if (infile.fail()) {
-            std::cerr << FILEPATH << ": no such file" << std::endl;
+            std::cerr << FILEPATH << ": no such file." << std::endl;
         } else {
             while (std::getline(infile, line))
                 std::cout << line << std::endl;

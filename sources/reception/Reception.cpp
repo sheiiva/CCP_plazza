@@ -12,53 +12,86 @@ namespace Plazza
     Reception::Reception(int bakeTimeWeight, int maxCook, int stockRegen) noexcept:
         _bakeTimeWeight(bakeTimeWeight), _maxCook(maxCook), _stockRegen(stockRegen)
     {
-        std::vector<int> ingredients;
-
-        _stock = {"doe", "tomato", "gruyere", "ham", "mushrooms",
-                    "steak","eggplant", "goat cheese", "chief love"};
-        ingredients.assign({0, 1, 2});
-        _menu["Margarita"] = Pizza("Margarita", ingredients, (1 * _bakeTimeWeight));
-        ingredients.assign({0, 1, 2, 3, 4});
-        _menu["Regina"] = Pizza("Regina", ingredients, (2 * _bakeTimeWeight));
-        ingredients.assign({0, 1, 2, 5});
-        _menu["Americana"] = Pizza("Americana", ingredients, (2 * _bakeTimeWeight));
-        ingredients.assign({0, 1, 6, 7, 8});
-        _menu["Fantasia"] = Pizza("Fantasia", ingredients, (4 * _bakeTimeWeight));
+        initStock();
+        initMenu();
     }
 
     int Reception::getBakeTimeWeight(void) const noexcept
     {
-        return _bakeTimeWeight;
+        return (_bakeTimeWeight);
+    }
+
+    void Reception::setBakeTimeWeight(int value) noexcept
+    {
+        _bakeTimeWeight = value;
     }
 
     int Reception::getMaxCook(void) const noexcept
     {
-        return _maxCook;
+        return (_maxCook);
+    }
+
+    void Reception::setMaxCook(int value) noexcept
+    {
+        _maxCook = value;
     }
 
     int Reception::getStockRegen(void) const noexcept
     {
-        return _stockRegen;
+        return (_stockRegen);
     }
 
-    Kitchen& Reception::getKitchen(int index) noexcept
+    void Reception::setStockRegen(int value) noexcept
     {
-        return _kitchens.at(index);
+        _stockRegen = value;
+    } 
+
+    void Reception::initStock(void) noexcept
+    {
+        _stock["doe"] = 0;
+        _stock["tomato"] = 1;
+        _stock["gruyere"] = 2;
+        _stock["ham"] = 3;
+        _stock["mushrooms"] = 4;
+        _stock["steak"] = 5;
+        _stock["eggplant"] = 6;
+        _stock["cheese"] = 7;
+        _stock["chief love"] = 8;
     }
 
-    int Reception::getStock(std::string const& ingredient) const noexcept
+    void Reception::initMenu(void) noexcept
     {
-        for (size_t i = 0; i < _stock.size(); i++) {
-            if (!_stock[i].compare(ingredient))
-                return (i);
-        }
-        return (-1);
+        std::vector<int> ingredients;
+    
+        ingredients.assign({_stock["doe"], _stock["tomato"], _stock["gruyere"]});
+        _menu["Margarita"] = Pizza("Margarita", ingredients, (1 * _bakeTimeWeight));
+        ingredients.assign({_stock["doe"], _stock["tomato"], _stock["gruyere"],_stock["ham"], _stock["mushrooms"]});
+        _menu["Regina"] = Pizza("Regina", ingredients, (2 * _bakeTimeWeight));
+        ingredients.assign({_stock["doe"], _stock["tomato"], _stock["gruyere"], _stock["steak"]});
+        _menu["Americana"] = Pizza("Americana", ingredients, (2 * _bakeTimeWeight));
+        ingredients.assign({_stock["doe"], _stock["tomato"], _stock["eggplant"], _stock["cheese"], _stock["chief love"]});
+        _menu["Fantasia"] = Pizza("Fantasia", ingredients, (4 * _bakeTimeWeight));
     }
 
-    Pizza& Reception::getPizza(std::string const& pizzaName) noexcept
-    {
-        return _menu[pizzaName];
-    }
+
+    // Kitchen& Reception::getKitchen(int index) noexcept
+    // {
+    //     return _kitchens.at(index);
+    // }
+
+//     int Reception::getStock(std::string const& ingredient) const noexcept
+//     {
+//         for (size_t i = 0; i < _stock.size(); i++) {
+//             if (!_stock[i].compare(ingredient))
+//                 return (i);
+//         }
+//         return (-1);
+//     }
+
+//     Pizza& Reception::getPizza(std::string const& pizzaName) noexcept
+//     {
+//         return _menu[pizzaName];
+//     }
 
     void Reception::createNewKitchen(void) noexcept
     {
@@ -85,27 +118,30 @@ namespace Plazza
             if (assignToKitchen(1) == false) {
                 if (assignToKitchen(2) == false) {
                     createNewKitchen();
-                    assignToKitchen(1);
                 }
             }
         }
     }
 
-    void Reception::checkKitchensActivity() noexcept
-    {
-        for (auto it = _kitchens.begin(); it != _kitchens.end(); it++) {
-            if (it->getInactiveTime() >= 5) {
-                std::cout << "Inactive kitchen closed." << std::endl;
-                close(it->getPid());
-                it = _kitchens.erase(it);
-            }
-        }
-    }
+//     void Reception::checkKitchensActivity() noexcept
+//     {
+//         for (auto it = _kitchens.begin(); it != _kitchens.end(); it++) {
+//             if (it->getInactiveTime() >= 5) {
+//                 std::cout << "Inactive kitchen closed." << std::endl;
+//                 close(it->getPid());
+//                 it = _kitchens.erase(it);
+//             }
+//         }
+//     }
 
     void Reception::status() const noexcept
     {
         size_t i = 0;
 
+        if (_kitchens.size() == 0) {
+            std::cout << "Everyone is sleeping..." << std::endl;
+            return;
+        }
         for (auto &kitchen : _kitchens) {
             std::cout << "Kitchen no. " << i++ <<  ":" << std::endl;
             kitchen.status();
@@ -121,7 +157,7 @@ namespace Plazza
         return (input);
     }
 
-    bool Reception::doAction(int action) noexcept
+    bool Reception::process(int action) noexcept
     {
         switch(action) {
             case HELP:
@@ -138,7 +174,7 @@ namespace Plazza
                     kitchen.quit();
                 return (false);
             default:
-                return (true);
+               break;
         }
         return (true);
     }
@@ -149,11 +185,11 @@ namespace Plazza
         std::string input;
         short action = NOACTION;
 
-        while (doAction(action)) {
-            input.assign(read_stdin());
+        while (process(action)) {
+            input.assign(std::move(read_stdin()));
             action = parser.run(input, _orders, _menu);
         }
-        return (0);
+        return (SUCCESS);
     }
 
 }

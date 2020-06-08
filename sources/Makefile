@@ -22,14 +22,13 @@ INCLUDES	=	-I./$(INCLUDE_PATH)$(KITCHEN_PATH) 		\
 				-I./$(INCLUDE_PATH)$(PIZZA_PATH) 		\
 				-I./$(INCLUDE_PATH)$(RECEPTION_PATH)
 
-override CPPFLAGS 	+=	-W -Wall -Werror -Wextra $(INCLUDES) -std=c++11 -pthread
+override CPPFLAGS 	+=	-W -Wall -Werror -Wextra $(INCLUDES) -std=c++11 -pthread -g
 override LDFLAGS 	+=
 override LDLIBS 	+=
 
 TST_SRC		=	$(KITCHEN_PATH)Kitchen.cpp				\
 				$(KITCHEN_PATH)Cook.cpp					\
 				$(PIZZA_PATH)Pizza.cpp					\
-				$(PIZZA_PATH)Recipe.cpp					\
 				$(RECEPTION_PATH)ArgumentsHandler.cpp	\
 				$(RECEPTION_PATH)Parser.cpp				\
 				$(RECEPTION_PATH)Reception.cpp			\

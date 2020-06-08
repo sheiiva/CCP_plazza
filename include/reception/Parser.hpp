@@ -6,62 +6,56 @@
 */
 
 #ifndef PARSER_HPP
-#define PARSER_HPP
+    #define PARSER_HPP
 
-#include <algorithm>
-#include <iostream>
-#include <iterator>
-#include <map>
-#include <queue>
-#include <sstream>
-#include <string>
+    #include <algorithm>
+    #include <iostream>
+    #include <iterator>
+    #include <queue>
+    #include <map>
+    #include <sstream>
+    #include <string>
 
-#include "ArgumentsHandler.hpp"
-#include "Pizza.hpp"
+    #include "ArgumentsHandler.hpp"
+    #include "Pizza.hpp"
 
-namespace Plazza
-{
-    enum INPUT {
-        PIZZANAME   = 0,
-        SIZE        = 1,
-        NUMBER      = 2
-    };
-
-    enum OUTPUT {
-        NOACTION        = 0,
-        HELP            = 1,
-        COMMAND         = 2,
-        STATUS          = 3,
-        QUIT            = 4
-    };
-
-    class Parser
+    namespace Plazza
     {
-        public:
-            Parser() noexcept = default;
-            Parser(const Parser &b) noexcept = default;
-            Parser(Parser &&b) noexcept = default;
-            ~Parser() noexcept = default;
+        enum PIZZA_ORDER_FORMAT {
+            PIZZANAME,
+            SIZE,
+            NUMBER,
+        };
 
-            Parser &operator=(const Parser &rhs) noexcept = delete;
-            Parser &operator=(Parser &&rhs) noexcept = delete;
+        enum ACTION {
+            NOACTION,
+            HELP,
+            COMMAND,
+            STATUS ,
+            QUIT
+        };
 
-        public:
-            int run(const std::string &input,
-                    std::queue<Pizza> &_orders,
-                    std::map<std::string, Pizza> &menu);
+        class Parser
+        {
+            public:
+                Parser() noexcept = default;
+                Parser(Parser const& b) noexcept = default;
+                Parser(Parser&& b) noexcept = default;
+                ~Parser() noexcept = default;
 
-        private:
-            bool isValidSize(std::string const& inputSize) const noexcept;
-            bool isValidName(std::string const& inputName, std::map<std::string, Pizza> menu) const noexcept;
-            size_t isValidNbr(const std::string &inputNbr) const noexcept;
-            bool addPizzatoOrder(std::vector<std::string> parsedInput, size_t sep,
-                                        std::queue<Pizza> &orders, 
-                                        std::map<std::string, Pizza> menu);
+                Parser &operator=(Parser const& rhs) noexcept = default;
+                Parser &operator=(Parser&& rhs) noexcept = default;
 
-            int getIngredient(std::string ingredient, std::vector<std::string> stock) noexcept;
-    };
+            public:
+                int run(std::string const& input, std::queue<Pizza>& _orders, std::map<std::string, Pizza>& menu);
+                std::vector<std::string> splitInput(std::string const& string, size_t *sep);
+                bool isValidPizzaSize(std::string const& inputSize) const noexcept;
+                bool isValidPizzaName(std::string const& inputName, std::map<std::string, Pizza> menu) const noexcept;
+                size_t isValidNbrFormat(std::string const& inputNbr) const noexcept;
+                bool addPizzatoOrder(std::vector<std::string> parsedInput, size_t sep, 
+                                    std::queue<Pizza>& orders, std::map<std::string, Pizza> menu);
+        };
 
-}
+    }
 
 #endif /* !PARSER_HPP */

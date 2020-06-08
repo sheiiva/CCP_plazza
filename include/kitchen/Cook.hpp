@@ -6,47 +6,54 @@
 */
 
 #ifndef COOK_HPP
-#define COOK_HPP
+    #define COOK_HPP
 
-#include <functional>
-#include <iostream>
-#include <mutex>
-#include <queue>
-#include <thread>
+    #include <functional>
+    #include <iostream>
+    #include <mutex>
+    #include <queue>
+    #include <thread>
+    #include <unistd.h>
+    #include <condition_variable>
 
-#include "Pizza.hpp"
+    #include "Pizza.hpp"
 
-namespace Plazza
-{
-    enum STATUS {
-        INACTIVE    = 0,
-        ACTIVE      = 1,
-        BUSY        = 2
-    };
-
-    class Cook
+    namespace Plazza
     {
-        public:
-            Cook() noexcept = delete;
-            Cook(Pizza const& pizza) noexcept;
-            Cook(Cook const& b) noexcept;
-            Cook(Cook&& b) noexcept;
-            ~Cook() noexcept = default;
-            Cook& operator=(Cook const& rhs) noexcept;
-            Cook& operator=(Cook&& rhs) noexcept;
+        enum STATUS {
+            FIRED       = -1,
+            INACTIVE    = 0,
+            ACTIVE      = 1,
+            BUSY        = 2
+        };
 
-            //GETTERS
-            int getStatus() const noexcept;
-            //SETTERS
-            void setStatus(int status) noexcept;
-            //METHODS
-            bool assignOrder(Pizza const& pizza) noexcept;
-            void cook();
+        class Cook
+        {
+            public:
+                Cook();
+                Cook(Cook const& b) noexcept = delete;
+                Cook(Cook&& b) noexcept = delete;
+                ~Cook() noexcept;
+                Cook& operator=(Cook const& rhs) noexcept = delete;
+                Cook& operator=(Cook&& rhs) noexcept = delete;
 
-        private:
-            int _status;
-            std::queue<Pizza> _orders;
-    };
-}
+                //GETTERS
+                int getStatus() const noexcept;
+                //SETTERS
+                void setStatus(int status) noexcept;
+                //METHODS
+                bool assignOrder(Pizza const& pizza) noexcept;
+                void bake(void);
+                void unlock(void);
+                bool pred(void);
+
+            private:
+                std::condition_variable _condition;
+                int _status = INACTIVE;
+                std::queue<Pizza> _orders;
+                std::thread _thread;
+        };
+    
+    }
 
 #endif /* !COOK_HPP */

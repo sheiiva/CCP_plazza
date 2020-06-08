@@ -9,52 +9,71 @@
 
 namespace Plazza
 {
-    Kitchen::Kitchen(std::map<std::string, Pizza> menu, std::vector<std::string> stock, int maxCook) noexcept :
-        _pid(0), _ppid(getpid()),_inactiveTime(time(NULL)), _maxCook(maxCook), _menu(menu)
+    Kitchen::Kitchen(std::map<std::string, Pizza> menu, std::map<std::string, int> stock, int maxCook) noexcept :
+        _childPid(0), _parentPid(getpid()),_inactiveTime(time(NULL)), _maxCook(maxCook), _menu(menu)
     {
-        for (auto &ingredient : stock)
-            _ingredientsStock[ingredient] = 5;
-        if (pipe(_pipefd) == -1) {
-            std::cerr << "Pipe :: failed" << std::endl;
-            this->~Kitchen();
+        if (pipe(_pipefdP) == -1) {
+            perror("Pipe :: failed");
+            // this->~Kitchen(); // PREFER TO THROW AN ERROR AND quit THE PROGRAM
             return;
         }
-        _pid = fork();
-        if (_pid == -1) {
-            std::cerr << "Fork failed :: Can't create a new Kitchen" << std::endl;
-            this->~Kitchen();
-        } else if (_pid) {
-            if (close(_pipefd[READ_END]) == -1)
-                std::cerr << "Close :: can't close unused read end" << std::endl;
-        } else {
-            _pid = getpid();
+        if (pipe(_pipefdC) == -1) {
+            perror("Pipe :: failed");
+            // this->~Kitchen(); // PREFER TO THROW AN ERROR AND quit THE PROGRAM
+            return;
+        }
+        _childPid = fork();
+        if (_childPid == -1) {
+            perror("Fork failed :: Can't create a new Kitchen");
+            // this->~Kitchen(); // PREFER TO THROW AN ERROR AND quit THE PROGRAM
+        } else if (_childPid == 0) {
+            for (auto &ingredient : stock)
+                _ingredientsStock[ingredient.first] = 5;
+            for (size_t i = 0; i < _maxCook ; i++)
+                _cooks.push_back(new Cook());
+            _childPid = getpid();
             childLoop();
         }
     }
 
     Kitchen::Kitchen(Kitchen const& b) noexcept :
-        _pid(b._pid),
+        _childPid(b._childPid),
+        _parentPid(b._parentPid),
         _inactiveTime(b._inactiveTime),
         _maxCook(b._maxCook),
         _cooks(b._cooks),
         _ingredientsStock(b._ingredientsStock),
         _menu(b._menu)
     {
+        _pipefdP[READ_END] = b._pipefdP[READ_END];
+        _pipefdP[WRITE_END] = b._pipefdP[WRITE_END];
+        _pipefdC[READ_END] = b._pipefdC[READ_END];
+        _pipefdC[WRITE_END] = b._pipefdC[WRITE_END];
     }
 
     Kitchen::Kitchen(Kitchen&& b) noexcept :
-        _pid(b._pid),
+        _childPid(b._childPid),
+        _parentPid(b._parentPid),
         _inactiveTime(b._inactiveTime),
         _maxCook(b._maxCook),
         _cooks(std::move(b._cooks)),
         _ingredientsStock(std::move(b._ingredientsStock)),
         _menu(std::move(b._menu))
     {
+        _pipefdP[READ_END] = b._pipefdP[READ_END];
+        _pipefdP[WRITE_END] = b._pipefdP[WRITE_END];
+        _pipefdC[READ_END] = b._pipefdC[READ_END];
+        _pipefdC[WRITE_END] = b._pipefdC[WRITE_END];
     }
 
     Kitchen &Kitchen::operator=(Kitchen const& rhs) noexcept
     {
-        _pid = rhs._pid;
+        _pipefdP[READ_END] = rhs._pipefdP[READ_END];
+        _pipefdP[WRITE_END] = rhs._pipefdP[WRITE_END];
+        _pipefdC[READ_END] = rhs._pipefdC[READ_END];
+        _pipefdC[WRITE_END] = rhs._pipefdC[WRITE_END];
+        _childPid = rhs._childPid;
+        _parentPid = rhs._parentPid;
         _inactiveTime = rhs._inactiveTime;
         _maxCook = rhs._maxCook,
         _cooks = rhs._cooks;
@@ -65,7 +84,12 @@ namespace Plazza
 
     Kitchen &Kitchen::operator=(Kitchen&& rhs) noexcept
     {
-        _pid = rhs._pid;
+        _pipefdP[READ_END] = rhs._pipefdP[READ_END];
+        _pipefdP[WRITE_END] = rhs._pipefdP[WRITE_END];
+        _pipefdC[READ_END] = rhs._pipefdC[READ_END];
+        _pipefdC[WRITE_END] = rhs._pipefdC[WRITE_END];
+        _childPid = rhs._childPid;
+        _parentPid = rhs._parentPid;
         _inactiveTime = rhs._inactiveTime;
         _maxCook = rhs._maxCook,
         _cooks.swap(rhs._cooks);
@@ -74,14 +98,19 @@ namespace Plazza
         return (*this);
     }
 
-    pid_t Kitchen::getPid() const noexcept
+    Kitchen::~Kitchen() noexcept
     {
-        return (_pid);
+        for (auto &cook : _cooks)
+            delete cook;
     }
 
-    pid_t Kitchen::getPpid() const noexcept
+    pid_t Kitchen::getChildPid() const noexcept
     {
-        return (_ppid);
+        return (_childPid);
+    }
+    pid_t Kitchen::getParentPid() const noexcept
+    {
+        return (_parentPid);
     }
 
     time_t Kitchen::getInactiveTime(void) const noexcept
@@ -94,10 +123,10 @@ namespace Plazza
         return (_maxCook);
     }
     
-    Cook Kitchen::getCook(int index) const
-    {
-        return (_cooks[index]);
-    }
+    // Cook Kitchen::getCook(int index) const
+    // {
+    //     return (_cooks[index]);
+    // }
     
     int Kitchen::getIngredientStock(std::string const& ingredient) const noexcept
     {
@@ -106,96 +135,100 @@ namespace Plazza
 
     Pizza& Kitchen::getPizza(std::string const& pizzaName) noexcept
     {
-        return _menu[pizzaName];
+        return (_menu[pizzaName]);
     }
 
-    void Kitchen::setInactiveTime(time_t time) noexcept
+    void Kitchen::setIngredientStock(std::string const& ingredient, int stock) noexcept
     {
-        _inactiveTime = time;
-    }
-    
-    void Kitchen::setIngredientToStock(std::string const& ingredient) noexcept
-    {
-        _ingredientsStock.emplace(ingredient, 5);
+        _ingredientsStock[ingredient] = stock;
     }
 
-    void Kitchen::updateTime(bool reset) noexcept
-    {
-        static long int initialTime = time(NULL);
+    // void Kitchen::updateTime(bool reset) noexcept
+    // {
+    //     static long int initialTime = time(NULL);
 
-        if (reset)
-            initialTime = time(NULL);
-        _inactiveTime = time(NULL) - initialTime;
-    }
+    //     if (reset)
+    //         initialTime = time(NULL);
+    //     _inactiveTime = time(NULL) - initialTime;
+    // }
 
-    bool Kitchen::isKitchenActive(void) noexcept
-    {
-        if (_cooks.size() != 0) {
-            updateTime(true);
-            return (true);
-        } else {
-            updateTime(false);
-            return (false);
-        }
-    }
+    // bool Kitchen::isKitchenActive(void) noexcept
+    // {
+    //     if (_cooks.size() != 0) {
+    //         updateTime(true);
+    //         return (true);
+    //     } else {
+    //         updateTime(false);
+    //         return (false);
+    //     }
+    // }
 
-    void Kitchen::contractCook(Pizza const& pizza) noexcept
-    {
-        std::cout << "New cook in the kitchen!" << std::endl;
-        _cooks.push_back(Cook(pizza));
-    }
+    // // COMPARE TIMESTAMP KITCHEN TO ACTUAL TIMESTAMP TO RECHARGE INGREDIENT
 
     bool Kitchen::assignOrder(Pizza& pizza, int importance) noexcept
-    {
+    {       
         std::string command("PIZZA");
+        char c = 0;
+        size_t i = 0;
+        pollfd pfds;
+        char buf[100];
 
-        if (_ppid == getpid()) {
+        if (_parentPid == getpid()) {
             command.append(";");
-            command.append(pizza.getRecipe().getPizzaName());
+            command.append(pizza.getPizzaName());
             command.append(";");
             command.append(std::to_string(importance));
-            fdopen(_pipefd[1], "w");
-            if (write(_pipefd[WRITE_END], command.c_str(), command.length()) == -1)
-                std::cerr << "Write :: Can't write in the pipe" << std::endl;
-            close(_pipefd[WRITE_END]);
-            //wait for return value
-            return (true);
-        } else {
-            if (_cooks.size() < _maxCook) {
-                contractCook(pizza);
-                return (true);
+            command.append("\n");
+            if (write(_pipefdP[WRITE_END], command.c_str(), command.length()) == -1)
+                perror("Write :: Can't write in the pipe");
+            pfds.fd = _pipefdC[READ_END];
+            pfds.events = POLLIN;
+            if (poll(&pfds, 1, -1)) {
+                if (!memset(buf, 0, 100)) {
+                    std::cerr << "Memset :: failed" << std::endl;
+                    return (false);
+                }
+                while (read(_pipefdC[READ_END], &c, 1) > 0) {
+                    if (c == '\n')
+                        break;
+                    buf[i++] = c;
+                }
             }
-            for (auto &i : _cooks) {
-                if (i.getStatus() < importance) {
-                    i.setStatus(i.getStatus() + 1);
-                    i.assignOrder(pizza);
+            return ((std::string(buf) == "True") ? true : false);
+        } else {
+            for (auto &cook : _cooks) {
+                if (cook->getStatus() < importance) {
+                    cook->setStatus(cook->getStatus() + 1);
+                    cook->assignOrder(pizza);
+                    if (write(_pipefdC[WRITE_END], "True\n", 5) == -1)
+                        perror("Write :: Can't write in the pipe");
                     return (true);
                 }
             }
+            if (write(_pipefdC[WRITE_END], "False\n", 6) == -1)
+                perror("Write :: Can't write in the pipe");
             return (false);
         }
+        return (true);
     }
 
     void Kitchen::status(void) const
     {
         std::string command;
 
-        if (_ppid == getpid()) {
-            command.assign("STATUS");
-            fdopen(_pipefd[1], "w");
-            if (write(_pipefd[WRITE_END], command.c_str(), command.length()) == -1)
-                std::cerr << "Write :: Can't write in the pipe" << std::endl;
-            close(_pipefd[WRITE_END]);
+        if (_parentPid == getpid()) {
+            command.assign("status\n");
+            if (write(_pipefdP[WRITE_END], command.c_str(), command.length()) == -1)
+                perror("Write :: Can't write in the pipe");
         } else {
             for (auto &cook : _cooks) {
-                if (cook.getStatus() == INACTIVE)
+                if (cook->getStatus() == INACTIVE)
                     std::cout << "Cook inactive." << std::endl;
                 else {
                     std::cout << "Cook is cooking";
-                    if (cook.getStatus() == BUSY)
-                        std::cout << ", another pending order." << std::endl;
-                    else
-                        std::cout << "." << std::endl;
+                    if (cook->getStatus() == BUSY)
+                        std::cout << ", another pending order";
+                    std::cout << "." << std::endl;
                 }
             }
         }
@@ -205,56 +238,65 @@ namespace Plazza
     {
         std::string command;
 
-        if (_ppid == getpid()) {
-            command.assign("QUIT");
-            fdopen(_pipefd[1], "w");
-            if (write(_pipefd[WRITE_END], command.c_str(), command.length()) == -1)
-                std::cerr << "Write :: Can't write in the pipe" << std::endl;
-            close(_pipefd[WRITE_END]);
-        } else
+        if (_parentPid == getpid()) {
+            command.assign("quit\n");
+            if (write(_pipefdP[WRITE_END], command.c_str(), command.length()) == -1)
+                perror("Write :: Can't write in the pipe");
+        } else {
+            for (auto &cook : _cooks)
+                delete cook;
             _exit(EXIT_SUCCESS);
+        }
     }
 
-    bool Kitchen::parsInput(std::string&& command)
+    std::vector<std::string> Kitchen::parsInput(std::string const& input)
     {
+        std::string command(input);
         std::replace(command.begin(), command.end(), ';', ' ');
         std::istringstream iss(command);
         std::vector<std::string> parsedInput(std::istream_iterator<std::string>{iss},
                                         std::istream_iterator<std::string>()); 
 
-        if (!command.compare("QUIT"))
-            _exit(EXIT_SUCCESS);
-        else if (!command.compare("STATUS"))
-            status();
-        else if (!parsedInput[0].compare("PIZZA"))
-            return (assignOrder(_menu[parsedInput[1]], atoi(parsedInput[2].c_str())));
-        return (true);
+        return (parsedInput);
     }
 
-    bool Kitchen::childLoop()
+    void Kitchen::process(std::string&& command)
     {
-        pollfd pfds;
-        char c;
-        char buf[100];
+        std::vector<std::string> parsedInput = parsInput(command);
+
+        if (!command.compare("quit"))
+            quit();
+        else if (!command.compare("status"))
+            status();
+        else if (parsedInput[0] == "PIZZA")
+            assignOrder(_menu[parsedInput[1]], atoi(parsedInput[2].c_str()));
+    }
+
+    void Kitchen::childLoop(void)
+    {
+        char c = 0;
         size_t i = 0;
+        pollfd pfds;
+        char buf[100];
         bool status = true;
 
-        pfds.fd = _pipefd[READ_END];
+        pfds.fd = _pipefdP[READ_END];
         pfds.events = POLLIN;
-        if (close(_pipefd[WRITE_END]) == -1)
-            std::cerr << "Close :: can't close unused write end" << std::endl;
-        memset(buf, 0, 100);
-        while(status) {
-            if (poll(&pfds, 2, -1)) {
-                while (read(_pipefd[READ_END], &c, 1) > 0)
+        while (status) {
+            if (poll(&pfds, 1, -1)) {
+                if (!memset(buf, 0, 100)) {
+                    perror("Memset :: failed");
+                    return;
+                }
+                while (read(_pipefdP[READ_END], &c, 1) > 0) {
+                    if (c == '\n')
+                        break;
                     buf[i++] = c;
+                }
                 i = 0;
-                close(_pipefd[READ_END]);
-                parsInput(std::string(buf));
-                memset(buf, 0, 100);
+                process(std::string(buf));
             }
         }
         _exit(EXIT_SUCCESS);
     }
-
 }

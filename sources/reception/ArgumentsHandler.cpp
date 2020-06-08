@@ -9,7 +9,6 @@
 
 namespace Plazza
 {
-
     int ArgumentsHandler::run(int ac, char **av) noexcept
     {
         if ((ac == 2) && ((!strcmp(av[1], "-h") || !strcmp(av[1], "--help")))) {
@@ -28,5 +27,4 @@ namespace Plazza
         }
         return (0);
     }
-
 }

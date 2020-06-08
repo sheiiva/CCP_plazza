@@ -13,7 +13,6 @@
 #include <vector>
 #include <string>
 #include <mutex>
-#include "Recipe.hpp"
 
 namespace Plazza
 {
@@ -32,15 +31,18 @@ namespace Plazza
         public:
             //GETTERS
             int getClock(void) const noexcept;
-            Recipe getRecipe(void) noexcept;
+            std::string getPizzaName(void) const noexcept;
+            std::vector<int> getIngredients(void) const noexcept;
+            int getBakeTime(void) const noexcept;
             //SETTERS
-            void setClock(int clock) noexcept;
+            // void setClock(int clock) noexcept;
             //METHODS
-            void bake(void);
 
         private:
             int _clock;
-            Recipe _recipe;
+            std::string _pizzaName;
+            std::vector<int> _ingredients;
+            int _bakeTime;
     };
 }
 

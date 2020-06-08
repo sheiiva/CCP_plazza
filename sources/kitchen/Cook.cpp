@@ -9,37 +9,15 @@
 
 namespace Plazza
 {
-    Cook::Cook(Pizza const& pizza) noexcept :
-        _status(STATUS::ACTIVE)
-    {
-        _orders.push(pizza);
-        std::cout << _orders.back().getRecipe().getPizzaName()
-                    << ": assigned to a cooker!" << std::endl;
-        cook();
-    }
-
-    Cook::Cook(Cook const& b) noexcept :
-        _status(b._status), _orders(b._orders)
+    Cook::Cook() :
+        _thread(&Cook::bake, this)
     {
     }
 
-    Cook::Cook(Cook&& b) noexcept :
-        _status(b._status),_orders(std::move(b._orders))
+    Cook::~Cook()
     {
-    }
-
-    Cook &Cook::operator=(Cook const& rhs) noexcept
-    {
-        _status = rhs._status;
-        _orders = rhs._orders;
-        return (*this);
-    }
-
-    Cook &Cook::operator=(Cook&& rhs) noexcept
-    {
-        _status = rhs._status;
-        _orders.swap(rhs._orders);
-        return (*this);
+        if (_thread.joinable())
+            _thread.join();
     }
 
     int Cook::getStatus() const noexcept
@@ -54,22 +32,27 @@ namespace Plazza
 
     bool Cook::assignOrder(Pizza const& pizza) noexcept
     {
-        if (_orders.size() > 2)
+        if (_orders.size() >= 2)
             return (false);
         _orders.push(pizza);
-        std::cout << _orders.back().getRecipe().getPizzaName()
-                    << ": assigned to a cooker!" << std::endl;
+        std::cout << _orders.back().getPizzaName() << ": assigned to a cooker!" << std::endl;
+        _condition.notify_one();
         return (true);
     }
 
-    void Cook::cook()
+    void Cook::bake(void)
     {
-        std::thread thread(&Pizza::bake, _orders.front());
-        if (thread.joinable())
-            thread.join();
-        _orders.pop();
-        if (_orders.empty() == false)
-            cook();
-        _status = ((_status - 1) <= INACTIVE) ? INACTIVE : (_status - 1);
+        std::mutex _mtx;
+        std::unique_lock<std::mutex> lock(_mtx);
+
+        while (_status != FIRED) {
+            _condition.wait(lock, [&](){return (!_orders.empty());});
+            std::cout << "Let's bake a " << _orders.front().getPizzaName() << "..." << std::endl;
+            sleep(_orders.front().getBakeTime());
+            std::cout << _orders.front().getPizzaName() << " cooked!" << std::endl;
+            _orders.pop();
+            _condition.notify_one();
+            _status = ((_status - 1) <= INACTIVE) ? INACTIVE : (_status - 1);
+        }
     }
 }

@@ -6,51 +6,51 @@
 */
 
 #ifndef ARGUMENTSHANDLER_HPP
-#define ARGUMENTSHANDLER_HPP
+    #define ARGUMENTSHANDLER_HPP
 
-#include <string.h>
-#include <stdlib.h>
-#include <iostream>
-#include <string>
-#include <sstream>
+    #include <string.h>
+    #include <stdlib.h>
+    #include <iostream>
+    #include <string>
+    #include <sstream>
 
-#include "Usage.hpp"
+    #include "Usage.hpp"
 
-namespace Plazza
-{
-
-    class ArgumentsHandler
+    namespace Plazza
     {
-        private:
-            ArgumentsHandler() noexcept = default;
-            ArgumentsHandler(ArgumentsHandler const& b) noexcept = default;
-            ArgumentsHandler(ArgumentsHandler&& b) noexcept = default;
-            ~ArgumentsHandler() noexcept = default;
-    
-            ArgumentsHandler &operator=(ArgumentsHandler const& rhs) noexcept = default;
-            ArgumentsHandler &operator=(ArgumentsHandler&& rhs) noexcept = default;
-    
-        private:
-            int run(int ac, char **av) noexcept;
 
-        public:
-            template <typename Type>
-            static bool isType(Type ret, std::string const& nb)
-            {
-                std::istringstream iss(nb);
+        class ArgumentsHandler
+        {
+            private:
+                ArgumentsHandler() noexcept = default;
+                ArgumentsHandler(ArgumentsHandler const& b) noexcept = default;
+                ArgumentsHandler(ArgumentsHandler&& b) noexcept = default;
+                ~ArgumentsHandler() noexcept = default;
+        
+                ArgumentsHandler &operator=(ArgumentsHandler const& rhs) noexcept = default;
+                ArgumentsHandler &operator=(ArgumentsHandler&& rhs) noexcept = default;
+        
+            private:
+                int run(int ac, char **av) noexcept;
 
-                iss >> ret;
-                return iss.eof() && !iss.fail();   
-            }
+            public:
+                template <typename Type>
+                static bool isType(Type ret, std::string const& nb)
+                {
+                    std::istringstream iss(nb);
 
-            static int check(int ac, char **av) noexcept
-            {
-                ArgumentsHandler argumentsHandler;
+                    iss >> ret;
+                    return (iss.eof() && !iss.fail());   
+                }
 
-                return argumentsHandler.run(ac, av);
-            }
-    };
+                static int check(int ac, char **av) noexcept
+                {
+                    ArgumentsHandler argumentsHandler;
 
-}
+                    return (argumentsHandler.run(ac, av));
+                }
+        };
+
+    }
 
 #endif /* !ARGUMENTSHANDLER_HPP */

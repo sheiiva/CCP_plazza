@@ -7,34 +7,38 @@
 
 #include "Pizza.hpp"
 
-namespace Plazza {
-
+namespace Plazza
+{
     Pizza::Pizza(const std::string &pizzaName, std::vector<int> &neededIngredients, int bakeTime) noexcept:
-        _clock(0), _recipe(pizzaName, neededIngredients, bakeTime)
+        _clock(0), _pizzaName(pizzaName), _ingredients(neededIngredients), _bakeTime(bakeTime)
     {
     }
 
     Pizza::Pizza(Pizza const& b) noexcept :
-        _clock(b._clock), _recipe(b._recipe)
+        _clock(b._clock), _pizzaName(b._pizzaName), _ingredients(b._ingredients), _bakeTime(b._bakeTime)
     {
     }
 
     Pizza::Pizza(Pizza&& b) noexcept :
-        _clock(b._clock), _recipe(std::move(b._recipe))
+        _clock(b._clock), _pizzaName(b._pizzaName), _ingredients(b._ingredients), _bakeTime(b._bakeTime)
     {
     }
 
     Pizza &Pizza::operator=(Pizza const& rhs) noexcept
     {
         _clock = rhs._clock;
-        _recipe = rhs._recipe;
+        _pizzaName = rhs._pizzaName;
+        _ingredients = rhs._ingredients;
+        _bakeTime = rhs._bakeTime;
         return (*this);
     }
 
     Pizza& Pizza::operator=(Pizza&& rhs) noexcept
     {
         _clock = rhs._clock;
-        _recipe = std::move(rhs._recipe);
+        _pizzaName.swap(rhs._pizzaName);
+        _ingredients.swap(rhs._ingredients);
+        _bakeTime = rhs._bakeTime;
         return (*this);
     }
 
@@ -43,26 +47,23 @@ namespace Plazza {
         return (_clock);
     }
 
-    Recipe Pizza::getRecipe(void) noexcept
+    // void Pizza::setClock(int clock) noexcept
+    // {
+    //     _clock = clock;
+    // }
+
+    std::string Pizza::getPizzaName(void) const noexcept
     {
-        return (_recipe);
+        return (_pizzaName);
     }
 
-    void Pizza::setClock(int clock) noexcept
+    std::vector<int> Pizza::getIngredients(void) const noexcept
     {
-        _clock = clock;
+        return (_ingredients);
     }
 
-    void Pizza::bake(void)
+    int Pizza::getBakeTime(void) const noexcept
     {
-        std::mutex mutex;
-        int initTime = time(NULL);
-
-        mutex.lock();
-        std::cout << "Let's bake a " << _recipe.getPizzaName() << "..." << std::endl;
-        // std::cout << (time(NULL) - initTime) << std::endl;
-        while ((time(NULL) - initTime) <= _recipe.getBakeTime());
-        std::cout << _recipe.getPizzaName() << " ready!" << std::endl;
-        mutex.unlock();
+        return (_bakeTime);
     }
 }
