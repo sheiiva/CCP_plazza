@@ -66,4 +66,19 @@ namespace Plazza
     {
         return (_bakeTime);
     }
+    
+    void Pizza::setPizzaName(const std::string &pizzaName) noexcept
+    {
+        _pizzaName = pizzaName;
+    }
+
+    void Pizza::setIngredients(std::vector<int> &neededIngredients) noexcept
+    {
+        _ingredients = neededIngredients;
+    }
+
+    void Pizza::setBakeTime(int bakeTime) noexcept
+    {
+        _bakeTime = bakeTime;
+    }
 }
