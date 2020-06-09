@@ -14,18 +14,15 @@ namespace Plazza
     {
         if (pipe(_pipefdP) == -1) {
             perror("Pipe :: failed");
-            // this->~Kitchen(); // PREFER TO THROW AN ERROR AND quit THE PROGRAM
             return;
         }
         if (pipe(_pipefdC) == -1) {
             perror("Pipe :: failed");
-            // this->~Kitchen(); // PREFER TO THROW AN ERROR AND quit THE PROGRAM
             return;
         }
         _childPid = fork();
         if (_childPid == -1) {
             perror("Fork failed :: Can't create a new Kitchen");
-            // this->~Kitchen(); // PREFER TO THROW AN ERROR AND quit THE PROGRAM
         } else if (_childPid == 0) {
             for (auto &ingredient : stock)
                 _ingredientsStock[ingredient.first] = 5;
@@ -92,11 +89,6 @@ namespace Plazza
         return (_maxCook);
     }
     
-    // Cook Kitchen::getCook(int index) const
-    // {
-    //     return (_cooks[index]);
-    // }
-    
     int Kitchen::getIngredientStock(std::string const& ingredient) const noexcept
     {
         return (_ingredientsStock.find(ingredient)->second);
@@ -137,28 +129,6 @@ namespace Plazza
         _menu[pizzaName] = menu[pizzaName];
     }
     
-    // void Kitchen::updateTime(bool reset) noexcept
-    // {
-    //     static long int initialTime = time(NULL);
-
-    //     if (reset)
-    //         initialTime = time(NULL);
-    //     _inactiveTime = time(NULL) - initialTime;
-    // }
-
-    // bool Kitchen::isKitchenActive(void) noexcept
-    // {
-    //     if (_cooks.size() != 0) {
-    //         updateTime(true);
-    //         return (true);
-    //     } else {
-    //         updateTime(false);
-    //         return (false);
-    //     }
-    // }
-
-    // // COMPARE TIMESTAMP KITCHEN TO ACTUAL TIMESTAMP TO RECHARGE INGREDIENT
-
     bool Kitchen::assignOrder(Pizza& pizza, int importance) noexcept
     {       
         std::string command("PIZZA");

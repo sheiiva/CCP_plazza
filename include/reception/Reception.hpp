@@ -9,9 +9,7 @@
     #define RECEPTION_HPP
 
     #include <map>
-    // #include <queue>
     #include <string>
-    // #include <vector>
     #include "Kitchen.hpp"
     #include "Parser.hpp"
     #include "Pizza.hpp"
@@ -41,9 +39,6 @@
                 int getBakeTimeWeight(void) const noexcept;
                 int getMaxCook(void) const noexcept;
                 int getStockRegen(void) const noexcept;
-                // Kitchen& getKitchen(int index) noexcept;
-                // int getStock(const std::string &ingredient) const noexcept;
-                // Pizza& getPizza(std::string const& pizzaName) noexcept;
                 // //SETTERS
                 void setBakeTimeWeight(int value) noexcept;
                 void setMaxCook(int value) noexcept;
@@ -58,8 +53,8 @@
                 bool assignToKitchen(int importance) noexcept;
                 void assignOrder(void) noexcept;
                 void status() const noexcept;
-                // void checkKitchensActivity() noexcept;
 
+            public:
                 static int start(int bakeTimeWeight, int maxCook, int stockRegen) noexcept
                 {
                     Reception reception(bakeTimeWeight, maxCook, stockRegen);

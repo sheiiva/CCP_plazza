@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2019
-** INCLUDE // KITCHEN
+** INCLUDE // RECEPTION
 ** File description:
 ** Parser.cpp
 */
@@ -69,7 +69,6 @@ namespace Plazza
             } else {
                 for(size_t index = 0; index < nbr; index++)
                     orders.push(Pizza(menu[parsedInput[PIZZANAME + i]]));
-                //WHAT ABOUT THE SIZE ? HAVE TO STOCK IT IN THE PIZZA
                 status = true;
             }
         }

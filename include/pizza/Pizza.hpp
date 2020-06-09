@@ -35,10 +35,10 @@ namespace Plazza
             std::vector<int> getIngredients(void) const noexcept;
             int getBakeTime(void) const noexcept;
             //SETTERS
+            void setClock(int clock) noexcept;
             void setPizzaName(const std::string &) noexcept;
             void setIngredients(std::vector<int> &) noexcept;
             void setBakeTime(int) noexcept;
-            // void setClock(int clock) noexcept;
             //METHODS
 
         private:

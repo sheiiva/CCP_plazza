@@ -47,10 +47,10 @@ namespace Plazza
         return (_clock);
     }
 
-    // void Pizza::setClock(int clock) noexcept
-    // {
-    //     _clock = clock;
-    // }
+    void Pizza::setClock(int clock) noexcept
+    {
+        _clock = clock;
+    }
 
     std::string Pizza::getPizzaName(void) const noexcept
     {

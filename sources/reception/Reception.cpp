@@ -73,26 +73,6 @@ namespace Plazza
         _menu["Fantasia"] = Pizza("Fantasia", ingredients, (4 * _bakeTimeWeight));
     }
 
-
-    // Kitchen& Reception::getKitchen(int index) noexcept
-    // {
-    //     return _kitchens.at(index);
-    // }
-
-//     int Reception::getStock(std::string const& ingredient) const noexcept
-//     {
-//         for (size_t i = 0; i < _stock.size(); i++) {
-//             if (!_stock[i].compare(ingredient))
-//                 return (i);
-//         }
-//         return (-1);
-//     }
-
-//     Pizza& Reception::getPizza(std::string const& pizzaName) noexcept
-//     {
-//         return _menu[pizzaName];
-//     }
-
     void Reception::createNewKitchen(void) noexcept
     {
         Kitchen newKitchen(_menu, _stock, _maxCook);
@@ -122,18 +102,7 @@ namespace Plazza
             }
         }
     }
-
-//     void Reception::checkKitchensActivity() noexcept
-//     {
-//         for (auto it = _kitchens.begin(); it != _kitchens.end(); it++) {
-//             if (it->getInactiveTime() >= 5) {
-//                 std::cout << "Inactive kitchen closed." << std::endl;
-//                 close(it->getPid());
-//                 it = _kitchens.erase(it);
-//             }
-//         }
-//     }
-
+    
     void Reception::status() const noexcept
     {
         size_t i = 0;

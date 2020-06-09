@@ -52,7 +52,6 @@ namespace Plazza
             pid_t getParentPid() const noexcept;
             time_t getInactiveTime(void) const noexcept;
             size_t getMaxCook(void) const noexcept;
-            // Cook getCook(int index) const;
             int getIngredientStock(std::string const& ingredient) const noexcept;
             Pizza& getPizza(std::string const& pizzaName) noexcept;
             // //SETTER
@@ -68,13 +67,7 @@ namespace Plazza
             void process(std::string&& command);
             void quit(void);
             void status(void) const;
-            // bool isKitchenActive(void) noexcept;
-            // void contractCook(Pizza const& pizza) noexcept;
             bool assignOrder(Pizza& pizza, int importance) noexcept;
-
-        // private:
-        //     void updateTime(bool reset) noexcept;
-
         private:
             int _pipefdP[2];
             int _pipefdC[2];
