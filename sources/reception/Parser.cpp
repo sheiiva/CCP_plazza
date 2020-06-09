@@ -74,22 +74,20 @@ namespace Plazza
         return (status);
     }
 
-    std::vector<std::string> Parser::splitInput(std::string const& input, size_t *sep)
+    std::vector<std::string> Parser::splitInput(std::string const& input)
     {
         std::string command(input);
         std::replace(command.begin(), command.end(), ';', ' ');
         std::istringstream iss(command);
         std::vector<std::string> parsedInput(std::istream_iterator<std::string>{iss},
                                                 std::istream_iterator<std::string>());
-
-        *sep = std::count(command.begin(), command.end(), ';');
         return (parsedInput);
     }
 
     int Parser::run(std::string const& input, std::queue<Pizza>& orders, std::map<std::string, Pizza>& menu)
     {
-        size_t sep = 0;
-        std::vector<std::string> parsedInput = splitInput(input, &sep);
+        size_t sep = std::count(input.begin(), input.end(), ';');
+        std::vector<std::string> parsedInput = splitInput(input);
 
         if (!input.compare("help"))
             return (HELP);

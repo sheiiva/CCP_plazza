@@ -48,7 +48,7 @@
 
             public:
                 int run(std::string const& input, std::queue<Pizza>& _orders, std::map<std::string, Pizza>& menu);
-                std::vector<std::string> splitInput(std::string const& string, size_t *sep);
+                std::vector<std::string> splitInput(std::string const& string);
                 bool isValidPizzaSize(std::string const& inputSize) const noexcept;
                 bool isValidPizzaName(std::string const& inputName, std::map<std::string, Pizza> menu) const noexcept;
                 size_t isValidNbrFormat(std::string const& inputNbr) const noexcept;
