@@ -41,10 +41,10 @@ namespace Plazza
         public:
             Kitchen() noexcept = delete;
             Kitchen(std::map<std::string, Pizza> menu, std::map<std::string, int> stock, int maxCook) noexcept;
-            Kitchen(Kitchen const& b) noexcept;
+            Kitchen(Kitchen const& b) noexcept = delete;
             Kitchen(Kitchen&& b) noexcept;
             ~Kitchen() noexcept;
-            Kitchen& operator=(Kitchen const& rhs) noexcept;
+            Kitchen& operator=(Kitchen const& rhs) noexcept = delete;
             Kitchen& operator=(Kitchen&& rhs) noexcept;
 
             //GETTER

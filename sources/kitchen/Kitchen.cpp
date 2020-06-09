@@ -36,21 +36,6 @@ namespace Plazza
         }
     }
 
-    Kitchen::Kitchen(Kitchen const& b) noexcept :
-        _childPid(b._childPid),
-        _parentPid(b._parentPid),
-        _inactiveTime(b._inactiveTime),
-        _maxCook(b._maxCook),
-        _cooks(b._cooks),
-        _ingredientsStock(b._ingredientsStock),
-        _menu(b._menu)
-    {
-        _pipefdP[READ_END] = b._pipefdP[READ_END];
-        _pipefdP[WRITE_END] = b._pipefdP[WRITE_END];
-        _pipefdC[READ_END] = b._pipefdC[READ_END];
-        _pipefdC[WRITE_END] = b._pipefdC[WRITE_END];
-    }
-
     Kitchen::Kitchen(Kitchen&& b) noexcept :
         _childPid(b._childPid),
         _parentPid(b._parentPid),
@@ -64,22 +49,6 @@ namespace Plazza
         _pipefdP[WRITE_END] = b._pipefdP[WRITE_END];
         _pipefdC[READ_END] = b._pipefdC[READ_END];
         _pipefdC[WRITE_END] = b._pipefdC[WRITE_END];
-    }
-
-    Kitchen &Kitchen::operator=(Kitchen const& rhs) noexcept
-    {
-        _pipefdP[READ_END] = rhs._pipefdP[READ_END];
-        _pipefdP[WRITE_END] = rhs._pipefdP[WRITE_END];
-        _pipefdC[READ_END] = rhs._pipefdC[READ_END];
-        _pipefdC[WRITE_END] = rhs._pipefdC[WRITE_END];
-        _childPid = rhs._childPid;
-        _parentPid = rhs._parentPid;
-        _inactiveTime = rhs._inactiveTime;
-        _maxCook = rhs._maxCook,
-        _cooks = rhs._cooks;
-        _ingredientsStock = rhs._ingredientsStock;
-        _menu = rhs._menu;
-        return (*this);
     }
 
     Kitchen &Kitchen::operator=(Kitchen&& rhs) noexcept

@@ -98,7 +98,7 @@ namespace Plazza
         Kitchen newKitchen(_menu, _stock, _maxCook);
 
         std::cout << "New kitchen created!" << std::endl;
-        _kitchens.push_back(newKitchen);
+        _kitchens.push_back(std::move(newKitchen));
     }
 
     bool Reception::assignToKitchen(int importance) noexcept
