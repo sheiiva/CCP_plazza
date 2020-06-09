@@ -107,11 +107,36 @@ namespace Plazza
         return (_menu[pizzaName]);
     }
 
-    void Kitchen::setIngredientStock(std::string const& ingredient, int stock) noexcept
+    void Kitchen::setChildPid(pid_t childPid) noexcept
+    {
+        _childPid = childPid;
+    }
+
+    void Kitchen::setParentPid(pid_t parentPid) noexcept
+    {
+        _parentPid = parentPid;
+    }
+
+    void Kitchen::setInactiveTime(time_t inactiveTime) noexcept
+    {
+        _inactiveTime = inactiveTime;
+    }
+
+    void Kitchen::setMaxCook(size_t maxCook) noexcept
+    {
+        _maxCook = maxCook;
+    }
+
+     void Kitchen::setIngredientStock(std::string const& ingredient, int stock) noexcept
     {
         _ingredientsStock[ingredient] = stock;
     }
 
+    void Kitchen::setPizza(std::string const& pizzaName, std::map<std::string, Pizza> menu) noexcept
+    {
+        _menu[pizzaName] = menu[pizzaName];
+    }
+    
     // void Kitchen::updateTime(bool reset) noexcept
     // {
     //     static long int initialTime = time(NULL);

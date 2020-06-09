@@ -56,7 +56,12 @@ namespace Plazza
             int getIngredientStock(std::string const& ingredient) const noexcept;
             Pizza& getPizza(std::string const& pizzaName) noexcept;
             // //SETTER
-            void setIngredientStock(const std::string &ingredient, int stock) noexcept;
+            void setChildPid(pid_t childPid) noexcept;
+            void setParentPid(pid_t parentPid) noexcept;
+            void setInactiveTime(time_t inactiveTime) noexcept;
+            void setMaxCook(size_t maxCook) noexcept;
+            void setIngredientStock(std::string const& ingredient, int stock) noexcept;
+            void setPizza(std::string const& pizzaName, std::map<std::string, Pizza> menu) noexcept;
             // //METHODS
             void childLoop(void);
             std::vector<std::string> parsInput(std::string const& command);
