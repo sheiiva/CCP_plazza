@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2020
-** Kitchen.cpp
+** SOURCES || KITCHEN
 ** File description:
 ** kitchen functions
 */

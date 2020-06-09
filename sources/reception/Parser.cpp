@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2019
-** INCLUDE // RECEPTION
+** SOURCES // RECEPTION
 ** File description:
 ** Parser.cpp
 */
@@ -9,7 +9,6 @@
 
 namespace Plazza
 {
-
     bool Parser::isValidPizzaSize(std::string const& inputSize) const noexcept
     {
         std::string sizes[5] = {"S", "M", "L", "XL", "XXL"};
@@ -100,5 +99,4 @@ namespace Plazza
             return (QUIT);
         return (addPizzatoOrder(parsedInput, sep, orders, menu) ? COMMAND : NOACTION);
     }
-
 }

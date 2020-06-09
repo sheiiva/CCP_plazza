@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2019
-** INCLUDE // RECEPTION
+** SOURCES // RECEPTION
 ** File description:
 ** Usage.cpp
 */
@@ -9,7 +9,6 @@
 
 namespace Plazza
 {
-
     void Usage::readFromFile(void) noexcept
     {
         std::ifstream infile(FILEPATH);
@@ -23,5 +22,4 @@ namespace Plazza
             infile.close();
         }
     }
-
 }

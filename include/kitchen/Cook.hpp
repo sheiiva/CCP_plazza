@@ -20,6 +20,7 @@
 
     namespace Plazza
     {
+        
         enum STATUS {
             FIRED       = -1,
             INACTIVE    = 0,
@@ -36,7 +37,7 @@
                 ~Cook() noexcept;
                 Cook& operator=(Cook const& rhs) noexcept = delete;
                 Cook& operator=(Cook&& rhs) noexcept = delete;
-
+            public:
                 //GETTERS
                 int getStatus() const noexcept;
                 //SETTERS
@@ -53,7 +54,7 @@
                 std::queue<Pizza> _orders;
                 std::thread _thread;
         };
-    
+        
     }
 
 #endif /* !COOK_HPP */
