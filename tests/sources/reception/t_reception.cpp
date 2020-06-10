@@ -11,7 +11,7 @@
 namespace Plazza
 {
     
-    Test(getStock, with_normal_case)
+    /*Test(getStock, with_normal_case)
     {
         Reception reception(2, 5, 2000);
 
@@ -60,6 +60,6 @@ namespace Plazza
         Reception reception(2, 5, 2000);
 
         cr_assert_eq(reception.getStockRegen(), 2000);
-    }
+        }*/
 
 }
