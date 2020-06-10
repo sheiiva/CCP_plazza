@@ -47,6 +47,7 @@ SRC 	= 	$(REC_FUNC)redirect.cpp										\
 			$(TEST_SRC)$(RECEPTION_PATH)t_reception.cpp					\
 			$(TEST_SRC)$(RECEPTION_PATH)t_usage.cpp						\
 			$(TEST_SRC)$(KITCHEN_PATH)t_kitchen.cpp						\
+			$(TEST_SRC)$(KITCHEN_PATH)t_cook.cpp						\
 
 OBJ 	= 	$(SRC:.cpp=.o)
 
