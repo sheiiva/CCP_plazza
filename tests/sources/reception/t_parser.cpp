@@ -12,7 +12,7 @@
 
 namespace Plazza {
 
-    Test(addIngredientToStock, with_normal_case, .init=redirect_all_std)
+    /*Test(addIngredientToStock, with_normal_case, .init=redirect_all_std)
     {
         const std::string &input("ADD INGREDIENT ingredient1 ingredient2");
         std::string output("ingredient1 added to the stock!\ningredient2 added to the stock!\n");
@@ -365,5 +365,5 @@ namespace Plazza {
 
         cr_assert_eq(parser.run(input, orders, stock, menu), NOACTION);
         cr_assert_stderr_eq_str(output.c_str());
-    }
+        }*/
 }
