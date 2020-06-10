@@ -8,7 +8,7 @@
 #include "cri_func.hpp"
 #include "Kitchen.hpp"
 
-Test(getInactiveTime, get_inactive_time, .init=redirect_all_std)
+/*Test(getInactiveTime, get_inactive_time, .init=redirect_all_std)
 {
     Plazza::Kitchen kitchen;
     
@@ -22,7 +22,7 @@ Test(getCook, get_cook, .init=redirect_all_std)
     Plazza::Cook cook(kitchen);
 
     cr_assert_eq(kitchen.getCook(0), cook);
-}
+    }*/
 
  /*Test(getCooks, get_cooks, .init=redirect_all_std)
 {
@@ -34,7 +34,7 @@ Test(getCook, get_cook, .init=redirect_all_std)
     cr_assert_eq(kitchen.getCooks(), cooks);
     }*/
 
-Test(getIngredientsStock, get_ingredient_stock_int, .init=redirect_all_std)
+/*Test(getIngredientsStock, get_ingredient_stock_int, .init=redirect_all_std)
 {
     Plazza::Kitchen kitchen;
     const std::string &str("tomato");
@@ -64,4 +64,4 @@ Test(checkCookStatus, check_cook_status, .init=redirect_all_std)
     Plazza::Kitchen kitchen;
 
     cr_assert_eq(kitchen.checkCookStatus(), false);
-}
+    }*/
