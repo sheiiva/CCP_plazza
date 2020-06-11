@@ -13,7 +13,7 @@
 #include "cri_func.hpp"
 #include "Usage.hpp"
 
-static bool exists(const std::string& name)
+/*static bool exists(const std::string& name)
 {
     return (access(name.c_str(), F_OK) != -1);
 }
@@ -43,4 +43,4 @@ Test(show, with_no_file, .init=redirect_all_std)
     Plazza::Usage::show();
 
     cr_assert_stderr_eq_str(output.c_str());
-}
+    }*/
