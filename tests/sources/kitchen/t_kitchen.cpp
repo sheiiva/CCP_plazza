@@ -7,16 +7,28 @@
 
 #include "cri_func.hpp"
 #include "Kitchen.hpp"
+#include "Pizza.hpp"
 
-/*Test(getInactiveTime, get_inactive_time, .init=redirect_all_std)
+using namespace Plazza;
+
+Test(getInactiveTime, get_inactive_time, .init=redirect_all_std)
 {
-    Plazza::Kitchen kitchen;
+    const std::string pizzaname = "Margarita";
+    std::vector<int> neededIngredients;
+    int bakeTime = 0;
+
+    Plazza::Pizza pizza(pizzaname, neededIngredients, bakeTime);
+    std::map<std::string, Pizza> menu;
+    std::map<std::string, int> stock;
+    int maxCook = 0;
+    Plazza::Kitchen kitchen(menu, stock, maxCook);
+    kitchen.setInactiveTime(5);
     
-    cr_assert_eq(kitchen.getInactiveTime(), 0);
+    cr_assert_eq(kitchen.getInactiveTime(), 5);
 }
 
 
-Test(getCook, get_cook, .init=redirect_all_std)
+/*Test(getCook, get_cook, .init=redirect_all_std)
 {
     Plazza::Kitchen kitchen;
     Plazza::Cook cook(kitchen);
@@ -40,9 +52,9 @@ Test(getCook, get_cook, .init=redirect_all_std)
     const std::string &str("tomato");
     
     cr_assert_eq(kitchen.getIngredientsStock(str), 5);
-}
+    }*/
 
-Test(getIngredientsStock, get_ingredient_stock_map, .init=redirect_all_std)
+/*Test(getIngredientsStock, get_ingredient_stock_map, .init=redirect_all_std)
 {
     Plazza::Kitchen kitchen;
     std::map<std::string, int> ingredients_stock;
@@ -57,9 +69,9 @@ Test(getIngredientsStock, get_ingredient_stock_map, .init=redirect_all_std)
     ingredients_stock["goat cheese"] = 5;
     ingredients_stock["chief love"] = 5;
     cr_assert_eq(kitchen.getIngredientsStock(), ingredients_stock);
-}
+    }*/
 
-Test(checkCookStatus, check_cook_status, .init=redirect_all_std)
+/*Test(checkCookStatus, check_cook_status, .init=redirect_all_std)
 {
     Plazza::Kitchen kitchen;
 

@@ -32,7 +32,7 @@ INCLUDES	=	-I./include/							\
 				-I./$(INCLUDE_PATH)$(PIZZA_PATH) 		\
 				-I./$(INCLUDE_PATH)$(RECEPTION_PATH)
 
-override CPPFLAGS  		+=	-W -Wall -Wextra -Wextra $(INCLUDES) --coverage
+override CPPFLAGS  		+=	-W -Wall -Wextra -Wextra $(INCLUDES) --coverage -pthread
 override LDFLAGS    	+= 	-L./$(SRCLIB)
 override LDLIBS     	+=	-lcriterion -lsrc
 
