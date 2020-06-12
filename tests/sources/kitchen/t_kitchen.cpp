@@ -27,6 +27,20 @@ Test(getInactiveTime, get_inactive_time, .init=redirect_all_std)
     cr_assert_eq(kitchen.getInactiveTime(), 5);
 }
 
+Test(getMaxCook, get_max_cook, .init=redirect_all_std)
+{
+    const std::string pizzaname = "Margarita";
+    std::vector<int> neededIngredients;
+    int bakeTime = 0;
+
+    Plazza::Pizza pizza(pizzaname, neededIngredients, bakeTime);
+    std::map<std::string, Pizza> menu;
+    std::map<std::string, int> stock;
+    int maxCook = 0;
+    Plazza::Kitchen kitchen(menu, stock, maxCook);
+    
+    cr_assert_eq(kitchen.getMaxCook(), 0);
+}
 
 /*Test(getCook, get_cook, .init=redirect_all_std)
 {
