@@ -12,6 +12,12 @@
 
 namespace Plazza {
 
+    Test(isValidPizzaSize, with_normal_case, .init=redirect_all_std)
+    {
+        Parser parser;
+
+        cr_assert_eq(parser.isValidPizzaSize("L"), true);
+    }
     /*Test(addIngredientToStock, with_normal_case, .init=redirect_all_std)
     {
         const std::string &input("ADD INGREDIENT ingredient1 ingredient2");
