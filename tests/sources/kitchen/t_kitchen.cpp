@@ -11,6 +11,21 @@
 
 using namespace Plazza;
 
+Test(getChildPid, get_child_pid, .init=redirect_all_std)
+{
+    const std::string pizzaname = "Margarita";
+    std::vector<int> neededIngredients;
+    int bakeTime = 0;
+    Plazza::Pizza pizza(pizzaname, neededIngredients, bakeTime);
+    std::map<std::string, Pizza> menu;
+    std::map<std::string, int> stock;
+    int maxCook = 0;
+    Plazza::Kitchen kitchen(menu, stock, maxCook);
+
+    kitchen.setChildPid(0);
+    cr_assert_eq(kitchen.getChildPid(), 0);
+}
+
 Test(getInactiveTime, get_inactive_time, .init=redirect_all_std)
 {
     const std::string pizzaname = "Margarita";
@@ -22,8 +37,8 @@ Test(getInactiveTime, get_inactive_time, .init=redirect_all_std)
     std::map<std::string, int> stock;
     int maxCook = 0;
     Plazza::Kitchen kitchen(menu, stock, maxCook);
+
     kitchen.setInactiveTime(5);
-    
     cr_assert_eq(kitchen.getInactiveTime(), 5);
 }
 
@@ -32,7 +47,6 @@ Test(getMaxCook, get_max_cook, .init=redirect_all_std)
     const std::string pizzaname = "Margarita";
     std::vector<int> neededIngredients;
     int bakeTime = 0;
-
     Plazza::Pizza pizza(pizzaname, neededIngredients, bakeTime);
     std::map<std::string, Pizza> menu;
     std::map<std::string, int> stock;
