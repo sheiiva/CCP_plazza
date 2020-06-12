@@ -26,6 +26,21 @@ Test(getChildPid, get_child_pid, .init=redirect_all_std)
     cr_assert_eq(kitchen.getChildPid(), 0);
 }
 
+Test(getParentPid, get_parent_pid, .init=redirect_all_std)
+{
+    const std::string pizzaname = "Margarita";
+    std::vector<int> neededIngredients;
+    int bakeTime = 0;
+    Plazza::Pizza pizza(pizzaname, neededIngredients, bakeTime);
+    std::map<std::string, Pizza> menu;
+    std::map<std::string, int> stock;
+    int maxCook = 0;
+    Plazza::Kitchen kitchen(menu, stock, maxCook);
+
+    kitchen.setParentPid(0);
+    cr_assert_eq(kitchen.getParentPid(), 0);
+}
+
 Test(getInactiveTime, get_inactive_time, .init=redirect_all_std)
 {
     const std::string pizzaname = "Margarita";
