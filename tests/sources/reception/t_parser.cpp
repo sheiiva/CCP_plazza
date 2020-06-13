@@ -19,6 +19,13 @@ namespace Plazza {
         cr_assert_eq(parser.isValidPizzaSize("L"), true);
     }
 
+    Test(isValidPizzaSize, wrong_case, .init=redirect_all_std)
+    {
+        Parser parser;
+
+        cr_assert_eq(parser.isValidPizzaSize("W"), false);
+    }
+    
     Test(isValidPizzaName, with_normal_case, .init=redirect_all_std)
     {
         const std::string pizzaname = "Margarita";
