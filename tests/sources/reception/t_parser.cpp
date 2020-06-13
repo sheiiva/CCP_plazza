@@ -31,6 +31,13 @@ namespace Plazza {
 
         cr_assert_eq(parser.isValidPizzaName("Margarita", menu), true);
     }
+
+    Test(isValidNbrFormat, with_wrong_input, .init=redirect_all_std)
+    {
+        Parser parser;
+
+        cr_assert_eq(parser.isValidNbrFormat("lol"), false);
+    }
     /*Test(addIngredientToStock, with_normal_case, .init=redirect_all_std)
     {
         const std::string &input("ADD INGREDIENT ingredient1 ingredient2");
