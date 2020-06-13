@@ -18,6 +18,19 @@ namespace Plazza {
 
         cr_assert_eq(parser.isValidPizzaSize("L"), true);
     }
+
+    Test(isValidPizzaName, with_normal_case, .init=redirect_all_std)
+    {
+        const std::string pizzaname = "Margarita";
+        std::vector<int> neededIngredients;
+        int bakeTime = 0;
+        Plazza::Pizza pizza(pizzaname, neededIngredients, bakeTime);
+        Parser parser;
+        std::map<std::string, Pizza> menu;
+        menu["Margarita"] = pizza;
+
+        cr_assert_eq(parser.isValidPizzaName("Margarita", menu), true);
+    }
     /*Test(addIngredientToStock, with_normal_case, .init=redirect_all_std)
     {
         const std::string &input("ADD INGREDIENT ingredient1 ingredient2");
